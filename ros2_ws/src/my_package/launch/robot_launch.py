@@ -16,24 +16,36 @@ def generate_launch_description():
     )
 
     my_robot_driver = WebotsController(
-        robot_name='my_robot',
+        robot_name='vehicle',
         parameters=[
             {'robot_description': robot_description_path},
         ]
     )
 
-    obstacle_avoider = Node(
+    lane_follower = Node(
         package='my_package',
-        executable='obstacle_avoider',
+        executable='lane_follower',
     )
 
     return LaunchDescription([
         webots,
         my_robot_driver,
-        obstacle_avoider,
+        lane_follower   ,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
                 target_action=webots,
+                on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
+            )
+        ),
+        launch.actions.RegisterEventHandler(
+            event_handler=launch.event_handlers.OnProcessExit(
+                target_action=my_robot_driver,
+                on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
+            )
+        ),
+        launch.actions.RegisterEventHandler(
+            event_handler=launch.event_handlers.OnProcessExit(
+                target_action=lane_follower,
                 on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
             )
         )

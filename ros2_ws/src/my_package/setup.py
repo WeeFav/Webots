@@ -23,7 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             'my_robot_driver = my_package.my_robot_driver:main',
-            'obstacle_avoider = my_package.obstacle_avoider:main'
+            'obstacle_avoider = my_package.obstacle_avoider:main',
+            'lane_follower = webots_ros2_tesla.lane_follower:main',
         ],
     },
 )
