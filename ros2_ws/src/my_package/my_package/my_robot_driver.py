@@ -16,27 +16,58 @@
 
 import rclpy
 from ackermann_msgs.msg import AckermannDrive
-
+import rclpy.logging
+from controller import Supervisor
+import numpy as np
+import cv2
+import sys
+import signal
 
 class TeslaDriver:
     def init(self, webots_node, properties):
         self.__robot = webots_node.robot
 
-        camera = self.__robot.getDevice("cam0")
-        camera.enable(30)
+        self.camera = self.__robot.getDevice("cam0")
+        self.camera.enable(30)
+        self.camera.recognitionEnable(30)
+        self.camera.enableRecognitionSegmentation()
         
         lidar = self.__robot.getDevice("lidar")
         lidar.enable(100)
         lidar.enablePointCloud()
+        
+        self.road_node = self.__robot.getFromDef("ROAD_SEGMENT_0")
 
         # ROS interface
         rclpy.init(args=None)
         self.__node = rclpy.create_node('tesla_node')
         self.__node.create_subscription(AckermannDrive, 'cmd_ackermann', self.__cmd_ackermann_callback, 1)
-
+        
+        rclpy.get_default_context().on_shutdown(self.cleanup)
+    
+    def cleanup(self, signum, frame):
+        print("Ctrl+C detected, closing windows...")
+        cv2.destroyAllWindows()
+        sys.exit(0)
+        
     def __cmd_ackermann_callback(self, message):
         self.__robot.setCruisingSpeed(message.speed)
         self.__robot.setSteeringAngle(message.steering_angle)
 
     def step(self):
         rclpy.spin_once(self.__node, timeout_sec=0)
+        
+        pos = self.road_node.getPosition()
+        self.__node.get_logger().info(f"{pos}")
+        
+        seg = self.camera.getRecognitionSegmentationImage()
+        width = self.camera.getWidth()
+        height = self.camera.getHeight()
+        
+        if seg:
+            img = np.frombuffer(seg, dtype=np.uint8).reshape((height, width, 4))
+            img = img[:, :, :3]  # drop alpha
+
+            cv2.imshow("segmentation", img)
+            cv2.waitKey(1)
+            

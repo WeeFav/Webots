@@ -1,0 +1,39 @@
+%< for (let j = 0; j < numberOfLanes - 1; ++j) { >%
+          %< if (typeof roadLines[j] === 'undefined' || (roadLines[j].fields.type.value !== 'none' && roadLines[j].fields.width.value > 0)) { >%
+            DEF LINES Solid {
+              children [
+                Shape {
+                  geometry IndexedFaceSet {
+                    coord Coordinate {
+                      point [
+                        %<
+                          let lineWidth = defaultLineWidth;
+                          if (typeof roadLines[j] !== 'undefined') {
+                            lineWidth = roadLines[j].fields.width.value * 0.5;
+                            if (roadLines[j].fields.type.value === 'double')
+                              lineWidth = lineWidth * 3;
+                          }
+                        >%
+                        %< for (let i = 0; i <= nbWayPoint - 1; ++i) { >%
+                          %< let offset = width * ((j+1) / numberOfLanes - 0.5); >%
+                          %<= wayPoints[i].x + Math.sin(angle[i]) * (offset - lineWidth) >% %<= wayPoints[i].y + Math.cos(angle[i]) * (offset - lineWidth) >% %<= wayPoints[i].z + Math.sin(tilt[i]) * (offset - lineWidth) + heightOffset >%
+                          %<= wayPoints[i].x + Math.sin(angle[i]) * (offset + lineWidth) >% %<= wayPoints[i].y + Math.cos(angle[i]) * (offset + lineWidth) >% %<= wayPoints[i].z + Math.sin(tilt[i]) * (offset + lineWidth) + heightOffset >%
+                        %< } >%
+                      ]
+                    }
+                    coordIndex [
+                      %< for (let i = 0; i <= nbWayPoint - 2; ++i) { >%
+                        %<= 2 * i >% %<= 2 * (i + 1) >% %<= 1 + 2 * (i + 1) >% %<= 1 + 2 * i >% -1
+                      %< } >%
+                    ]
+                    creaseAngle 0.2
+                  }
+                }
+              ]
+              name "road line(%<= j - 1 >%)"
+              recognitionColors [ 1 1 1 ]
+              model "road line"
+            }
+          %< } >%
+        %< } >%
+      %< } >%
