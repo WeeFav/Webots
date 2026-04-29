@@ -7,7 +7,7 @@ from webots_ros2_driver.webots_controller import WebotsController
 import cv2
 
 def generate_launch_description():
-    package_dir = get_package_share_directory('my_package')
+    package_dir = get_package_share_directory('create_dataset')
     robot_description_path = os.path.join(package_dir, 'resource', 'my_robot.urdf')
 
     my_robot_driver = WebotsController(
@@ -18,7 +18,7 @@ def generate_launch_description():
     )
 
     lane_follower = Node(
-        package='my_package',
+        package='create_dataset',
         executable='lane_follower',
     )
 

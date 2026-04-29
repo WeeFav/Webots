@@ -392,3 +392,130 @@ class StraightRoadSegmentPROTO:
 
     def to_dict(self):
         return self.__dict__
+    
+class CurvedRoadSegmentPROTO:
+    def __init__(self, data=None):
+        self.translation = [0, 0, 0]
+        self.rotation = [0, 0, 1, 0]
+
+        self.name = "road"
+        self.id = ""
+        self.startJunction = ""
+        self.endJunction = ""
+
+        self.width = 7.0
+        self.numberOfLanes = 2
+        self.numberOfForwardLanes = 1
+        self.speedLimit = -1.0
+
+        self.lines = [RoadLine()]
+
+        self.roadBorderHeight = 0.15
+        self.roadBorderWidth = [0.8]
+        self.rightBorder = True
+        self.leftBorder = True
+
+        self.rightBarrier = False
+        self.leftBarrier = False
+
+        self.bottom = False
+        self.curvatureRadius = 10.0
+        self.totalAngle = 1.5708  # ~90 degrees
+
+        self.startLine = []
+        self.endLine = []
+
+        self.subdivision = 16
+
+        self.tilt = 0.0
+
+        self.bottomTexture = []
+
+        self.locked = True
+        self.roadBoundingObject = False
+        self.rightBorderBoundingObject = False
+        self.leftBorderBoundingObject = False
+        self.rightBarrierBoundingObject = True
+        self.leftBarrierBoundingObject = True
+        self.castShadows = False
+
+        self.contactMaterial = "default"
+        
+        # --- override with dict ---
+        if data:
+            self.update_from_dict(data)
+        
+        # Radius
+        self.radius = self.curvatureRadius
+        if self.radius < 0:
+            self.radius = 10.0  # default value from PROTO
+            print(f"'curvatureRadius' must be strictly positive. Value reset to {self.radius}.")
+
+        if self.radius < self.width * 0.5:
+            self.radius = self.width * 0.5
+            print(f"'radius' must be greater than 'width / 2'. Value reset to {self.radius}.")
+
+        # Angle
+        self.angle = self.totalAngle
+        if self.angle < 0:
+            self.angle = 1.5708  # default value from PROTO
+            print(f"'totalAngle' must be greater or equal to zero. Value reset to {self.angle}.")
+
+        # Subdivision
+        self.subdivision = self.subdivision
+        if self.subdivision < 1:
+            self.subdivision = 16  # default value from PROTO
+            print(f"'subdivision' must be greater or equal to 1. Value reset to {self.subdivision}.")
+
+        # Waypoints
+        self.wayPoints = []
+        for i in range(self.subdivision + 1):
+            x = self.radius * math.sin(i * self.angle / self.subdivision)
+            y = self.radius * math.cos(i * self.angle / self.subdivision)
+            z = 0.0
+            self.wayPoints.append([x, y, z])
+
+        # Road tilt
+        self.roadTilt = []
+        for i in range(self.subdivision + 1):
+            value = self.tilt * (0.5 - abs((i - (self.subdivision * 0.5)) / self.subdivision))
+            self.roadTilt.append(value)  
+            
+        self.road = RoadPROTO({
+            "translation": self.translation,
+            "rotation": self.rotation,
+            "name": self.name,
+            "width": self.width,
+            "numberOfLanes": self.numberOfLanes,
+            "lines": self.lines,
+            "roadBorderHeight": self.roadBorderHeight,
+            "roadBorderWidth": self.roadBorderWidth,
+            "rightBorder": self.rightBorder,
+            "leftBorder": self.leftBorder,
+            "rightBarrier": self.rightBarrier,
+            "leftBarrier": self.leftBarrier,
+            "bottom": self.bottom,
+            "startLine": self.startLine,
+            "endLine": self.endLine,
+            "startingAngle": 0,
+            "endingAngle": [self.angle],
+            "wayPoints": self.wayPoints,
+            "roadTilt": self.roadTilt,
+            "splineSubdivision": -1,
+            "locked": self.locked,
+            "roadBoundingObject": self.roadBoundingObject,
+            "rightBorderBoundingObject": self.rightBorderBoundingObject,
+            "leftBorderBoundingObject": self.leftBorderBoundingObject,
+            "rightBarrierBoundingObject": self.rightBarrierBoundingObject,
+            "leftBarrierBoundingObject": self.leftBarrierBoundingObject,
+            "contactMaterial": self.contactMaterial,
+            "castShadows": self.castShadows
+        })      
+    
+    def update_from_dict(self, data: dict):
+        for key, value in data.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+    def to_dict(self):
+        return self.__dict__

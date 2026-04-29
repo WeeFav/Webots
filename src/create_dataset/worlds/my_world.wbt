@@ -1439,7 +1439,7 @@ TeslaModel3 {
   controller "<extern>"
   supervisor TRUE
   sensorsSlotFront [
-    Camera {
+    DEF CAMERA Camera {
       name "cam0"
       translation -2.12 0 0.93
       fieldOfView 1

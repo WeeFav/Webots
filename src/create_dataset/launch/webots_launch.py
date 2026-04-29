@@ -7,7 +7,7 @@ from webots_ros2_driver.webots_launcher import WebotsLauncher
 
 
 def generate_launch_description():
-    package_dir = get_package_share_directory('my_package')
+    package_dir = get_package_share_directory('create_dataset')
 
     webots = WebotsLauncher(
         world=os.path.join(package_dir, 'worlds', 'my_world.wbt')

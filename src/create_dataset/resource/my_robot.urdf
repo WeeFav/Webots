@@ -13,6 +13,6 @@
                 <alwaysOn>true</alwaysOn>
             </ros>
         </device>
-        <plugin type="my_package.my_robot_driver.TeslaDriver" />
+        <plugin type="create_dataset.my_robot_driver.TeslaDriver" />
     </webots>
 </robot>

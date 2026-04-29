@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'my_package'
+package_name = 'create_dataset'
 data_files = []
 data_files.append(('share/ament_index/resource_index/packages', ['resource/' + package_name]))
 data_files.append(('share/' + package_name + '/launch', ['launch/robot_launch.py', 'launch/webots_launch.py']))
@@ -22,8 +22,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'my_robot_driver = my_package.my_robot_driver:main',
-            'obstacle_avoider = my_package.obstacle_avoider:main',
+            'my_robot_driver = create_dataset.my_robot_driver:main',
+            'obstacle_avoider = create_dataset.obstacle_avoider:main',
             'lane_follower = webots_ros2_tesla.lane_follower:main',
         ],
     },
