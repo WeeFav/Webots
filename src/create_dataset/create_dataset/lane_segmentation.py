@@ -1,7 +1,7 @@
 import os
 import re
 import matplotlib.pyplot as plt
-from create_dataset.proto_nodes import StraightRoadSegmentPROTO, RoadPROTO, RoadLine, CurvedRoadSegmentPROTO
+from create_dataset.proto_nodes import StraightRoadSegmentPROTO, RoadLine, CurvedRoadSegmentPROTO
 import numpy as np
 
 def extract_blocks(text, node_name):
@@ -25,7 +25,6 @@ def extract_blocks(text, node_name):
 
     return blocks
 
-
 def parse_value(value):
     value = value.strip()
 
@@ -48,7 +47,6 @@ def parse_value(value):
         return int(value)
     except:
         return value
-
 
 def parse_lines_block(block):
     lines = []
@@ -78,7 +76,6 @@ def parse_lines_block(block):
 
     return lines
 
-
 def parse_block(block):
     result = {}
     lines_match = re.search(r"lines\s*\[(.*?)\]", block, re.DOTALL)
@@ -102,7 +99,6 @@ def parse_block(block):
         result[key] = parse_value(val)
 
     return result
-
 
 def extract_all_road_segments(file_path):
     with open(file_path, "r") as f:
@@ -170,26 +166,7 @@ def interpolate_lane_3d(points, num_points=100):
 
     return np.stack([x_new, y_new, z_new], axis=1)
     
-def extract_lanes(wbt_path):
-    d = {
-        '0': 'y',
-        '1': 'y',
-        '2': 'y',
-        '3': 'o',
-        '4': 'o',
-        '5': 'r', 
-        '6': 'r', 
-        '7': 'r', 
-        '8': 'b', 
-        '9': 'b', 
-        '10': 'b', 
-        '11': 'g', 
-        '12': 'g', 
-        '13': 'g', 
-        '14': 'p', 
-        '15': 'p', 
-    }
-    
+def extract_lanes(wbt_path):    
     parsed = extract_all_road_segments(wbt_path)
     
     all_lanes = []
@@ -219,13 +196,12 @@ def extract_lanes(wbt_path):
 
             center.append((x_c, y_c, z_c))
 
-        # ✅ interpolate in 3D BEFORE projection
+        # interpolate in 3D
         center_interp = interpolate_lane_3d(center, num_points=100)
 
         all_lanes_center.append(center_interp)   
              
-    return all_lanes_center   
-    # plot_lanes(all_lanes)
+    return all_lanes_center
 
 if __name__ == '__main__':
     all_lanes_center = extract_lanes("/home/marvin/Webots/src/create_dataset/worlds/my_world.wbt")

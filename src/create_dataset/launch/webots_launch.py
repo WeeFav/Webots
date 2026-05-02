@@ -10,7 +10,7 @@ def generate_launch_description():
     package_dir = get_package_share_directory('create_dataset')
 
     webots = WebotsLauncher(
-        world=os.path.join(package_dir, 'worlds', 'my_world.wbt')
+        world=os.path.join(package_dir, 'worlds', 'city.wbt')
     )
 
     return LaunchDescription([

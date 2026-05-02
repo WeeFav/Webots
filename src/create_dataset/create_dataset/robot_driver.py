@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import sys
 import os
-from create_dataset.extract import extract_lanes
+from create_dataset.lane_segmentation import extract_lanes
 
 def get_intrinsic_matrix(width, height, fov):
     fx = width / (2 * np.tan(fov / 2))
@@ -45,7 +45,9 @@ def world_to_image(points_world, K, extrinsic, self):
     # Convert to homogeneous
     points_h = np.hstack((points_world, np.ones((N, 1))))  # (N, 4)
     
-    # World → Camera
+    # World to Camera
+    # this will transform points from webots world coordinate system to webots camera coordinate system
+    # webots world coordinate system and camera coordinate system is x front, y left, z up 
     points_cam = (extrinsic @ points_h.T).T  # (N, 3)
 
     R_webots_to_opencv = np.array([
@@ -54,12 +56,13 @@ def world_to_image(points_world, K, extrinsic, self):
         [1,  0,  0]
     ])
 
+    # transform points from webots camera cooridnate system to opencv camera cooridnate system
+    # opencv camera cooridnate system is x right, y down, z front
     p_cv = (R_webots_to_opencv @ points_cam.T).T
     
-    # ✅ Filter points in front of camera
-    mask = p_cv[:, 2] > 1e-6   # avoid division by zero too
+    # filter points in front of camera and not too far
+    mask = (p_cv[:, 2] > 1e-6) & (p_cv[:, 2] < 50.0) # avoid division by zero
     p_cv = p_cv[mask]
-    points_cam = points_cam[mask]  # keep consistent if you return it
     
     # Project
     points_img = (K @ p_cv.T).T  # (N, 3)
@@ -68,7 +71,7 @@ def world_to_image(points_world, K, extrinsic, self):
     points_img[:, 0] /= points_img[:, 2]
     points_img[:, 1] /= points_img[:, 2]
 
-    return points_img[:, :2], points_cam
+    return points_img[:, :2]
 
 def interpolate_polyline(points, num_points=100):
     """
@@ -98,16 +101,14 @@ def interpolate_polyline(points, num_points=100):
 
     return np.stack([x_new, y_new], axis=1)
 
-class TeslaDriver:
+class RobotDriver:
     def init(self, webots_node, properties):
         rclpy.init(args=None)
-        self.__node = rclpy.create_node('tesla_node')
+        self.__node = rclpy.create_node('robot_driver_node')
         self.__robot = webots_node.robot
         
         self.camera = self.__robot.getDevice("cam0")
         self.camera.enable(30)
-        self.camera.recognitionEnable(30)
-        self.camera.enableRecognitionSegmentation()
         self.width = self.camera.getWidth()
         self.height = self.camera.getHeight()
         fov = self.camera.getFov()
@@ -123,11 +124,10 @@ class TeslaDriver:
         self.__node.create_subscription(AckermannDrive, 'cmd_ackermann', self.__cmd_ackermann_callback, 1)
         rclpy.get_default_context().on_shutdown(self.cleanup)
     
-        world_path = "/home/marvin/Webots/src/create_dataset/worlds/my_world.wbt"
+        world_path = "/home/marvin/Webots/src/create_dataset/worlds/city.wbt"
         self.all_lanes_center = extract_lanes(world_path)
         self.__node.get_logger().info(f"{self.all_lanes_center}")
         
-
     def cleanup(self, signum, frame):
         print("Ctrl+C detected, closing windows...")
         cv2.destroyAllWindows()
@@ -139,26 +139,15 @@ class TeslaDriver:
 
     def step(self):
         rclpy.spin_once(self.__node, timeout_sec=0)
-                
-        # if self.camera.isRecognitionSegmentationEnabled() and self.camera.getRecognitionNumberOfObjects() > 0:
-        #     seg = self.camera.getRecognitionSegmentationImage()
-        #     if seg:
-        #         img = np.frombuffer(seg, dtype=np.uint8).reshape((self.height, self.width, 4))
-        #         img = img[:, :, :3]  # drop alpha
-
-        #         cv2.imshow("segmentation", img)
-        #         cv2.waitKey(1)
-        
+                        
         position = self.camera_node.getPosition()
         orientation = self.camera_node.getOrientation()
         extrinsic = get_extrinsic_matrix(position, orientation)
         
-        # self.__node.get_logger().info(f"{position} {orientation}")
-
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
 
         for lanes in self.all_lanes_center:
-            coords, points_cam = world_to_image(np.array(lanes), self.K, extrinsic, self)
+            coords = world_to_image(np.array(lanes), self.K, extrinsic, self)
 
             # Convert to integer pixel coordinates
             pts = coords.astype(np.int32)

@@ -8,7 +8,7 @@ import cv2
 
 def generate_launch_description():
     package_dir = get_package_share_directory('create_dataset')
-    robot_description_path = os.path.join(package_dir, 'resource', 'my_robot.urdf')
+    robot_description_path = os.path.join(package_dir, 'resource', 'robot.urdf')
 
     my_robot_driver = WebotsController(
         robot_name='vehicle',
