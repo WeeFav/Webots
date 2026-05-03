@@ -164,5 +164,5 @@ class RobotDriver:
                 pts = pts.reshape((-1, 1, 2))  # required shape for OpenCV
                 cv2.polylines(img, [pts], isClosed=False, color=(255, 255, 255), thickness=2)                    
         
-        cv2.imshow("segmentation", img)
-        cv2.waitKey(1)
+        # cv2.imshow("segmentation", img)
+        # cv2.waitKey(1)

@@ -22,7 +22,6 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/StraightRoadSegment.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/RoadIntersection.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/GenericTrafficLight.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/CrossRoadsTrafficLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/BuildingUnderConstruction.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/CommercialBuilding.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/UBuilding.proto"
@@ -58,7 +57,11 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/Crossroad.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/protos/SumoInterface.proto"
-
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficLightBigPole.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficLightStandardLampGeometry.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficLightHorizontal.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/TrafficLightArrowLampGeometry.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/toyota/ToyotaPriusSimple.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3Simple.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/bmw/BmwX5Simple.proto"
@@ -585,9 +588,6 @@ GenericTrafficLight {
   greenTime 10
   redTime 10
   state "red"
-}
-CrossRoadsTrafficLight {
-  translation 45 45 0
 }
 DEF STONES Solid {
   translation 136.158 5.03891 -4.23581
@@ -1458,7 +1458,7 @@ Crossroad {
     "6"
   ]
 }
-TeslaModel3 {
+DEF WEBOTS_VEHICLE0 TeslaModel3 {
   translation 31.4381 47.0076 0.400134
   rotation 0 0 1 3.1415
   controller "<extern>"
@@ -1500,6 +1500,111 @@ SumoInterface {
   networkFiles "D:/Webots/city_net"
   gui FALSE
   step 160
+  children [
+    # edge 5
+    TrafficLightBigPole {
+      translation 34.6 34.6 0
+      rotation 0 0 1 3.14156
+      name "pole 1"
+      slot2 [
+        DEF TLS_16_11 TrafficLightHorizontal {
+          name "traffic light 1"
+          red_light "16_11_r"
+          orange_light "16_11_y"
+          green_light "16_11_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+      slot3 [
+        DEF TLS_16_13 TrafficLightHorizontal {
+          name "traffic light 2"
+          red_light "16_13_r"
+          orange_light "16_13_y"
+          green_light "16_13_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+    }
+    # edge 10
+    TrafficLightBigPole {
+      translation 55.4 34.6 0
+      rotation 0 0 1 -1.5708
+      name "pole 2"
+      slot2 [
+        DEF TLS_16_6 TrafficLightHorizontal {
+          name "traffic light 4"
+          red_light "16_6_r"
+          orange_light "16_6_y"
+          green_light "16_6_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+      slot3 [
+        DEF TLS_16_8 TrafficLightHorizontal {
+          name "traffic light 5"
+          red_light "16_8_r"
+          orange_light "16_8_y"
+          green_light "16_8_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+    }
+    # edge -4
+    TrafficLightBigPole {
+      translation 55.4 55.4 0
+      name "pole 3"
+      slot2 [
+        DEF TLS_16_1 TrafficLightHorizontal {
+          name "traffic light 7"
+          red_light "16_1_r"
+          orange_light "16_1_y"
+          green_light "16_1_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+      slot3 [
+        DEF TLS_16_3 TrafficLightHorizontal {
+          name "traffic light 8"
+          red_light "16_3_r"
+          orange_light "16_3_y"
+          green_light "16_3_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+    }
+    # edge 11
+    TrafficLightBigPole {
+      translation 34.6 55.4 0
+      rotation 0 0 1 1.5708
+      name "pole 4"
+      slot2 [
+        DEF TLS_16_16 TrafficLightHorizontal {
+          name "traffic light 10"
+          red_light "16_16_r"
+          orange_light "16_16_y"
+          green_light "16_16_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+      slot3 [
+        DEF TLS_16_18 TrafficLightHorizontal {
+          name "traffic light 11"
+          red_light "16_18_r"
+          orange_light "16_18_y"
+          green_light "16_18_g"
+          lamp_geometry TrafficLightStandardLampGeometry {
+          }
+        }
+      ]
+    }
+  ]
 }
 
 DEF SUMO_VEHICLE0 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
@@ -1507,3 +1612,52 @@ DEF SUMO_VEHICLE1 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 
 DEF SUMO_VEHICLE2 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
 DEF SUMO_VEHICLE3 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
 DEF SUMO_VEHICLE4 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE5 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE6 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE7 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE8 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE9 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+
+DEF SUMO_VEHICLE10 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE11 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE12 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE13 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE14 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE15 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE16 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE17 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE18 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE19 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+
+# DEF SUMO_VEHICLE20 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE21 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE22 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE23 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE24 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE25 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE26 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE27 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE28 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE29 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# 
+# DEF SUMO_VEHICLE30 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE31 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE32 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE33 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE34 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE35 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE36 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE37 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE38 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE39 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# 
+# DEF SUMO_VEHICLE40 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE41 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE42 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE43 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE44 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE45 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE46 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE47 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE48 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+# DEF SUMO_VEHICLE49 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }

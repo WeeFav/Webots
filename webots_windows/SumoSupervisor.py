@@ -593,6 +593,8 @@ class SumoSupervisor (Supervisor):
 
             # re-route vehicle (if on last edge to prevent it from despawning)
             for id in idList:
+                if id == "webotsVehicle0":
+                    continue
                 route_index = self.traci.vehicle.getRouteIndex(id)
                 route = self.traci.vehicle.getRoute(id)
                 if route_index == len(route) - 1:

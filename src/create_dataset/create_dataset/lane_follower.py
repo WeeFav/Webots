@@ -51,7 +51,7 @@ class LaneFollower(Node):
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         command_message = AckermannDrive()
-        command_message.speed = 5.0
+        command_message.speed = 20.0
         command_message.steering_angle = 0.0
 
         if contours:
