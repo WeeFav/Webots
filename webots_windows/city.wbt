@@ -1478,7 +1478,7 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
     }
   ]
   sensorsSlotTop [
-    Lidar {
+    DEF LIDAR Lidar {
       name "lidar"
       translation 0 0 0.1
       rotation 0 0 1 0
