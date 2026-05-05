@@ -14,6 +14,7 @@ from geometry_msgs.msg import Point
 from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs_py.point_cloud2 as pc2
 from std_msgs.msg import Header
+import time
 
 def get_intrinsic_matrix(width, height, fov):
     fx = width / (2 * np.tan(fov / 2))
@@ -38,76 +39,6 @@ def get_extrinsic_matrix(position, orientation):
 
     extrinsic = np.hstack((R_wc, t_wc))
     return extrinsic
-
-def world_to_image(points_world, K, extrinsic, self):
-    """
-    points_world: (N, 3)
-    K: (3, 3)
-    extrinsic: (3, 4)
-
-    returns: (N, 2) pixel coordinates
-    """
-
-    N = points_world.shape[0]
-
-    # Convert to homogeneous
-    points_h = np.hstack((points_world, np.ones((N, 1))))  # (N, 4)
-    
-    # World to Camera
-    # this will transform points from webots world coordinate system to webots camera coordinate system
-    # webots world coordinate system and camera coordinate system is x front, y left, z up 
-    points_cam = (extrinsic @ points_h.T).T  # (N, 3)
-
-    R_webots_to_opencv = np.array([
-        [0, -1,  0],
-        [0,  0, -1],
-        [1,  0,  0]
-    ])
-
-    # transform points from webots camera cooridnate system to opencv camera cooridnate system
-    # opencv camera cooridnate system is x right, y down, z front
-    p_cv = (R_webots_to_opencv @ points_cam.T).T
-    
-    # filter points in front of camera and not too far
-    mask = (p_cv[:, 2] > 1e-6) & (p_cv[:, 2] < 50.0) # avoid division by zero
-    p_cv = p_cv[mask]
-    
-    # Project
-    points_img = (K @ p_cv.T).T  # (N, 3)
-
-    # Normalize
-    points_img[:, 0] /= points_img[:, 2]
-    points_img[:, 1] /= points_img[:, 2]
-
-    return points_img[:, :2]
-
-def interpolate_polyline(points, num_points=100):
-    """
-    points: (N, 2)
-    returns: (num_points, 2)
-    """
-
-    if len(points) < 2:
-        return points
-
-    # Compute distances between consecutive points
-    deltas = np.diff(points, axis=0)
-    dists = np.linalg.norm(deltas, axis=1)
-
-    # Cumulative distance
-    cumdist = np.insert(np.cumsum(dists), 0, 0)
-
-    # Normalize to [0, 1]
-    t = cumdist / cumdist[-1]
-
-    # New evenly spaced samples
-    t_new = np.linspace(0, 1, num_points)
-
-    # Interpolate x and y separately
-    x_new = np.interp(t_new, t, points[:, 0])
-    y_new = np.interp(t_new, t, points[:, 1])
-
-    return np.stack([x_new, y_new], axis=1)
     
 class RobotDriver:
     def init(self, webots_node, properties):
@@ -127,8 +58,15 @@ class RobotDriver:
         self.lidar_node = self.__robot.getFromDef("LIDAR")
         
         self.lidar = self.__robot.getDevice("lidar")
-        self.lidar.enable(32)
+        self.lidar.enable(100)
         self.lidar.enablePointCloud()
+        
+        self.inertial_unit = self.__robot.getDevice("inertial_unit")
+        self.accelerometer = self.__robot.getDevice("accelerometer")
+        self.gyro = self.__robot.getDevice("gyro")
+        self.inertial_unit.enable(2)
+        self.accelerometer.enable(2)
+        self.gyro.enable(2)
         
         self.__node.create_subscription(AckermannDrive, 'cmd_ackermann', self.__cmd_ackermann_callback, 1)
         self.lane_seg_pub = self.__node.create_publisher(Image, 'segmentation', 10)
@@ -139,24 +77,32 @@ class RobotDriver:
     
         world_path = "/home/marvin/Webots/src/create_dataset/worlds/city.wbt"
         self.all_lanes_center = extract_lanes(world_path)
+        self.max_lane_dist = 50
+        self.R_webots_to_opencv = np.array([
+            [0, -1,  0],
+            [0,  0, -1],
+            [1,  0,  0]
+        ])
 
         self.vehicles = {}
         for i in range(100):
             defName = "SUMO_VEHICLE%d" % i
             node = self.__robot.getFromDef(defName)
             if node:
-                self.vehicles[i] = node
+                boundingObject = node.getBaseNodeField("boundingObject").getSFNode()
+                boxes = self.extract_boxes(boundingObject)
+                corners_vehicle = self.get_bounding_box(boxes)            
+                self.vehicles[i] = {"node": node, "corners_vehicle": corners_vehicle}
             else:
                 break
+        self.max_obj_dist = 50
             
         self.edges = [
             (0,1), (1,2), (2,3), (3,0),  # bottom face
             (4,5), (5,6), (6,7), (7,4),  # top face
             (0,4), (1,5), (2,6), (3,7)   # vertical edges
         ]
-        
-        self.step_count = 0
-        
+                
     def cleanup(self, signum, frame):
         print("Ctrl+C detected, closing windows...")
         cv2.destroyAllWindows()
@@ -173,8 +119,17 @@ class RobotDriver:
         
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
 
-        for lanes in self.all_lanes_center:
-            coords = world_to_image(np.array(lanes), self.K, extrinsic, self)
+        # all_lanes_center (N, 100, 3)
+        for lane in self.all_lanes_center:
+            # quick filter for lanes too far
+            lane = np.array(lane)
+            center = lane.mean(axis=0)
+            dist_sq = np.sum((center - position) ** 2)
+            
+            if dist_sq > self.max_lane_dist ** 2:
+                continue
+            
+            coords = self.world_to_image(lane, extrinsic)
 
             # Convert to integer pixel coordinates
             pts = coords.astype(np.int32)
@@ -191,28 +146,67 @@ class RobotDriver:
                 pts = pts.reshape((-1, 1, 2))  # required shape for OpenCV
                 cv2.polylines(img, [pts], isClosed=False, color=(255, 255, 255), thickness=2)                    
         
-        # cv2.imshow("segmentation", img)
-        # cv2.waitKey(1)
+        cv2.imshow("segmentation", img)
+        cv2.waitKey(1)
         
-        msg = self.bridge.cv2_to_imgmsg(img, encoding="bgr8")
-        self.lane_seg_pub.publish(msg)
+        # msg = self.bridge.cv2_to_imgmsg(img, encoding="bgr8")
+        # self.lane_seg_pub.publish(msg)
+        
+    def world_to_image(self, points_world, extrinsic):
+        """
+        points_world: (N, 3)
+        K: (3, 3)
+        extrinsic: (3, 4)
+
+        returns: (N, 2) pixel coordinates
+        """
+
+        N = points_world.shape[0]
+        
+        # [extrinsic] World to Camera
+        # this will transform points from webots world coordinate system to webots camera coordinate system
+        # webots world coordinate system and camera coordinate system is x front, y left, z up 
+        
+        # [R_webots_to_opencv] transform points from webots camera cooridnate system to opencv camera cooridnate system
+        # opencv camera cooridnate system is x right, y down, z front
+        T_combined = self.R_webots_to_opencv @ extrinsic  # (3, 4)
+        R = T_combined[:, :3]
+        t = T_combined[:, 3]
+        
+        p_cv = (points_world @ R.T) + t  # (N, 3)
+                
+        # filter points in front of camera and not too far
+        mask = (p_cv[:, 2] > 1e-6) & (p_cv[:, 2] < 50.0) # avoid division by zero
+        p_cv = p_cv[mask]
+        
+        # Project
+        points_img = (self.K @ p_cv.T).T  # (N, 3)
+
+        # Normalize
+        points_img[:, 0] /= points_img[:, 2]
+        points_img[:, 1] /= points_img[:, 2]
+
+        return points_img[:, :2]       
         
     def object_detection(self):
         t_lidar_to_world = np.array(self.lidar_node.getPosition())
-        R_liar_to_world = np.array(self.lidar_node.getOrientation()).reshape(3, 3)
+        R_lidar_to_world = np.array(self.lidar_node.getOrientation()).reshape(3, 3)
         
         all_corners = []
         for i, vehicle in self.vehicles.items():
-            t_vehicle_to_world = np.array(vehicle.getPosition()) # world coordinate
-            R_vehicle_to_world = np.array(vehicle.getOrientation()).reshape(3, 3)
+            t_vehicle_to_world = np.array(vehicle["node"].getPosition()) # world coordinate
+            dist_sq = np.sum((t_vehicle_to_world - t_lidar_to_world) ** 2)
+            if dist_sq > self.max_obj_dist ** 2:
+                continue
             
-            boundingObject = vehicle.getBaseNodeField("boundingObject").getSFNode()
-            boxes = self.extract_boxes(boundingObject)
-            corners_vehicle = self.get_bounding_box(boxes)
+            R_vehicle_to_world = np.array(vehicle["node"].getOrientation()).reshape(3, 3)
+                        
+            corners_vehicle = vehicle["corners_vehicle"]
             
-            corners_world = (R_vehicle_to_world @ corners_vehicle.T).T + t_vehicle_to_world
-            corners_lidar = (R_liar_to_world.T @ (corners_world - t_lidar_to_world).T).T
-            
+            R_combined = R_lidar_to_world.T @ R_vehicle_to_world
+            t_combined = R_lidar_to_world.T @ (t_vehicle_to_world - t_lidar_to_world)
+            corners_lidar = (corners_vehicle @ R_combined.T) + t_combined
+                        
             all_corners.append(corners_lidar)
             
         marker_array = self.corners_to_marker_array(all_corners)
@@ -247,7 +241,7 @@ class RobotDriver:
             size = np.array(node.getField("size").getSFVec3f())
             boxes.append((parent_R, parent_t, size))
 
-        return boxes
+        return boxes # list of (R_local_to_vehicle, t_local_to_vehicle, (x, y, z))
 
     def get_box_corners(self, box):
         R_local_to_vehicle = box[0]
@@ -300,6 +294,9 @@ class RobotDriver:
 
     def corners_to_marker_array(self, all_corners):
         marker_array = MarkerArray()
+        clearAll = Marker()
+        clearAll.action = Marker.DELETEALL
+        marker_array.markers.append(clearAll)    
 
         edges = [
             (0,1), (1,2), (2,3), (3,0),
@@ -343,25 +340,10 @@ class RobotDriver:
 
     def step(self):
         rclpy.spin_once(self.__node, timeout_sec=0)
-        self.step_count += 1
-        
-        if self.step_count > 2:
-            points = self.lidar.getPointCloud()
-        
-            if points:
-                points = np.array([(point.x, point.y, point.z) for point in points], dtype=np.float32)
-
-                # reshape if needed (Nx3)
-                if points.ndim == 1:
-                    points = points.reshape(-1, 3)  
-                    
-                header = Header()
-                header.stamp = self.__node.get_clock().now().to_msg()
-                header.frame_id = "lidar"
-
-                msg = pc2.create_cloud_xyz32(header, points.tolist())
-
-                self.lidar_pub.publish(msg)            
                   
-        self.lane_detection()
+        # start = time.perf_counter()          
+        # self.lane_detection()
         self.object_detection()           
+        # end = time.perf_counter()
+        # self.__node.get_logger().info(f"Elapsed time: {end - start:.4f} seconds")
+        

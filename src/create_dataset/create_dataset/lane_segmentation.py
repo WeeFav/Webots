@@ -171,7 +171,6 @@ def extract_lanes(wbt_path):
     
     all_lanes = []
     for data in parsed: 
-        print(data)
         if data["type"] == 'StraightRoadSegment':
             straight_road = StraightRoadSegmentPROTO(data)
             lanes = straight_road.road.compute_lane_lines()

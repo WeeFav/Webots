@@ -10,9 +10,19 @@
         <device reference="lidar" type="Lidar">
             <ros>
                 <topicName>/vehicle/lidar</topicName>
+                <!-- ROS2 topic publish rate is determined by world basicTimeStep, lidar.enable(16), and updateRate -->
+                <updateRate>10</updateRate> 
                 <alwaysOn>true</alwaysOn>
             </ros>
         </device>
+        <plugin type="webots_ros2_driver::Ros2IMU">
+            <topicName>/vehicle/imu</topicName>
+            <updateRate>10</updateRate>
+            <alwaysOn>True</alwaysOn>
+            <inertialUnitName>inertial_unit</inertialUnitName>
+            <gyroName>gyro</gyroName>
+            <accelerometerName>accelerometer</accelerometerName>
+        </plugin>
         <plugin type="create_dataset.robot_driver.RobotDriver" />
     </webots>
 </robot>
