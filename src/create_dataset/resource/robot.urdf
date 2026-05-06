@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<robot name="My robot">
+<robot name="vehicle">
     <webots>
         <device reference="cam0" type="Camera">
             <ros>

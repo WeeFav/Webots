@@ -45,7 +45,7 @@ class RobotDriver:
         rclpy.init(args=None)
         self.__node = rclpy.create_node('robot_driver_node')
         self.__robot = webots_node.robot
-        
+                
         self.camera = self.__robot.getDevice("cam0")
         self.camera.enable(30)
         self.width = self.camera.getWidth()
@@ -75,7 +75,7 @@ class RobotDriver:
         self.bridge = CvBridge()
         rclpy.get_default_context().on_shutdown(self.cleanup)
     
-        world_path = "/home/marvin/Webots/src/create_dataset/worlds/city.wbt"
+        world_path = "/home/marvin/Webots/src/webots_launch/worlds/city.wbt"
         self.all_lanes_center = extract_lanes(world_path)
         self.max_lane_dist = 50
         self.R_webots_to_opencv = np.array([
