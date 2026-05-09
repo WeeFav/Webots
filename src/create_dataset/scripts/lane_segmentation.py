@@ -204,4 +204,4 @@ def extract_lanes(wbt_path):
 
 if __name__ == '__main__':
     all_lanes_center = extract_lanes("/home/marvin/Webots/src/create_dataset/worlds/my_world.wbt")
-    plot_lanes(all_lanes_center)
+    # plot_lanes(all_lanes_center)

@@ -15,6 +15,7 @@ from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs_py.point_cloud2 as pc2
 from std_msgs.msg import Header
 import time
+import struct
 
 def get_intrinsic_matrix(width, height, fov):
     fx = width / (2 * np.tan(fov / 2))
@@ -43,7 +44,7 @@ def get_extrinsic_matrix(position, orientation):
 class RobotDriver:
     def init(self, webots_node, properties):
         rclpy.init(args=None)
-        self.__node = rclpy.create_node('robot_driver_node')
+        self.__node = rclpy.create_node('robot_driver_node', parameter_overrides=[rclpy.parameter.Parameter('use_sim_time', rclpy.Parameter.Type.BOOL, True)])
         self.__robot = webots_node.robot
                 
         self.camera = self.__robot.getDevice("cam0")
@@ -72,6 +73,7 @@ class RobotDriver:
         self.lane_seg_pub = self.__node.create_publisher(Image, 'segmentation', 10)
         self.obj_det_pub = self.__node.create_publisher(MarkerArray, "bbox_markers", 10)
         self.lidar_pub = self.__node.create_publisher(PointCloud2, "/points", 10)
+        self.timer = self.__node.create_timer(0.1, self.timer_callback)
         self.bridge = CvBridge()
         rclpy.get_default_context().on_shutdown(self.cleanup)
     
@@ -111,6 +113,34 @@ class RobotDriver:
     def __cmd_ackermann_callback(self, message):
         self.__robot.setCruisingSpeed(message.speed)
         self.__robot.setSteeringAngle(message.steering_angle)
+        
+    def timer_callback(self):        
+        points = self.lidar.getPointCloud()
+
+        msg = PointCloud2()
+
+        msg.header.stamp = self.__node.get_clock().now().to_msg()
+        msg.header.frame_id = "lidar"
+
+        msg.height = 1
+        msg.width = len(points)
+
+        msg.fields = [
+            PointField(name='x', offset=0, datatype=PointField.FLOAT32, count=1),
+            PointField(name='y', offset=4, datatype=PointField.FLOAT32, count=1),
+            PointField(name='z', offset=8, datatype=PointField.FLOAT32, count=1),
+            PointField(name='ring', offset=12, datatype=PointField.UINT16, count=1),
+            PointField(name='time', offset=14, datatype=PointField.FLOAT32, count=1),
+        ]
+
+        msg.is_bigendian = False
+        msg.point_step = 18
+        msg.row_step = msg.point_step * msg.width
+        msg.is_dense = True
+
+        msg.data = points
+
+        self.lidar_pub.publish(msg)
         
     def lane_detection(self):
         position = self.camera_node.getPosition()

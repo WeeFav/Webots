@@ -11,6 +11,7 @@ def generate_launch_description():
 
     webots = WebotsLauncher(
         world=os.path.join(package_dir, 'worlds', 'city.wbt'),
+        mode="pause",
         ros2_supervisor=True
     )
 

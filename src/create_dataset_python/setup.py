@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'create_dataset'
+package_name = 'create_dataset_python'
 data_files = []
 data_files.append(('share/ament_index/resource_index/packages', ['resource/' + package_name]))
 data_files.append(('share/' + package_name + '/launch', ['launch/robot_launch.py', 'launch/webots_launch.py']))
@@ -21,8 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'my_robot_driver = create_dataset.robot_driver:main',
-            'lane_follower = create_dataset.lane_follower:main',
+            'my_robot_driver = create_dataset_python.robot_driver:main',
+            'lane_follower = create_dataset_python.lane_follower:main',
         ],
     },
 )
