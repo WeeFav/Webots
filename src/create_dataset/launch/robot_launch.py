@@ -14,6 +14,7 @@ def generate_launch_description():
         robot_name='vehicle',
         parameters=[
             {'robot_description': robot_description_path},
+            {'use_sim_time': True},
         ]
     )
 

@@ -82,8 +82,8 @@ target_link_libraries(lane_follower
   Eigen3::Eigen
 )
 
-install(TARGETS
-  lane_follower
+install(TARGETS ${PROJECT_NAME}
+  EXPORT ${PROJECT_NAME}Targets
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION lib/${PROJECT_NAME}
@@ -97,5 +97,7 @@ ament_export_include_directories(
 ament_export_libraries(
   ${PROJECT_NAME}
 )
+
+ament_export_targets(${PROJECT_NAME}Targets)
 
 ament_package()

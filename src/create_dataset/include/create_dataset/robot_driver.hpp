@@ -42,6 +42,7 @@ public:
 
 private:
     void cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg);
+    void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg);
     void publish_lidar();
     void lane_detection();
     Eigen::MatrixXd world_to_image(const Eigen::MatrixXd& points_world, const Eigen::Matrix<double, 3, 4>& extrinsic);
@@ -65,10 +66,12 @@ private:
     WbNodeRef camera_node;
     WbNodeRef lidar_node;
 
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub;
     rclcpp::Subscription<ackermann_msgs::msg::AckermannDrive>::SharedPtr ackermann_sub;
     rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr                lane_seg_pub;
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr   obj_det_pub;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr          lidar_pub;
+    rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr     imu_pub;
  
     // ---- Camera intrinsics / extrinsics ----
     Eigen::Matrix3d K;
@@ -86,5 +89,8 @@ private:
     double max_obj_dist = 50.0;
 
     long step_count = 0;
+
+    sensor_msgs::msg::Imu imu_prev_;
+    bool imu_prev_valid_{false};
 };
 } // namespace robot_driver

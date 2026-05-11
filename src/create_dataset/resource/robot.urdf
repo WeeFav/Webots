@@ -17,7 +17,7 @@
         </device> -->
         <plugin type="webots_ros2_driver::Ros2IMU">
             <topicName>/vehicle/imu</topicName>
-            <updateRate>10</updateRate>
+            <updateRate>500</updateRate>
             <alwaysOn>True</alwaysOn>
             <inertialUnitName>inertial_unit</inertialUnitName>
             <gyroName>gyro</gyroName>

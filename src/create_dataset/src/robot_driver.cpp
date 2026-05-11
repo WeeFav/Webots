@@ -4,6 +4,7 @@
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <sensor_msgs/msg/point_field.hpp>
 #include <sensor_msgs/point_cloud2_iterator.hpp>
+#include <sensor_msgs/msg/imu.hpp>
 #include <visualization_msgs/msg/marker.hpp>
 #include <visualization_msgs/msg/marker_array.hpp>
 #include <geometry_msgs/msg/point.hpp>
@@ -12,7 +13,7 @@
 #include <opencv2/opencv.hpp>
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
- 
+
 #include <webots/robot.h>
 #include <webots/camera.h>
 #include <webots/lidar.h>
@@ -31,6 +32,10 @@
 
 #include "create_dataset/robot_driver.hpp"
 #include "create_dataset/load_lanes.hpp"
+
+static constexpr double IMU_STEP_DT_SEC   = 0.033; // basicTimeStep
+static constexpr double IMU_OUT_DT_SEC    = 0.002; // desired IMU step
+static constexpr int    IMU_INTERP_STEPS  = IMU_STEP_DT_SEC / IMU_OUT_DT_SEC;    // sub-samples per Webots step
 
 Eigen::Matrix3d get_intrinsic_matrix(int width, int height, double fov)
 {
@@ -100,11 +105,15 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
     ackermann_sub = node->create_subscription<ackermann_msgs::msg::AckermannDrive>(
         "cmd_ackermann", 1,
         std::bind(&RobotDriver::cmd_ackermann_callback, this, std::placeholders::_1));
+    imu_sub = node->create_subscription<sensor_msgs::msg::Imu>(
+            "/vehicle/imu", 10,
+            std::bind(&RobotDriver::imu_callback, this, std::placeholders::_1));
 
     lane_seg_pub = node->create_publisher<sensor_msgs::msg::Image>("/segmentation", 10);
     obj_det_pub  = node->create_publisher<visualization_msgs::msg::MarkerArray>("/bbox_markers", 10);
     lidar_pub    = node->create_publisher<sensor_msgs::msg::PointCloud2>("/points", 10);
-
+    imu_pub      = node->create_publisher<sensor_msgs::msg::Imu>("/vehicle/imu_interpolated", 10);
+    
     R_webots_to_opencv <<  0, -1,  0,
                             0,  0, -1,
                             1,  0,  0;
@@ -145,8 +154,82 @@ void robot_driver::RobotDriver::step() {
 }
 
 void robot_driver::RobotDriver::cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg) {
-    wbu_driver_set_cruising_speed(msg->speed);
-    wbu_driver_set_steering_angle(msg->steering_angle);
+    if (step_count > 150) {
+        wbu_driver_set_cruising_speed(msg->speed);
+        wbu_driver_set_steering_angle(msg->steering_angle);
+    }
+}
+
+void robot_driver::RobotDriver::imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
+{
+    if (!imu_prev_valid_) {
+        // First message: store as both previous and current; nothing to interpolate yet.
+        imu_prev_ = *msg;
+        imu_prev_valid_ = true;
+        return;
+    }
+ 
+    const sensor_msgs::msg::Imu& p = imu_prev_;   // previous sample
+    const sensor_msgs::msg::Imu& c = *msg;        // current sample
+ 
+    // Base timestamp: previous sample's stamp (start of the interval)
+    const rclcpp::Time t0(p.header.stamp);
+ 
+    for (int i = 0; i < IMU_INTERP_STEPS; ++i) {
+        const double alpha = static_cast<double>(i) / IMU_INTERP_STEPS;
+ 
+        sensor_msgs::msg::Imu out;
+        out.header.frame_id = c.header.frame_id;
+        out.header.stamp    = t0 + rclcpp::Duration::from_seconds(i * IMU_OUT_DT_SEC);
+ 
+        // --- Linear interpolation of linear acceleration ---
+        out.linear_acceleration.x = p.linear_acceleration.x + alpha * (c.linear_acceleration.x - p.linear_acceleration.x);
+        out.linear_acceleration.y = p.linear_acceleration.y + alpha * (c.linear_acceleration.y - p.linear_acceleration.y);
+        out.linear_acceleration.z = p.linear_acceleration.z + alpha * (c.linear_acceleration.z - p.linear_acceleration.z);
+ 
+        // --- Linear interpolation of angular velocity ---
+        out.angular_velocity.x = p.angular_velocity.x + alpha * (c.angular_velocity.x - p.angular_velocity.x);
+        out.angular_velocity.y = p.angular_velocity.y + alpha * (c.angular_velocity.y - p.angular_velocity.y);
+        out.angular_velocity.z = p.angular_velocity.z + alpha * (c.angular_velocity.z - p.angular_velocity.z);
+ 
+        // --- SLERP for orientation quaternion ---
+        Eigen::Quaterniond q0(p.orientation.w, p.orientation.x, p.orientation.y, p.orientation.z);
+        Eigen::Quaterniond q1(c.orientation.w, c.orientation.x, c.orientation.y, c.orientation.z);
+        Eigen::Quaterniond qi = q0.slerp(alpha, q1);
+ 
+        out.orientation.w = qi.w();
+        out.orientation.x = qi.x();
+        out.orientation.y = qi.y();
+        out.orientation.z = qi.z();
+ 
+        // Propagate covariances from the current message (conservative)
+        // out.orientation_covariance         = c.orientation_covariance;
+        // out.angular_velocity_covariance    = c.angular_velocity_covariance;
+        // out.linear_acceleration_covariance = c.linear_acceleration_covariance;
+
+        out.orientation_covariance = {
+            1e-3, 0, 0,
+            0, 1e-3, 0,
+            0, 0, 1e-3
+        };
+
+        out.angular_velocity_covariance = {
+            1e-4, 0, 0,
+            0, 1e-4, 0,
+            0, 0, 1e-4
+        };
+
+        out.linear_acceleration_covariance = {
+            1e-2, 0, 0,
+            0, 1e-2, 0,
+            0, 0, 1e-2
+        };
+
+        imu_pub->publish(out);
+    }
+ 
+    // Slide window: current becomes previous for the next step
+    imu_prev_ = *msg;
 }
 
 void robot_driver::RobotDriver::publish_lidar() {
@@ -156,7 +239,7 @@ void robot_driver::RobotDriver::publish_lidar() {
     int num_points = wb_lidar_get_number_of_points(lidar);
     sensor_msgs::msg::PointCloud2 msg;
     msg.header.stamp    = node->get_clock()->now();
-    msg.header.frame_id = "lidar";
+    msg.header.frame_id = "velodyne";
     msg.height    = 1;
     msg.width     = static_cast<uint32_t>(num_points);
     msg.is_bigendian = false;
@@ -179,14 +262,17 @@ void robot_driver::RobotDriver::publish_lidar() {
     msg.point_step = 22;
     msg.row_step   = msg.point_step * msg.width;
     msg.data.resize(msg.row_step);
-    for (int i = 0; i < num_points; ++i) {
+
+    float start_time = pts[num_points - 1].time; 
+
+    for (int i = num_points - 1; i >= 0; i--) {
         uint8_t* base = msg.data.data() + i * msg.point_step;
         float x = static_cast<float>(pts[i].x);
         float y = static_cast<float>(pts[i].y);
         float z = static_cast<float>(pts[i].z);
         float intensity = 0.0;
         uint16_t layer = static_cast<uint16_t>(pts[i].layer_id);
-        float    t_pt  = static_cast<float>(pts[i].time);
+        float    t_pt  = static_cast<float>(pts[i].time) - start_time;
         std::memcpy(base +  0, &x,     4);
         std::memcpy(base +  4, &y,     4);
         std::memcpy(base +  8, &z,     4);
