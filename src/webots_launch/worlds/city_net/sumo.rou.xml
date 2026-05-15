@@ -26,6 +26,7 @@
     <vehicle id="1" depart="0.00">
         <route edges="-2 3 -4 -11 12 -13 14 -15"/>
     </vehicle>
+    <!--  
     <vehicle id="2" depart="0.00">
         <route edges="15 -14 13"/>
     </vehicle>
@@ -80,7 +81,6 @@
     <vehicle id="19" depart="0.00">
         <route edges="5 -10 9 -8 8 -9 10"/>
     </vehicle>
-    <!--  
     <vehicle id="20" depart="0.00">
         <route edges="14 -15 8 -9 10 4 -3 2 -1"/>
     </vehicle>

@@ -1,0 +1,9 @@
+dataset = 'Carla'
+img_folder = './img_folder'
+out_folder = './out_folder'
+griding_num = 100
+backbone = '18'
+model_path = './weights/07_23_16_30_02/ep099.pth'
+use_classification = True
+num_lanes = 4
+num_cls = 4

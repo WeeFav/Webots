@@ -63,25 +63,6 @@ install(DIRECTORY
   DESTINATION share/${PROJECT_NAME}/
 )
 
-add_executable(lane_follower src/lane_follower.cpp)
-
-ament_target_dependencies(lane_follower
-  rclcpp
-  ackermann_msgs
-  sensor_msgs
-  std_msgs
-  geometry_msgs
-  visualization_msgs
-  cv_bridge
-  webots_ros2_driver
-  pluginlib
-)
-
-target_link_libraries(lane_follower
-  ${OpenCV_LIBS}
-  Eigen3::Eigen
-)
-
 install(TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}Targets
   ARCHIVE DESTINATION lib

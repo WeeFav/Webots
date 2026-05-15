@@ -8,34 +8,38 @@ import cv2
 
 def generate_launch_description():
     package_dir = get_package_share_directory('create_dataset')
-    robot_description_path = os.path.join(package_dir, 'resource', 'robot.urdf')
+    robot_description_path_0 = os.path.join(package_dir, 'resource', 'SUMO_VEHICLE0.urdf')
+    robot_description_path_1 = os.path.join(package_dir, 'resource', 'SUMO_VEHICLE1.urdf')
 
-    my_robot_driver = WebotsController(
-        robot_name='vehicle',
+    robot_driver_0 = WebotsController(
+        robot_name='SUMO_VEHICLE0',
         parameters=[
-            {'robot_description': robot_description_path},
+            {'robot_description': robot_description_path_0},
+            {'use_sim_time': True},
+        ]
+    )
+    
+    robot_driver_1 = WebotsController(
+        robot_name='SUMO_VEHICLE1',
+        parameters=[
+            {'robot_description': robot_description_path_1},
             {'use_sim_time': True},
         ]
     )
 
-    lane_follower = Node(
-        package='create_dataset',
-        executable='lane_follower',
-    )
-
     return LaunchDescription([
-        my_robot_driver,
-        lane_follower,
+        robot_driver_0,
+        robot_driver_1,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
-                target_action=my_robot_driver,
+                target_action=robot_driver_0,
                 on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
             )
         ),
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
-                target_action=lane_follower,
+                target_action=robot_driver_1,
                 on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
             )
-        )
+        ),
     ])
