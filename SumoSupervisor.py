@@ -23,6 +23,8 @@ import sys
 import math
 import random
 import zmq
+import numpy as np
+import json
 
 hiddenPosition = 10000
 
@@ -442,7 +444,42 @@ class SumoSupervisor (Supervisor):
                 return True
             except self.traci.exceptions.TraCIException:
                 continue
-        return False        
+        return False         
+    
+    def get_gt_lanes(self, vehicle_id):
+        # Current lane ID
+        current_lane_id = self.traci.vehicle.getLaneID(vehicle_id)
+
+        # Current edge
+        edge_id = self.traci.vehicle.getRoadID(vehicle_id)
+
+        # All lanes in this edge
+        num_lanes = self.traci.edge.getLaneNumber(edge_id)
+
+        # Find current lane index in edge lane list
+        current_lane_index = self.traci.vehicle.getLaneIndex(vehicle_id)
+
+        left_lane_id = "None"
+        right_lane_id = "None"
+
+        # SUMO ordering:
+        # lane_ids[0] is rightmost lane
+        # increasing index goes left
+
+        if current_lane_index < num_lanes - 1:
+            left_lane_id = f"{edge_id}_{current_lane_index + 1}"
+
+        if current_lane_index > 0:
+            right_lane_id = f"{edge_id}_{current_lane_index - 1}"
+
+        print("Current:", current_lane_id)
+        print("Left:", left_lane_id)
+        print("Right:", right_lane_id)
+        
+        lane_ids = [current_lane_id, left_lane_id, right_lane_id]
+                
+        return json.dumps(lane_ids)
+
 
     def run(self, port, disableTrafficLight, directory, step, rotateWheels,
             maxVehicles, radius, enableHeight, useDisplay, displayRefreshRate,
@@ -616,7 +653,8 @@ class SumoSupervisor (Supervisor):
             if result[self.traci.constants.VAR_MIN_EXPECTED_VEHICLES] == 0:
                 break
 
-            socket.send_string("Hello")
+            msg = self.get_gt_lanes('0')
+            socket.send_string(msg)
 
         if not self.sumoClosed:
             self.traci.close()

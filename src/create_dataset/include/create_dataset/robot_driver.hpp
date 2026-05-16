@@ -37,6 +37,15 @@ struct VehicleInfo {
     Corners8x3 corners_vehicle; // corners in vehicle frame
 };
 
+struct Point {
+    double x, y;
+};
+
+struct LaneBoundary {
+    std::vector<Point> left_line;
+    std::vector<Point> right_line;
+};
+
 namespace robot_driver {
 class RobotDriver : public webots_ros2_driver::PluginInterface {
 public:
@@ -85,7 +94,7 @@ private:
  
     // ---- Lanes ----
     // Each lane is a list of 3-D points (N×3).
-    std::vector<Eigen::MatrixX3d> all_lanes_center;
+    std::unordered_map<std::string, LaneBoundary> all_lanes_center;
     double max_lane_dist = 70.0;
  
     // ---- Vehicles ----

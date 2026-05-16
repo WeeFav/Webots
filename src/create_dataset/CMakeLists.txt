@@ -21,6 +21,7 @@ find_package(cv_bridge REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(ZMQ REQUIRED libzmq)
+find_package(nlohmann_json REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/robot_driver.cpp
@@ -50,6 +51,7 @@ target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBS}
   Eigen3::Eigen
   ${ZMQ_LIBRARIES}
+  nlohmann_json::nlohmann_json
 )
  
 install(DIRECTORY include/
