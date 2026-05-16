@@ -29,7 +29,7 @@ Example:
 
 import argparse
 import numpy as np
-from create_dataset.lane_segmentation import extract_lanes
+from lane_segmentation import extract_lanes
 
 # ---------------------------------------------------------------------------
 # Serialiser

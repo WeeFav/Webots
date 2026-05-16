@@ -82,7 +82,7 @@ private:
     // ---- Lanes ----
     // Each lane is a list of 3-D points (N×3).
     std::vector<Eigen::MatrixX3d> all_lanes_center;
-    double max_lane_dist = 50.0;
+    double max_lane_dist = 70.0;
  
     // ---- Vehicles ----
     std::unordered_map<int, VehicleInfo> vehicles;

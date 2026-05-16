@@ -1,7 +1,7 @@
 import os
 import re
 import matplotlib.pyplot as plt
-from create_dataset.proto_nodes import StraightRoadSegmentPROTO, RoadLine, CurvedRoadSegmentPROTO
+from proto_nodes import StraightRoadSegmentPROTO, RoadLine, CurvedRoadSegmentPROTO
 import numpy as np
 
 def extract_blocks(text, node_name):

@@ -19,27 +19,27 @@ def generate_launch_description():
         ]
     )
     
-    robot_driver_1 = WebotsController(
-        robot_name='SUMO_VEHICLE1',
-        parameters=[
-            {'robot_description': robot_description_path_1},
-            {'use_sim_time': True},
-        ]
-    )
+    # robot_driver_1 = WebotsController(
+    #     robot_name='SUMO_VEHICLE1',
+    #     parameters=[
+    #         {'robot_description': robot_description_path_1},
+    #         {'use_sim_time': True},
+    #     ]
+    # )
 
     return LaunchDescription([
         robot_driver_0,
-        robot_driver_1,
+        # robot_driver_1,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
                 target_action=robot_driver_0,
                 on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
             )
         ),
-        launch.actions.RegisterEventHandler(
-            event_handler=launch.event_handlers.OnProcessExit(
-                target_action=robot_driver_1,
-                on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
-            )
-        ),
+        # launch.actions.RegisterEventHandler(
+        #     event_handler=launch.event_handlers.OnProcessExit(
+        #         target_action=robot_driver_1,
+        #         on_exit=[launch.actions.EmitEvent(event=launch.events.Shutdown())],
+        #     )
+        # ),
     ])

@@ -90,7 +90,7 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
                             1,  0,  0;
     
     // ---- Lane data ----
-    // all_lanes_center = load_lanes_txt("/path/to/lanes.txt");
+    all_lanes_center = load_lanes_txt("/home/marvin/Webots/src/create_dataset/resource/lanes.txt");
 
 }
 
@@ -110,15 +110,7 @@ void robot_driver::RobotDriver::step() {
     // Show image
     cv::imshow("Camera", bgr);
 
-    cv::waitKey(1);
-
-    const double* pos = wb_supervisor_node_get_position(camera_node);
-    const double* ori = wb_supervisor_node_get_orientation(camera_node);
-
-    RCLCPP_ERROR(node->get_logger(), "pos: %.2f", pos[0]);
-    RCLCPP_ERROR(node->get_logger(), "ori: %.2f", ori[0]);
-
-    // lane_detection();   // uncomment to enable
+    lane_detection();   // uncomment to enable
 }
 
 void robot_driver::RobotDriver::lane_detection() {
@@ -145,10 +137,20 @@ void robot_driver::RobotDriver::lane_detection() {
                 pts.emplace_back(u, v);
         }
 
-        if (pts.size() >= 2) {
-            std::vector<std::vector<cv::Point>> contours = {pts};
-            cv::polylines(img, contours, false, cv::Scalar(255, 255, 255), 2);
+        for (const auto& pt : pts) {
+            cv::circle(
+                img,          // target image
+                pt,             // center point
+                5,              // radius
+                cv::Scalar(0, 0, 255), // BGR color (red)
+                -1              // negative thickness = filled circle
+            );
         }
+        
+        // if (pts.size() >= 2) {
+        //     std::vector<std::vector<cv::Point>> contours = {pts};
+        //     cv::polylines(img, contours, false, cv::Scalar(255, 255, 255), 2);
+        // }
     }
 
     cv::imshow("segmentation", img);
@@ -167,7 +169,7 @@ Eigen::MatrixXd robot_driver::RobotDriver::world_to_image(const Eigen::MatrixXd&
     // Keep only points in front of camera
     std::vector<int> valid_idx;
     for (int i = 0; i < p_cv.rows(); ++i)
-        if (p_cv(i, 2) > 1e-6 && p_cv(i, 2) < 50.0)
+        if (p_cv(i, 2) > 1e-6 && p_cv(i, 2) < 70.0)
             valid_idx.push_back(i);
 
     Eigen::MatrixXd p_valid(valid_idx.size(), 3);

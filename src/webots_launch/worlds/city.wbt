@@ -1584,33 +1584,27 @@ DEF SUMO_VEHICLE0 TeslaModel3Simple {
       fieldOfView 1
       width 360
       height 240
-      recognition Recognition {
-        occlusion 0
-        frameThickness 0
-        segmentation TRUE
-      }
     }
   ]
 }
 
-DEF SUMO_VEHICLE1 TeslaModel3Simple { 
-  name "SUMO_VEHICLE1"
-  translation 1000 1000 1000 
-  rotation 0 0 0 1
-  color 1 0 0
-  controller "<extern>"
-  sensorsSlotFront [
-    DEF CAMERA Camera {
-      name "cam0"
-      translation -2.12 0 0.93
-      fieldOfView 1
-      width 360
-      height 240
-      recognition Recognition {
-        occlusion 0
-        frameThickness 0
-        segmentation TRUE
-      }
-    }
-  ]
-}
+
+DEF SUMO_VEHICLE1 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE2 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE3 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE4 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE5 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE6 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE7 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE8 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE9 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE10 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE11 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE12 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE13 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE14 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE15 ToyotaPriusSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE16 TeslaModel3Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE17 BmwX5Simple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE18 CitroenCZeroSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
+DEF SUMO_VEHICLE19 LincolnMKZSimple { translation 1000 1000 1000 rotation 0 0 0 1 }
