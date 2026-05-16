@@ -20,6 +20,10 @@
 #include <webots/gyro.h>
 #include <webots/supervisor.h>   // WbNodeRef, WbFieldRef, wb_supervisor_*
 
+#include <zmq.hpp>
+#include <iostream>
+#include <string>
+
 using Corners8x3 = Eigen::Matrix<double, 8, 3, Eigen::RowMajor>; // 8 corners × (x,y,z)
  
 struct BoxInfo {
@@ -92,5 +96,10 @@ private:
 
     sensor_msgs::msg::Imu imu_prev_;
     bool imu_prev_valid_{false};
+
+    // ZeroMQ
+    zmq::context_t context;
+    zmq::socket_t subscriber;
+
 };
 } // namespace robot_driver

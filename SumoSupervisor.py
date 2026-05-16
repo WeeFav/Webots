@@ -22,6 +22,7 @@ import os
 import sys
 import math
 import random
+import zmq
 
 hiddenPosition = 10000
 
@@ -542,6 +543,13 @@ class SumoSupervisor (Supervisor):
         self.all_edges = self.traci.edge.getIDList()
         self.all_edges = [e for e in self.all_edges if not e.startswith(":")]
 
+
+        context = zmq.Context()
+        socket = context.socket(zmq.PUB)
+        socket.bind("tcp://*:5555")
+        print("Python Publisher started on Windows")
+        
+       
         # Main simulation loop
         while self.step(step) >= 0:
             if self.usePlugin:
@@ -608,7 +616,7 @@ class SumoSupervisor (Supervisor):
             if result[self.traci.constants.VAR_MIN_EXPECTED_VEHICLES] == 0:
                 break
 
-            
+            socket.send_string("Hello")
 
         if not self.sumoClosed:
             self.traci.close()

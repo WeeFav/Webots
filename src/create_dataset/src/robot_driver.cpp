@@ -92,11 +92,24 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
     // ---- Lane data ----
     all_lanes_center = load_lanes_txt("/home/marvin/Webots/src/create_dataset/resource/lanes.txt");
 
+    // ZeroMQ
+    context = zmq::context_t(1);
+    subscriber = zmq::socket_t(context, zmq::socket_type::sub);
+    subscriber.connect("tcp://172.21.224.1:5555");
+    subscriber.set(zmq::sockopt::subscribe, ""); // Use "" to subscribe to ALL messages
 }
 
 // Called every simulation step
 void robot_driver::RobotDriver::step() {
     rclcpp::spin_some(node);
+
+    zmq::message_t msg;
+    auto result = subscriber.recv(msg, zmq::recv_flags::dontwait);
+    if (result.has_value()) {
+        std::cout << "Received: " << msg.to_string() << std::endl;
+    } else {
+        std::cout << "No message yet..." << std::endl;
+    }
 
     const unsigned char *image = wb_camera_get_image(camera);
     
