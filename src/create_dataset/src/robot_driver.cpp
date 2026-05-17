@@ -104,22 +104,6 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
 void robot_driver::RobotDriver::step() {
     rclcpp::spin_some(node);
 
-    zmq::message_t message;
-    auto result = subscriber.recv(message, zmq::recv_flags::dontwait);
-    if (result.has_value()) {
-        std::string msg(static_cast<char*>(message.data()), message.size());
-        // Parse JSON
-        std::vector<std::string> data = nlohmann::json::parse(msg);
-
-        std::cout << "Received:\n";
-
-        for (const auto& s : data) {
-            std::cout << s << std::endl;
-        }
-    } else {
-        std::cout << "No message yet..." << std::endl;
-    }
-
     const unsigned char *image = wb_camera_get_image(camera);
     
     // Webots format = BGRA (4 channels)
@@ -132,52 +116,104 @@ void robot_driver::RobotDriver::step() {
     // Show image
     cv::imshow("Camera", bgr);
 
-    // lane_detection();   // uncomment to enable
+    lane_detection();   // uncomment to enable
 }
 
-// void robot_driver::RobotDriver::lane_detection() {
-//     const double* pos = wb_supervisor_node_get_position(camera_node);
-//     const double* ori = wb_supervisor_node_get_orientation(camera_node);
-//     auto extrinsic = get_extrinsic_matrix(pos, ori);
-//     Eigen::Vector3d cam_pos(pos[0], pos[1], pos[2]);
+void robot_driver::RobotDriver::lane_detection() {
+    zmq::message_t message;
+    auto result = subscriber.recv(message, zmq::recv_flags::dontwait);
+    if (result.has_value()) {
+        std::string msg(static_cast<char*>(message.data()), message.size());
+        // Parse JSON
+        std::vector<std::string> lane_ids = nlohmann::json::parse(msg);
 
-//     cv::Mat img(height, width, CV_8UC3, cv::Scalar(0, 0, 0));
+        current_lane_id = lane_ids[0];
+        left_lane_id = lane_ids[1];
+        right_lane_id = lane_ids[2];
+        next_lane_id = lane_ids[3];
+        next_left_lane_id = lane_ids[4];
+        next_right_lane_id = lane_ids[5];
+    }
 
-//     for (const auto& lane : all_lanes_center) {
-//         // Quick distance filter on lane centroid
-//         Eigen::Vector3d center = lane.colwise().mean().transpose();
-//         if ((center - cam_pos).squaredNorm() > max_lane_dist * max_lane_dist)
-//             continue;
+    const double* pos = wb_supervisor_node_get_position(camera_node);
+    const double* ori = wb_supervisor_node_get_orientation(camera_node);
+    auto extrinsic = get_extrinsic_matrix(pos, ori);
 
-//         auto coords = world_to_image(lane, extrinsic);   // N×2
-
-//         std::vector<cv::Point> pts;
-//         for (int i = 0; i < coords.rows(); ++i) {
-//             int u = static_cast<int>(coords(i, 0));
-//             int v = static_cast<int>(coords(i, 1));
-//             if (u >= 0 && u < width && v >= 0 && v < height)
-//                 pts.emplace_back(u, v);
-//         }
-
-//         for (const auto& pt : pts) {
-//             cv::circle(
-//                 img,          // target image
-//                 pt,             // center point
-//                 5,              // radius
-//                 cv::Scalar(0, 0, 255), // BGR color (red)
-//                 -1              // negative thickness = filled circle
-//             );
-//         }
+    std::vector<Eigen::MatrixXd> all_coords;
+    cv::Mat img(height, width, CV_8UC3, cv::Scalar(0, 0, 0));
+    
+    // current edge
+    if (current_lane_id != "None" && all_lanes_center.find(current_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd left_line = all_lanes_center[current_lane_id].left_line;
+        Eigen::MatrixXd right_line = all_lanes_center[current_lane_id].right_line;
         
-//         // if (pts.size() >= 2) {
-//         //     std::vector<std::vector<cv::Point>> contours = {pts};
-//         //     cv::polylines(img, contours, false, cv::Scalar(255, 255, 255), 2);
-//         // }
-//     }
+        Eigen::MatrixXd left_coords = world_to_image(left_line, extrinsic);   // N×2
+        Eigen::MatrixXd right_coords = world_to_image(right_line, extrinsic);   // N×2
 
-//     cv::imshow("segmentation", img);
-//     cv::waitKey(1);
-// }
+        all_coords.push_back(left_coords);
+        all_coords.push_back(right_coords);
+    }
+    if (left_lane_id != "None" && all_lanes_center.find(left_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd left_left_line = all_lanes_center[left_lane_id].left_line;
+        Eigen::MatrixXd left_left_coords = world_to_image(left_left_line, extrinsic);   // N×2
+        all_coords.push_back(left_left_coords);
+    }
+    if (right_lane_id != "None" && all_lanes_center.find(right_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd right_right_line = all_lanes_center[right_lane_id].right_line;
+        Eigen::MatrixXd right_right_coords = world_to_image(right_right_line, extrinsic);   // N×2
+        all_coords.push_back(right_right_coords);
+    }
+
+    // next edge
+    if (next_lane_id != "None" && all_lanes_center.find(next_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd left_line = all_lanes_center[next_lane_id].left_line;
+        Eigen::MatrixXd right_line = all_lanes_center[next_lane_id].right_line;
+        
+        Eigen::MatrixXd left_coords = world_to_image(left_line, extrinsic);   // N×2
+        Eigen::MatrixXd right_coords = world_to_image(right_line, extrinsic);   // N×2
+
+        all_coords.push_back(left_coords);
+        all_coords.push_back(right_coords);
+    }
+    if (next_left_lane_id != "None" && all_lanes_center.find(next_left_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd left_left_line = all_lanes_center[next_left_lane_id].left_line;
+        Eigen::MatrixXd left_left_coords = world_to_image(left_left_line, extrinsic);   // N×2
+        all_coords.push_back(left_left_coords);
+    }
+    if (next_right_lane_id != "None" && all_lanes_center.find(next_right_lane_id) != all_lanes_center.end()) {
+        Eigen::MatrixXd right_right_line = all_lanes_center[next_right_lane_id].right_line;
+        Eigen::MatrixXd right_right_coords = world_to_image(right_right_line, extrinsic);   // N×2
+        all_coords.push_back(right_right_coords);
+    }
+
+    for (const auto& coords : all_coords) {
+        std::vector<cv::Point> pts;
+        for (int i = 0; i < coords.rows(); ++i) {
+            int u = static_cast<int>(coords(i, 0));
+            int v = static_cast<int>(coords(i, 1));
+            if (u >= 0 && u < width && v >= 0 && v < height)
+                pts.emplace_back(u, v);
+        }
+
+        // for (const auto& pt : pts) {
+        //     cv::circle(
+        //         img,          // target image
+        //         pt,             // center point
+        //         5,              // radius
+        //         cv::Scalar(0, 0, 255), // BGR color (red)
+        //         -1              // negative thickness = filled circle
+        //     );
+        // }
+        
+        if (pts.size() >= 2) {
+            std::vector<std::vector<cv::Point>> contours = {pts};
+            cv::polylines(img, contours, false, cv::Scalar(255, 255, 255), 2);
+        }
+    }
+
+    cv::imshow("segmentation", img);
+    cv::waitKey(1);
+}
 
 Eigen::MatrixXd robot_driver::RobotDriver::world_to_image(const Eigen::MatrixXd& points_world, const Eigen::Matrix<double, 3, 4>& extrinsic) {
     // Combined transform: R_webots_to_opencv * extrinsic  →  3×4

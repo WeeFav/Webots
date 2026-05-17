@@ -444,16 +444,23 @@ class SumoSupervisor (Supervisor):
                 return True
             except self.traci.exceptions.TraCIException:
                 continue
-        return False         
+        return False 
+    
+    def is_direct_continuation(self, edge1, edge2):
+        j = self.traci.edge.getToJunction(edge1)
+
+        if j != self.traci.edge.getFromJunction(edge2):
+            return False
+        
+        incoming = self.traci.junction.getIncomingEdges(j)
+                
+        return len(incoming) <= 4 # true junction have > 4 connections       
     
     def get_gt_lanes(self, vehicle_id):
-        # Current lane ID
         current_lane_id = self.traci.vehicle.getLaneID(vehicle_id)
 
-        # Current edge
         edge_id = self.traci.vehicle.getRoadID(vehicle_id)
 
-        # All lanes in this edge
         num_lanes = self.traci.edge.getLaneNumber(edge_id)
 
         # Find current lane index in edge lane list
@@ -471,12 +478,30 @@ class SumoSupervisor (Supervisor):
 
         if current_lane_index > 0:
             right_lane_id = f"{edge_id}_{current_lane_index - 1}"
-
-        print("Current:", current_lane_id)
-        print("Left:", left_lane_id)
-        print("Right:", right_lane_id)
         
-        lane_ids = [current_lane_id, left_lane_id, right_lane_id]
+        next_lane_id = "None"
+        next_left_lane_id = "None"
+        next_right_lane_id = "None"
+        
+        route = self.traci.vehicle.getRoute(vehicle_id)
+        current_edge_index = self.traci.vehicle.getRouteIndex(vehicle_id)
+        
+        if current_edge_index + 1 < len(route):
+            next_edge_id = route[current_edge_index + 1]
+            next_lane_id = f"{next_edge_id}_{current_lane_index}"
+            
+            if self.is_direct_continuation(edge_id, next_edge_id):
+                num_lanes = self.traci.edge.getLaneNumber(next_edge_id)
+
+                if current_lane_index < num_lanes - 1:
+                    next_left_lane_id = f"{next_edge_id}_{current_lane_index + 1}"
+
+                if current_lane_index > 0:
+                    next_right_lane_id = f"{next_edge_id}_{current_lane_index - 1}"
+            else:
+                next_lane_id = "None"
+        
+        lane_ids = [current_lane_id, left_lane_id, right_lane_id, next_lane_id, next_left_lane_id, next_right_lane_id]
                 
         return json.dumps(lane_ids)
 

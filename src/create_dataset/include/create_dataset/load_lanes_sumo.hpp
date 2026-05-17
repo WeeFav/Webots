@@ -20,18 +20,26 @@ inline std::unordered_map<std::string, LaneBoundary> load_lane_boundaries(const 
     std::string current_lane_id;
     std::string current_side;
     int remaining_pts = 0;
+    int total_pts     = 0;
 
     while (std::getline(file, line)) {
         if (remaining_pts > 0) {
             // Parse a point line: "x y"
             std::istringstream ss(line);
-            Point pt;
-            ss >> pt.x >> pt.y;
+            double x, y;
+            ss >> x >> y;
 
-            if (current_side == "left_line")
-                boundaries[current_lane_id].left_line.push_back(pt);
-            else
-                boundaries[current_lane_id].right_line.push_back(pt);
+            int row = total_pts - remaining_pts;  // current row index
+
+            if (current_side == "left_line") {
+                boundaries[current_lane_id].left_line(row, 0) = x;
+                boundaries[current_lane_id].left_line(row, 1) = y;
+                boundaries[current_lane_id].left_line(row, 2) = 0.02;
+            } else {
+                boundaries[current_lane_id].right_line(row, 0) = x;
+                boundaries[current_lane_id].right_line(row, 1) = y;
+                boundaries[current_lane_id].right_line(row, 2) = 0.02;
+            }
 
             --remaining_pts;
         } else {
@@ -42,16 +50,16 @@ inline std::unordered_map<std::string, LaneBoundary> load_lane_boundaries(const 
             std::getline(ss, current_lane_id, '|');
             std::getline(ss, current_side,    '|');
             std::getline(ss, token,           '|');
-            remaining_pts = std::stoi(token);
+            total_pts    = std::stoi(token);
+            remaining_pts = total_pts;
 
-            // Pre-allocate
+            // Pre-allocate the Eigen matrix (N, 3)
             auto& bnd = boundaries[current_lane_id];
             if (current_side == "left_line")
-                bnd.left_line.reserve(remaining_pts);
+                bnd.left_line  = Eigen::MatrixXd(total_pts, 3);
             else
-                bnd.right_line.reserve(remaining_pts);
+                bnd.right_line = Eigen::MatrixXd(total_pts, 3);
         }
     }
-
     return boundaries;
 }

@@ -37,13 +37,9 @@ struct VehicleInfo {
     Corners8x3 corners_vehicle; // corners in vehicle frame
 };
 
-struct Point {
-    double x, y;
-};
-
 struct LaneBoundary {
-    std::vector<Point> left_line;
-    std::vector<Point> right_line;
+    Eigen::MatrixXd left_line;
+    Eigen::MatrixXd right_line;
 };
 
 namespace robot_driver {
@@ -96,6 +92,12 @@ private:
     // Each lane is a list of 3-D points (N×3).
     std::unordered_map<std::string, LaneBoundary> all_lanes_center;
     double max_lane_dist = 70.0;
+    std::string current_lane_id = "None";
+    std::string left_lane_id = "None";
+    std::string right_lane_id = "None";
+    std::string next_lane_id = "None";
+    std::string next_left_lane_id = "None";
+    std::string next_right_lane_id = "None";
  
     // ---- Vehicles ----
     std::unordered_map<int, VehicleInfo> vehicles;
