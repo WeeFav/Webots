@@ -1,5 +1,3 @@
 __pycache__/
-/img_folder
-/out_folder
-/weights
-/runs
+/datasets
+/results

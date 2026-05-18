@@ -27,7 +27,7 @@ def get_data_loader(batch_size, data_root, griding_num, dataset, use_aux, num_la
         mytransforms.RandomLROffsetLABEL(200)
     ])
 
-    if dataset == 'Carla':
+    if dataset == "Webots":
         full_dataset = LaneClsDataset(data_root,
                                        os.path.join(data_root, 'train_gt.txt'),
                                        img_transform=img_transform,

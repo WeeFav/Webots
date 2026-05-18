@@ -1,8 +1,8 @@
 from datetime import datetime
 
 # DATASET
-dataset = 'Carla'
-data_root = 'C:\\Users\\marvi\\Datasets\\Lane\\CarlaLane'
+dataset = "Webots"
+data_root = "/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city"
 num_lanes = 4
 num_cls = 4
 
@@ -10,7 +10,7 @@ num_cls = 4
 backbone = '18'
 griding_num = 100
 use_aux = True
-use_classification = True
+use_classification = False
 
 # TRAIN
 epoch = 50
@@ -35,4 +35,4 @@ shp_loss_w = 0.0
 finetune = None
 resume = None
 timestamp = datetime.now().strftime("%m_%d_%H_%M_%S")
-save_path = f"C:\\Users\\marvi\\carla_lane_detection\\weights\\{timestamp}"
+save_path = f"/home/marvin/Webots/Webots-Lane-Detection/results/{timestamp}"

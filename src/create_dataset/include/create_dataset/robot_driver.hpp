@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <Eigen/Dense>
+#include <opencv2/opencv.hpp>
 
 #include <webots/robot.h>
 #include <webots/camera.h>
@@ -53,19 +54,21 @@ private:
     void cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg);
     void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg);
     void publish_lidar();
-    void lane_detection();
+    void lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist);
     Eigen::MatrixXd world_to_image(const Eigen::MatrixXd& points_world, const Eigen::Matrix<double, 3, 4>& extrinsic);
     void object_detection();
-    std::vector<BoxInfo> extract_boxes(
-        WbNodeRef node,
-        const Eigen::Matrix3d& parent_R,
-        const Eigen::Vector3d& parent_t);
+    std::vector<BoxInfo> extract_boxes( WbNodeRef node, const Eigen::Matrix3d& parent_R, const Eigen::Vector3d& parent_t);
     Corners8x3 get_box_corners(const BoxInfo& box);
     Corners8x3 get_bounding_box(const std::vector<BoxInfo>& boxes);
     visualization_msgs::msg::MarkerArray corners_to_marker_array(const std::vector<Corners8x3>& all_corners);
+    void save_lane(cv::Mat &img, cv::Mat &seg, std::vector<bool> &lane_exist);
 
     // ---- ROS / Webots handles ----
-    rclcpp::Node::SharedPtr   node;
+    webots_ros2_driver::WebotsNode *node;
+    bool saving;
+    std::string data_root;
+    int save_freq;
+    int save_num;
 
     WbDeviceTag camera;
     WbDeviceTag lidar;
@@ -74,6 +77,7 @@ private:
     WbDeviceTag gyro;
     WbNodeRef camera_node;
     WbNodeRef lidar_node;
+    WbNodeRef vehicle_node;
 
     rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub;
     rclcpp::Subscription<ackermann_msgs::msg::AckermannDrive>::SharedPtr ackermann_sub;
@@ -98,6 +102,8 @@ private:
     std::string next_lane_id = "None";
     std::string next_left_lane_id = "None";
     std::string next_right_lane_id = "None";
+    std::unordered_map<int, cv::Scalar> seg_vis_color;
+    int save_counter = 0;
  
     // ---- Vehicles ----
     std::unordered_map<int, VehicleInfo> vehicles;

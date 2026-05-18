@@ -102,10 +102,10 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.08268451863488442 -0.008282374566606533 -0.9965413552129464 3.340616867722656
-  position 51.670031498239545 41.288011070033996 5.128037630741435
+  orientation -0.577351 -0.577351 0.577348 4.18879
+  position 0.09223 113.153 209.511
   near 1
-  follow "vehicle"
+  follow "SUMO_VEHICLE0"
   followSmoothness 0
 }
 TexturedBackground {
@@ -1582,8 +1582,8 @@ DEF SUMO_VEHICLE0 TeslaModel3Simple {
       name "cam0"
       translation -2.12 0 0.93
       fieldOfView 1
-      width 360
-      height 240
+      width 800
+      height 450
     }
   ]
 }
