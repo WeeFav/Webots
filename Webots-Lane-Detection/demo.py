@@ -13,9 +13,9 @@ from configs import cfg_common, cfg_demo
 
 def main():
     # number of row anchors
-    if cfg_demo.dataset == 'Carla':
+    if cfg_demo.dataset == 'Webots':
         cls_num_per_lane = 56
-        img_w, img_h = 1280, 720
+        img_w, img_h = 800, 450
         row_anchor = cfg_common.carla_row_anchor
     else:
         raise NotImplementedError

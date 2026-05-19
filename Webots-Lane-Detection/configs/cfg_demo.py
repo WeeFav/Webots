@@ -1,9 +1,9 @@
-dataset = 'Carla'
-img_folder = './img_folder'
-out_folder = './out_folder'
+dataset = 'Webots'
+img_folder = '/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city/img'
+out_folder = '/home/marvin/Webots/Webots-Lane-Detection/results/05_18_17_48_50/demo'
 griding_num = 100
 backbone = '18'
-model_path = './weights/07_23_16_30_02/ep099.pth'
-use_classification = True
+model_path = '/home/marvin/Webots/Webots-Lane-Detection/results/05_18_17_48_50/ep049.pth'
+use_classification = False
 num_lanes = 4
 num_cls = 4

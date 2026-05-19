@@ -293,8 +293,12 @@ void robot_driver::RobotDriver::save_lane(cv::Mat &img, cv::Mat &seg, std::vecto
     std::string seg_rel_path = "seg/" + img_filename;
 
     cv::imwrite(data_root + "/" + img_rel_path, img);
-    cv::imwrite(data_root + "/" + seg_rel_path, seg);
 
+    cv::Mat gray;
+    cv::extractChannel(seg, gray, 0);
+    gray.convertTo(gray, CV_8U);
+    cv::imwrite(data_root + "/" + seg_rel_path, gray);
+    
     // --- Append to train_gt.txt ---
     std::ofstream gt_file(data_root + "/train_gt.txt", std::ios::app);
     if (!gt_file.is_open()) {

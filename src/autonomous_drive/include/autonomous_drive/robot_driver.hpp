@@ -1,0 +1,111 @@
+#pragma once
+ 
+#include "rclcpp/macros.hpp"
+#include "webots_ros2_driver/PluginInterface.hpp"
+#include "webots_ros2_driver/WebotsNode.hpp"
+#include "geometry_msgs/msg/twist.hpp"
+#include "rclcpp/rclcpp.hpp"
+
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <vector>
+#include <Eigen/Dense>
+#include <opencv2/opencv.hpp>
+
+#include <webots/robot.h>
+#include <webots/camera.h>
+#include <webots/lidar.h>
+#include <webots/inertial_unit.h>
+#include <webots/accelerometer.h>
+#include <webots/gyro.h>
+#include <webots/supervisor.h>   // WbNodeRef, WbFieldRef, wb_supervisor_*
+
+#include <zmq.hpp>
+#include <iostream>
+#include <string>
+
+using Corners8x3 = Eigen::Matrix<double, 8, 3, Eigen::RowMajor>; // 8 corners × (x,y,z)
+ 
+struct BoxInfo {
+    Eigen::Matrix3d R_local_to_vehicle;
+    Eigen::Vector3d t_local_to_vehicle;
+    Eigen::Vector3d size;
+};
+ 
+struct VehicleInfo {
+    WbNodeRef node;
+    Corners8x3 corners_vehicle; // corners in vehicle frame
+};
+
+struct LaneBoundary {
+    Eigen::MatrixXd left_line;
+    Eigen::MatrixXd right_line;
+};
+
+namespace robot_driver {
+class RobotDriver : public webots_ros2_driver::PluginInterface {
+public:
+    void step() override;
+    void init(webots_ros2_driver::WebotsNode *node,
+        std::unordered_map<std::string, std::string> &parameters) override;
+
+private:
+    void cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg);
+    void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg);
+    void publish_lidar();
+    void lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist);
+    void object_detection();
+    std::vector<BoxInfo> extract_boxes( WbNodeRef node, const Eigen::Matrix3d& parent_R, const Eigen::Vector3d& parent_t);
+    Corners8x3 get_box_corners(const BoxInfo& box);
+    Corners8x3 get_bounding_box(const std::vector<BoxInfo>& boxes);
+    visualization_msgs::msg::MarkerArray corners_to_marker_array(const std::vector<Corners8x3>& all_corners);
+
+    // ---- ROS / Webots handles ----
+    webots_ros2_driver::WebotsNode *node;
+
+    WbDeviceTag camera;
+    WbDeviceTag lidar;
+    WbDeviceTag inertial_unit;
+    WbDeviceTag accelerometer;
+    WbDeviceTag gyro;
+    WbNodeRef camera_node;
+    WbNodeRef lidar_node;
+    WbNodeRef vehicle_node;
+
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub;
+    rclcpp::Subscription<ackermann_msgs::msg::AckermannDrive>::SharedPtr ackermann_sub;
+    rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr                lane_seg_pub;
+    rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr   obj_det_pub;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr          lidar_pub;
+    rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr     imu_pub;
+ 
+    // ---- Camera intrinsics / extrinsics ----
+    Eigen::Matrix3d K;
+    Eigen::Matrix3d R_webots_to_opencv;
+    int width  = 0;
+    int height = 0;
+ 
+    // ---- Lanes ----
+    // Each lane is a list of 3-D points (N×3).
+    std::unordered_map<std::string, LaneBoundary> all_lanes_center;
+    double max_lane_dist = 70.0;
+    std::string current_lane_id = "None";
+    std::string left_lane_id = "None";
+    std::string right_lane_id = "None";
+    std::string next_lane_id = "None";
+    std::string next_left_lane_id = "None";
+    std::string next_right_lane_id = "None";
+    std::unordered_map<int, cv::Scalar> seg_vis_color;
+ 
+    // ---- Vehicles ----
+    std::unordered_map<int, VehicleInfo> vehicles;
+    double max_obj_dist = 50.0;
+
+    long step_count = 0;
+
+    sensor_msgs::msg::Imu imu_prev_;
+    bool imu_prev_valid_{false};
+
+};
+} // namespace robot_driver
