@@ -7,7 +7,7 @@
 #include <string>
 #include <stdexcept>
 
-#include "lane_detection.hpp"
+#include "autonomous_drive/lane_detection.hpp"
 
 static const std::vector<int> CARLA_ROW_ANCHOR = {
     64,  68,  72,  76,  80,  84,  88,  92,  96, 100, 104, 108, 112,
@@ -17,7 +17,7 @@ static const std::vector<int> CARLA_ROW_ANCHOR = {
     272, 276, 280, 284
 };
 
-void lane_detection::LaneDetection::LaneDetection() : Node("lane_detection") {
+lane_detection::LaneDetection::LaneDetection() : Node("lane_detection") {
     this->declare_parameter<std::string>("model_path",    "model.pt");
     this->declare_parameter<int>        ("griding_num",   100);
     this->declare_parameter<int>        ("num_lanes",     4);
@@ -67,11 +67,11 @@ void lane_detection::LaneDetection::LaneDetection() : Node("lane_detection") {
 
     image_sub = this->create_subscription<sensor_msgs::msg::Image>(
         image_topic, 10,
-        std::bind(&LaneDetectionNode::imageCallback, this, std::placeholders::_1));
+        std::bind(&LaneDetection::imageCallback, this, std::placeholders::_1));
 
     image_pub = this->create_publisher<sensor_msgs::msg::Image>(output_topic, 10);
 
-    RCLCPP_INFO(this->get_logger(), "Lane detection node ready.\n  Subscribing : %s\n  Publishing  : %s", in_topic.c_str(), out_topic.c_str());   
+    RCLCPP_INFO(this->get_logger(), "Lane detection node ready.\n  Subscribing : %s\n  Publishing  : %s", image_topic.c_str(), output_topic.c_str());   
 }
 
 void lane_detection::LaneDetection::imageCallback(const sensor_msgs::msg::Image::ConstSharedPtr& msg) {
@@ -118,7 +118,7 @@ void lane_detection::LaneDetection::imageCallback(const sensor_msgs::msg::Image:
     try {
         torch::NoGradGuard no_grad;
         // model returns a dict-like IValue; 'det' key mirrors out['det']
-        auto output = model_.forward({input_tensor}).toGenericDict();
+        auto output = model.forward({input_tensor}).toGenericDict();
         detection   = output.at("det").toTensor().to(torch::kCPU);
     } catch (const c10::Error& e) {
         RCLCPP_ERROR(this->get_logger(), "Inference error: %s", e.what());
@@ -191,4 +191,12 @@ void lane_detection::LaneDetection::imageCallback(const sensor_msgs::msg::Image:
     // -- 6. Publish annotated image ----------------------------------
     auto out_msg = cv_bridge::CvImage(msg->header, "bgr8", vis).toImageMsg();
     image_pub->publish(*out_msg);
+}
+
+int main(int argc, char * argv[])
+{
+    rclcpp::init(argc, argv);
+    rclcpp::spin(std::make_shared<lane_detection::LaneDetection>());
+    rclcpp::shutdown();
+    return 0;
 }

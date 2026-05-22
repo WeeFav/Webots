@@ -32,7 +32,7 @@
 #include <cstring>
 #include <unordered_map>
 
-#include "create_dataset/robot_driver.hpp"
+#include "autonomous_drive/robot_driver.hpp"
 
 void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
     // ---- ROS node ----
@@ -50,7 +50,6 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
     width  = wb_camera_get_width(camera);
     height = wb_camera_get_height(camera);
     double fov = wb_camera_get_fov(camera);
-    K = get_intrinsic_matrix(width, height, fov);
 
     vehicle_node = wb_supervisor_node_get_from_def("SUMO_VEHICLE0");
 

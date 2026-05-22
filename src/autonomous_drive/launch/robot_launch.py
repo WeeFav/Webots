@@ -7,11 +7,11 @@ from webots_ros2_driver.webots_controller import WebotsController
 import cv2
 
 def generate_launch_description():
-    package_dir = get_package_share_directory('create_dataset')
+    package_dir = get_package_share_directory('autonomous_drive')
     robot_description_path = os.path.join(package_dir, 'resource', 'robot.urdf')
 
     robot_driver_0 = WebotsController(
-        robot_name='vehicle',
+        robot_name='SUMO_VEHICLE0',
         parameters=[
             {'robot_description': robot_description_path},
             {'use_sim_time': True},

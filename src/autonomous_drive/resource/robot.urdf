@@ -15,14 +15,14 @@
                 <alwaysOn>true</alwaysOn>
             </ros>
         </device> -->
-        <plugin type="webots_ros2_driver::Ros2IMU">
+        <!-- <plugin type="webots_ros2_driver::Ros2IMU">
             <topicName>/vehicle/imu</topicName>
             <updateRate>500</updateRate>
             <alwaysOn>True</alwaysOn>
             <inertialUnitName>inertial_unit</inertialUnitName>
             <gyroName>gyro</gyroName>
             <accelerometerName>accelerometer</accelerometerName>
-        </plugin>
+        </plugin> -->
         <plugin type="robot_driver::RobotDriver" />
     </webots>
 </robot>

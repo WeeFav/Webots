@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 package_name = 'webots_launch'
 data_files = []
 data_files.append(('share/ament_index/resource_index/packages', ['resource/' + package_name]))
-data_files.append(('share/' + package_name + '/worlds', ['worlds/city.wbt']))
+data_files.append(('share/' + package_name + '/worlds', ['worlds/autonomous_drive.wbt', 'worlds/create_dataset.wbt']))
 data_files.append(('share/' + package_name + '/launch', ['launch/webots_launch.py']))
 data_files.append(('share/' + package_name, ['package.xml']))
 
