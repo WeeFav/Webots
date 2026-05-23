@@ -10,6 +10,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3Windows.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3FrontLights.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/tesla/TeslaModel3Details.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/abstract/VehicleLights.proto"
 
 PROTO TeslaModel3Simple [
   field       SFVec3f    translation                    0 0 0.4                                                 # Is `Robot.translation`.
@@ -26,12 +27,14 @@ PROTO TeslaModel3Simple [
   field       MFNode     sensorsSlotTop                 [ ]                                                     # Extends the robot with new nodes on the roof of the car.
   field       MFNode     sensorsSlotCenter              [ ]                                                     # Extends the robot with new nodes at the center of the car.
   field       SFBool     wheelBoundingObject            FALSE                                                   # Defines whether the wheels should have a bounding object.
+  field       SFBool     frontSpotLights                FALSE                                                   # Defines whether the car should have front spot lights.
   hiddenField SFVec3f    frontRightWheelAngularVelocity 0 0 0
   hiddenField SFVec3f    frontLeftWheelAngularVelocity  0 0 0
   hiddenField SFVec3f    rearRightWheelAngularVelocity  0 0 0
   hiddenField SFVec3f    rearLeftWheelAngularVelocity   0 0 0
 ]
 {
+  %< const frontSpotLights = fields.frontSpotLights.value; >%
   Robot {
     supervisor TRUE
     translation IS translation
@@ -98,12 +101,38 @@ PROTO TeslaModel3Simple [
         translation 1.39 0 -0.36
         rotation 0 -0.707107 -0.707107 -3.141588
         children [
+          %< if (frontSpotLights) { >%
+          SpotLight {
+            attenuation 0 0 1
+            beamWidth 0.3
+            cutOffAngle 0.6
+            direction -1 -0.5 -0.05
+            intensity 60
+            location -2.03 0.72 -0.72
+            radius 40
+          }
+          SpotLight {
+            attenuation 0 0 1
+            beamWidth 0.3
+            cutOffAngle 0.6
+            direction -1 -0.5 0.05
+            intensity 60
+            location -2.03 0.72 0.72
+            radius 40
+          }
+          %< } >%
+          TeslaModel3FrontLights {
+          }
+        ]
+      }      
+      Pose {
+        translation 1.39 0 -0.36
+        rotation 0 -0.707107 -0.707107 -3.141588
+        children [
           TeslaModel3Coachwork {
             color IS color
           }
           TeslaModel3Windows {
-          }
-          TeslaModel3FrontLights {
           }
           TeslaModel3Details {
           }

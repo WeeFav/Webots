@@ -41,7 +41,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'world',
-            default_value=os.path.join( package_dir, 'worlds', 'city.wbt'),
+            default_value='city.wbt',
             description='Path to world file'
         ),
 

@@ -86,6 +86,9 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
     save_freq = node->get_parameter("save_freq").as_int();
     save_num = node->get_parameter("save_num").as_int();
 
+    RCLCPP_INFO(node->get_logger(), "saving %d", saving);
+    RCLCPP_INFO(node->get_logger(), "save freq %d", save_freq);
+
     // camera
     camera_node = wb_supervisor_node_get_from_def("CAMERA");
     camera = wb_robot_get_device("cam0");

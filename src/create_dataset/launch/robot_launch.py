@@ -17,20 +17,12 @@ def generate_launch_description():
             {'robot_description': robot_description_path_0},
             {'use_sim_time': True},
             {'saving': True},
-            {'data_root': "/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city"},
-            {'save_freq': 90},
-            {'save_num': 250},
+            {'data_root': "/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city_2"},
+            {'save_freq': 10},
+            {'save_num': 2500},
         ]
     )
     
-    # robot_driver_1 = WebotsController(
-    #     robot_name='SUMO_VEHICLE1',
-    #     parameters=[
-    #         {'robot_description': robot_description_path_1},
-    #         {'use_sim_time': True},
-    #     ]
-    # )
-
     return LaunchDescription([
         robot_driver_0,
         # robot_driver_1,
