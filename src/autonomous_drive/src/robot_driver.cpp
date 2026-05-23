@@ -34,7 +34,7 @@
 
 #include "autonomous_drive/robot_driver.hpp"
 
-void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
+void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
     // ---- ROS node ----
     rclcpp::NodeOptions options;
     options.parameter_overrides({rclcpp::Parameter("use_sim_time", true)});    
@@ -55,6 +55,7 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
 
     // ---- Publishers / Subscribers ----
 
+    RCLCPP_INFO(node->get_logger(), "Message: %d", 42);
 
     R_webots_to_opencv <<  0, -1,  0,
                             0,  0, -1,
@@ -65,7 +66,7 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
 }
 
 // Called every simulation step
-void robot_driver::RobotDriver::step() {
+void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
@@ -83,4 +84,4 @@ void robot_driver::RobotDriver::step() {
 }
 
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(robot_driver::RobotDriver, webots_ros2_driver::PluginInterface)
+PLUGINLIB_EXPORT_CLASS(autonomous_drive::RobotDriver, webots_ros2_driver::PluginInterface)

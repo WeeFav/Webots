@@ -69,7 +69,7 @@ Eigen::Matrix<double, 3, 4> get_extrinsic_matrix(const double* position,
     return extrinsic;
 }
 
-void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
+void create_dataset::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
     // ---- ROS node ----
     rclcpp::NodeOptions options;
     options.parameter_overrides({rclcpp::Parameter("use_sim_time", true)});    
@@ -78,16 +78,13 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
 
     node->declare_parameter("saving", false);
     node->declare_parameter("data_root", "");
-    node->declare_parameter("save_freq", 10);
+    node->declare_parameter("save_freq", 20);
     node->declare_parameter("save_num", 250);
 
     saving = node->get_parameter("saving").as_bool();
     data_root = node->get_parameter("data_root").as_string();
     save_freq = node->get_parameter("save_freq").as_int();
     save_num = node->get_parameter("save_num").as_int();
-
-    RCLCPP_INFO(node->get_logger(), "saving %d", saving);
-    RCLCPP_INFO(node->get_logger(), "save freq %d", save_freq);
 
     // camera
     camera_node = wb_supervisor_node_get_from_def("CAMERA");
@@ -130,7 +127,7 @@ void robot_driver::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node
 }
 
 // Called every simulation step
-void robot_driver::RobotDriver::step() {
+void create_dataset::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
@@ -158,7 +155,7 @@ void robot_driver::RobotDriver::step() {
 
 }
 
-void robot_driver::RobotDriver::lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist) {
+void create_dataset::RobotDriver::lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist) {
     zmq::message_t message;
     auto result = subscriber.recv(message, zmq::recv_flags::dontwait);
     if (result.has_value()) {
@@ -259,7 +256,7 @@ void robot_driver::RobotDriver::lane_detection(cv::Mat &seg, std::vector<bool> &
     cv::waitKey(1);
 }
 
-Eigen::MatrixXd robot_driver::RobotDriver::world_to_image(const Eigen::MatrixXd& points_world, const Eigen::Matrix<double, 3, 4>& extrinsic) {
+Eigen::MatrixXd create_dataset::RobotDriver::world_to_image(const Eigen::MatrixXd& points_world, const Eigen::Matrix<double, 3, 4>& extrinsic) {
     // Combined transform: R_webots_to_opencv * extrinsic  →  3×4
     Eigen::Matrix<double, 3, 4> T = R_webots_to_opencv * extrinsic;
     Eigen::Matrix3d R = T.leftCols(3);
@@ -290,7 +287,7 @@ Eigen::MatrixXd robot_driver::RobotDriver::world_to_image(const Eigen::MatrixXd&
     return result;
 }
 
-void robot_driver::RobotDriver::save_lane(cv::Mat &img, cv::Mat &seg, std::vector<bool> &lane_exist) {
+void create_dataset::RobotDriver::save_lane(cv::Mat &img, cv::Mat &seg, std::vector<bool> &lane_exist) {
     std::string img_filename = std::to_string(save_counter) + ".png";
     std::string img_rel_path = "img/" + img_filename;
     std::string seg_rel_path = "seg/" + img_filename;
@@ -318,4 +315,4 @@ void robot_driver::RobotDriver::save_lane(cv::Mat &img, cv::Mat &seg, std::vecto
 }
 
 #include "pluginlib/class_list_macros.hpp"
-PLUGINLIB_EXPORT_CLASS(robot_driver::RobotDriver, webots_ros2_driver::PluginInterface)
+PLUGINLIB_EXPORT_CLASS(create_dataset::RobotDriver, webots_ros2_driver::PluginInterface)

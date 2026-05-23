@@ -1,9 +1,9 @@
 dataset = 'Webots'
 img_folder = '/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city/img'
-out_folder = '/home/marvin/Webots/Webots-Lane-Detection/results/05_18_17_48_50/demo'
+out_folder = '/home/marvin/Webots/Webots-Lane-Detection/results/05_22_22_12_23/demo'
 griding_num = 100
 backbone = '18'
-model_path = '/home/marvin/Webots/Webots-Lane-Detection/results/05_18_17_48_50/ep049.pth'
+model_path = '/home/marvin/Webots/Webots-Lane-Detection/results/05_22_22_12_23/ep049.pth'
 use_classification = False
 num_lanes = 4
 num_cls = 4

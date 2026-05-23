@@ -23,107 +23,107 @@
     <vehicle id="0" depart="0.00">
         <route edges="12 -13 14 -15 -0"/>
     </vehicle>
-    <!--
-    <vehicle id="1" depart="1.00">
+    <vehicle id="1" depart="0.00">
         <route edges="-2 3 -4 -11 12 -13 14 -15"/>
     </vehicle>
-    <vehicle id="2" depart="2.00">
+    <vehicle id="2" depart="0.00">
         <route edges="15 -14 13"/>
     </vehicle>
-    <vehicle id="3" depart="3.00">
+    <vehicle id="3" depart="0.00">
         <route edges="6 5 -10"/>
     </vehicle>
-    <vehicle id="4" depart="4.00">
+    <vehicle id="4" depart="0.00">
         <route edges="-7 -0"/>
     </vehicle>
-    <vehicle id="5" depart="5.00">
+    <vehicle id="5" depart="0.00">
         <route edges="-14 13 -12 11 4 -3 2 -1 0"/>
     </vehicle>
-    <vehicle id="6" depart="6.00">
+    <vehicle id="6" depart="0.00">
         <route edges="-0 1 -2 3 -4 -5 -6 -7 15 -14"/>
     </vehicle>
-    <vehicle id="7" depart="7.00">
+    <vehicle id="7" depart="0.00">
         <route edges="12 -13 14 -15 -0 1"/>
     </vehicle>
-    <vehicle id="8" depart="8.00">
+    <vehicle id="8" depart="0.00">
         <route edges="-15 8 -9 10"/>
     </vehicle>
-    <vehicle id="9" depart="9.00">
+    <vehicle id="9" depart="0.00">
         <route edges="3 -4 -5 -6 -7 -0"/>
     </vehicle>
-    <vehicle id="10" depart="10.00">
+    <vehicle id="10" depart="0.00">
         <route edges="3 -4 -11 12 -13 14"/>
     </vehicle>
-    <vehicle id="11" depart="11.00">
+    <vehicle id="11" depart="0.00">
         <route edges="-4 -5 -6 -7 15 -14 13 -12"/>
     </vehicle>
-    <vehicle id="12" depart="12.00">
+    <vehicle id="12" depart="0.00">
         <route edges="8 -9 10 -5 -6 -7 -0 1 -2 3 -4"/>
     </vehicle>
-    <vehicle id="13" depart="13.00">
+    <vehicle id="13" depart="0.00">
         <route edges="-10 9 -8 7 6 5 -11"/>
     </vehicle>
-    <vehicle id="14" depart="14.00">
+    <vehicle id="14" depart="0.00">
         <route edges="5 -10 9 -8 15 -14 13 -12 11"/>
     </vehicle>
-    <vehicle id="15" depart="15.00">
+    <vehicle id="15" depart="0.00">
         <route edges="3 -4 -5 -6 -7 15"/>
     </vehicle>
-    <vehicle id="16" depart="16.00">
+    <vehicle id="16" depart="0.00">
         <route edges="1 -2 3 -4 -10 9"/>
     </vehicle>
-    <vehicle id="17" depart="17.00">
+    <vehicle id="17" depart="0.00">
         <route edges="-6 -7 -0 1"/>
     </vehicle>
-    <vehicle id="18" depart="18.00">
+    <vehicle id="18" depart="0.00">
         <route edges="4 -3 2 -1 0 15 -14 13 -12 11"/>
     </vehicle>
-    <vehicle id="19" depart="19.00">
+    <vehicle id="19" depart="0.00">
         <route edges="5 -10 9 -8 8 -9 10"/>
     </vehicle>
-    <vehicle id="20" depart="20.00">
+    <vehicle id="20" depart="0.00">
         <route edges="14 -15 7 6 5 4 -3 2 -1"/>
     </vehicle>
-    <vehicle id="21" depart="21.00">
+    <vehicle id="21" depart="0.00">
         <route edges="-15 7 6 5 4 -3"/>
     </vehicle>
-    <vehicle id="22" depart="22.00">
+    <vehicle id="22" depart="0.00">
         <route edges="-10 9 -8 7 6 5 -11 12 -13 14 -15"/>
     </vehicle>
-    <vehicle id="23" depart="23.00">
+    <vehicle id="23" depart="0.00">
         <route edges="-11 12 -13 14 -15 -0 1 -2"/>
     </vehicle>
-    <vehicle id="24" depart="24.00">
+    <vehicle id="24" depart="0.00">
         <route edges="12 -13 14 -15 8 -9 10 -5"/>
     </vehicle>
-    <vehicle id="25" depart="25.00">
+    <vehicle id="25" depart="0.00">
         <route edges="-5 -6 -7 15 -14"/>
     </vehicle>
-    <vehicle id="26" depart="26.00">
+    <vehicle id="26" depart="0.00">
         <route edges="-2 3 -4 -10 9 -8 7"/>
     </vehicle>
-    <vehicle id="27" depart="27.00">
+    <vehicle id="27" depart="0.00">
         <route edges="12 -13 14 -15 15 -14 13 -12 11"/>
     </vehicle>
-    <vehicle id="28" depart="28.00">
+    <vehicle id="28" depart="0.00">
         <route edges="-13 14 -15 15"/>
     </vehicle>
-    <vehicle id="29" depart="29.00">
+    <vehicle id="29" depart="0.00">
         <route edges="-13 14 -15 8 -9 10 -5 -6"/>
     </vehicle>
-    <vehicle id="30" depart="30.00">
+    <!--
+    <vehicle id="30" depart="0.00">
         <route edges="9 -8 7 6 5 -11 12"/>
     </vehicle>
-    <vehicle id="31" depart="31.00">
+    <vehicle id="31" depart="0.00">
         <route edges="1 -2 3 -4 -5 -6 -7 15 -14 13"/>
     </vehicle>
-    <vehicle id="32" depart="32.00">
+    <vehicle id="32" depart="0.00">
         <route edges="4 -3 2"/>
     </vehicle>
-    <vehicle id="33" depart="33.00">
+    <vehicle id="33" depart="0.00">
         <route edges="-15 7 6 5 4 -3 2 -1"/>
     </vehicle>
-    <vehicle id="34" depart="34.00">
+    <vehicle id="34" depart="0.00">
         <route edges="-4 -5 -6 -7 -0 1 -2"/>
     </vehicle>
     <vehicle id="35" depart="35.00">

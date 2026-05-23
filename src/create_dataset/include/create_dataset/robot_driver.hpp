@@ -43,7 +43,7 @@ struct LaneBoundary {
     Eigen::MatrixXd right_line;
 };
 
-namespace robot_driver {
+namespace create_dataset {
 class RobotDriver : public webots_ros2_driver::PluginInterface {
 public:
     void step() override;

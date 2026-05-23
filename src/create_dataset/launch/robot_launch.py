@@ -16,8 +16,8 @@ def generate_launch_description():
         parameters=[
             {'robot_description': robot_description_path_0},
             {'use_sim_time': True},
-            {'saving': True},
-            {'data_root': "/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city_2"},
+            {'saving': False},
+            {'data_root': "/home/marvin/Webots/Webots-Lane-Detection/datasets/city_night"},
             {'save_freq': 10},
             {'save_num': 2500},
         ]

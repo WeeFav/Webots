@@ -2,7 +2,7 @@ from datetime import datetime
 
 # DATASET
 dataset = "Webots"
-data_root = "/home/marvin/Webots/Webots-Lane-Detection/datasets/normal_city"
+data_root = "/home/marvin/Webots/Webots-Lane-Detection/datasets/city_2"
 num_lanes = 4
 num_cls = 4
 
