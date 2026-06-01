@@ -234,6 +234,7 @@ class Area(WebotsObject):
                         file.write('  type "%s"\n' % random.choice(Tree.broadLeavesTypes))
                     else:
                         file.write('  type "random"\n')
+                    file.write('  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"\n')
                     file.write("}\n")
             else:
                 verticalOffset = -0.01 if area.type == 'parking' else 0.0

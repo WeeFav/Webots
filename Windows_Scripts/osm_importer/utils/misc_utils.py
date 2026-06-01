@@ -38,6 +38,7 @@ def extern_proto_declaration(options):
     declaration += f'EXTERNPROTO "{PREFIX}projects/objects/backgrounds/protos/TexturedBackground.proto"\n'
     declaration += f'EXTERNPROTO "{PREFIX}projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"\n'
     declaration += f'EXTERNPROTO "{PREFIX}projects/objects/floors/protos/Floor.proto"\n'
+    declaration += f'EXTERNPROTO "{PREFIX}projects/appearances/protos/Soil.proto"\n'
 
     if not options.noRoads:
         declaration += f'EXTERNPROTO "{PREFIX}projects/objects/road/protos/Road.proto"\n'
@@ -95,14 +96,7 @@ def print_header(options, file, minlat, minlon, maxlat, maxlon, elevation=None):
         file.write("Floor {\n")
         file.write("  translation 0 0 -0.02\n")
         file.write("  size " + str(round(1.5 * xSize)) + " " + str(round(1.5 * zSize)) + "\n")
-        file.write("  appearance PBRAppearance {\n")
-        file.write("    baseColorMap ImageTexture {\n")
-        file.write("      url [\n")
-        file.write(f"        \"{GRASS_TEXTURE}\"\n")
-        file.write("      ]\n")
-        file.write("    }\n")
-        file.write("    roughness 1\n")
-        file.write("    metalness 0\n")
+        file.write("  appearance Soil {\n")
         file.write("  }\n")
         file.write("}\n")
     else:

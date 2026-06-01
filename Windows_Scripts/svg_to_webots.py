@@ -1,4 +1,5 @@
 from proto_nodes import extract_lanes
+from webots_to_svg import compute_bounds
 
 import numpy as np
 import xml.etree.ElementTree as ET
@@ -58,39 +59,6 @@ def apply_transform(points, translation, rotation, extra_rot=None):
         transformed.append(p_world)
 
     return np.array(transformed)
-
-
-def compute_bounds(roads, crossroads):
-    """
-    Compute world bounds for SVG sizing.
-    """
-
-    all_pts = []
-
-    for road in roads:
-        pts = apply_transform(
-            road.wayPoints,
-            road.translation,
-            road.rotation
-        )
-        if pts.size > 0:
-            all_pts.extend(pts[:, :2])
-
-    for cross in crossroads:
-        pts = apply_transform(
-            cross.shape,
-            cross.translation,
-            cross.rotation
-        )
-        if pts.size > 0:
-            all_pts.extend(pts[:, :2])
-
-    all_pts = np.array(all_pts)
-
-    min_xy = all_pts.min(axis=0)
-    max_xy = all_pts.max(axis=0)
-
-    return min_xy, max_xy
 
 # ----------------------------
 # SVG → World coordinate transform
@@ -175,10 +143,10 @@ def parse_path(d):
 # Main conversion
 # ----------------------------
 def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
-    roads, crossroads = extract_lanes(wbt_file)
+    roads, crossroads, forests = extract_lanes(wbt_file)
 
     # compute same bounds used in export
-    min_xy, max_xy = compute_bounds(roads, crossroads)
+    min_xy, max_xy = compute_bounds(roads, crossroads, forests)
 
     # IMPORTANT: SVG canvas height must match exporter
     height = (max_xy[1] - min_xy[1]) * scale + margin * 2
@@ -243,6 +211,31 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
             cross.shape = local_pts.tolist()
             road_updates[str(cross.id)] = (cross.shape, 'c')
             continue
+        
+        # ----------------------------
+        # FOREST UPDATE
+        # ----------------------------
+        forest = next((f for f in forests if str(f.id) == str(path_id)), None)
+        if forest is not None:
+            world_pts = [
+                svg_to_world(p, min_xy, max_xy, scale, margin, height)
+                for p in svg_points
+            ]
+
+            local_pts = inverse_transform(
+                world_pts,
+                forest.translation,
+                forest.rotation
+            )
+
+            # Undo the Y flip that was applied during export
+            forest.shape = [
+                [p[0], -p[1]]
+                for p in local_pts
+            ]
+
+            road_updates[str(forest.id)] = (forest.shape, 'f')
+            continue
 
         print(f"[WARN] No match for SVG id: {path_id}")
 
@@ -270,7 +263,26 @@ def format_points(points):
 
     return "\n".join(lines)
 
-def replace_field_block(node_block, field_name, new_points):
+def format_forest_shape(points):
+    """
+    Convert points into Forest shape format:
+
+    shape [
+      x y,
+      x y,
+      ...
+    ]
+    """
+
+    entries = []
+
+    for p in points:
+        x, y = p[:2]
+        entries.append(f"    {x:.6f} {y:.6f},")
+
+    return "\n".join(entries)
+
+def replace_field_block(node_block, field_name, new_points, type):
     """
     Replace contents inside:
         field_name [
@@ -286,7 +298,10 @@ def replace_field_block(node_block, field_name, new_points):
     content_start = node_block.find("[", field_start) + 1
     content_end = node_block.find("]", content_start)
 
-    new_content = "\n" + format_points(new_points) + "\n  "
+    if type == 'f':
+        new_content = "\n" + format_forest_shape(new_points) + "\n  "
+    else:
+        new_content = "\n" + format_points(new_points) + "\n  "
 
     return (
         node_block[:content_start]
@@ -320,8 +335,9 @@ def write_wbt(road_updates, wbt_file, output_file):
         # find next Road or Crossroad
         road_pos = text.find("Road {", pos)
         cross_pos = text.find("Crossroad {", pos)
+        forest_pos = text.find("Forest {", pos)
 
-        candidates = [p for p in [road_pos, cross_pos] if p != -1]
+        candidates = [p for p in [road_pos, cross_pos, forest_pos] if p != -1]
 
         if not candidates:
             output.append(text[pos:])
@@ -330,12 +346,6 @@ def write_wbt(road_updates, wbt_file, output_file):
         node_start = min(candidates)
 
         output.append(text[pos:node_start])
-
-        # determine node type
-        if node_start == road_pos:
-            node_keyword = "Road {"
-        else:
-            node_keyword = "Crossroad {"
 
         # find matching brace
         brace_count = 0
@@ -373,25 +383,16 @@ def write_wbt(road_updates, wbt_file, output_file):
 
                 # road -> update wayPoints
                 if geom_type == 'r':
-
-                    node_block = replace_field_block(
-                        node_block,
-                        "wayPoints",
-                        points
-                    )
-
+                    node_block = replace_field_block(node_block, "wayPoints", points, geom_type)
                     print(f"Updated Road {node_id}")
 
                 # crossroad -> update shape
                 elif geom_type == 'c':
-
-                    node_block = replace_field_block(
-                        node_block,
-                        "shape",
-                        points
-                    )
-
+                    node_block = replace_field_block(node_block, "shape", points, geom_type)
                     print(f"Updated Crossroad {node_id}")
+                elif geom_type == 'f':
+                    node_block = replace_field_block(node_block, "shape", points, geom_type)
+                    print(f"Updated Forest {node_id}")
 
         output.append(node_block)
 

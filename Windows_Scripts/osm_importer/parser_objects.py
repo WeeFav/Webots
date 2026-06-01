@@ -82,7 +82,6 @@ class Parser(object):
         OSMNode.add(osmId, lon, lat, tags)
         OSMCoord.add(osmId, lon, lat)
         if 'natural' in tags:
-            print("Tree found: ", osmId)
             tree = Tree()
             if 'height' in tags:
                 tree.height = float(tags['height'])
