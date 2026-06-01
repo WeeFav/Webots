@@ -2,7 +2,7 @@ import os
 import re
 import matplotlib.pyplot as plt
 import numpy as np
-from proto_nodes import RoadPROTO, CrossroadPROTO, ForestPROTO, SimpleBuildingPROTO
+from proto_nodes import RoadPROTO, CrossroadPROTO, ForestPROTO, SimpleBuildingPROTO, TransformPROTO
 
 def parse_vector_block(block):
     """
@@ -177,6 +177,14 @@ def parse_block(block):
         result["appearance"] = appearance_match.group(1)
         block = (block[:appearance_match.start()] + block[appearance_match.end():])
     
+    # ----------------------------------------
+    # point [ ... ]
+    # ----------------------------------------
+    point_match = re.search(r"point\s*\[(.*?)\]", block, re.DOTALL)
+    if point_match:
+        result["point"] = parse_vector_block(point_match.group(1))
+        block = (block[:point_match.start()] + block[point_match.end():])
+    
     # -------------------------------------------------
     # remaining single-line fields (e.g. "width 7", "translation 1 2 3")
     # -------------------------------------------------
@@ -188,8 +196,13 @@ def parse_block(block):
         parts = line.split(None, 1)
         if len(parts) != 2:
             continue
-
+        
         key, val = parts # ["width","0.15"]
+        
+        # skip node declarations
+        if val == "{" or val == "[":
+            continue
+
         result[key] = parse_value(val)
 
     return result
@@ -203,7 +216,7 @@ def extract_blocks(text, node_name):
     blocks = [block, block, ...]
     """
     blocks = []
-    pattern = re.compile(rf"{node_name}\s*\{{")
+    pattern = re.compile(rf"^\s*{node_name}\s*\{{", re.MULTILINE)
 
     for match in pattern.finditer(text):
         start = match.end()
@@ -228,7 +241,7 @@ def extract_proto(wbt_path):
 
     results = [] # list of dict
 
-    for node_name in ["Road", "Crossroad", "Forest", "SimpleBuilding"]:
+    for node_name in ["Road", "Crossroad", "Forest", "SimpleBuilding", "Transform"]:
         blocks = extract_blocks(text, node_name)
 
         for b in blocks:
@@ -240,6 +253,8 @@ def extract_proto(wbt_path):
     crossroads = []
     forests = []
     buildings = []
+    parkings = []
+    waters = []
     
     for data in results: 
         if data["type"] == 'Road':
@@ -254,7 +269,18 @@ def extract_proto(wbt_path):
         elif data["type"] == 'SimpleBuilding':
             building = SimpleBuildingPROTO(data)
             buildings.append(building)
+        elif data["type"] == 'Transform':
+            if "name" not in data:
+                print(f"Transform node have no name field, skipping.")
+            elif data["name"].startswith("parking"): 
+                parking = TransformPROTO(data)
+                parkings.append(parking)
+            elif data["name"].startswith("water"): 
+                water = TransformPROTO(data)
+                waters.append(water)
+            else:
+                print(f"Transform node with name {data['name']} is not supported")
         else:
             continue
 
-    return roads, crossroads, forests, buildings
+    return roads, crossroads, forests, buildings, parkings, waters

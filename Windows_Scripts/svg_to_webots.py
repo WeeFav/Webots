@@ -1,6 +1,3 @@
-from proto_nodes import extract_lanes
-from webots_to_svg import compute_bounds
-
 import numpy as np
 import xml.etree.ElementTree as ET
 from scipy.spatial.transform import Rotation as R
@@ -8,6 +5,8 @@ import shutil
 from pathlib import Path
 import re
 import argparse
+
+from webots_to_svg import extract_proto, compute_bounds
 
 POSE_AXIS = np.array([0.707107, -0.707107, 0.0])
 POSE_ANGLE = 3.14157
@@ -90,15 +89,11 @@ def parse_path(d):
     tokens = re.findall(r'[MmLlZz]|-?\d*\.?\d+(?:[eE][-+]?\d+)?', d)
 
     points = []
-
     i = 0
-
     current = np.array([0.0, 0.0])
-
     command = None
 
     while i < len(tokens):
-
         token = tokens[i]
 
         # command token
@@ -143,10 +138,10 @@ def parse_path(d):
 # Main conversion
 # ----------------------------
 def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
-    roads, crossroads, forests = extract_lanes(wbt_file)
+    roads, crossroads, forests, buildings, parkings, waters = extract_proto(wbt_file)
 
     # compute same bounds used in export
-    min_xy, max_xy = compute_bounds(roads, crossroads, forests)
+    min_xy, max_xy = compute_bounds(roads, crossroads, forests, buildings, parkings, waters)
 
     # IMPORTANT: SVG canvas height must match exporter
     height = (max_xy[1] - min_xy[1]) * scale + margin * 2
@@ -158,7 +153,7 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
     def is_path(elem):
         return elem.tag.endswith("path")
     
-    road_updates = {}
+    node_updates = {}
 
     for elem in root.iter():
         if not is_path(elem):
@@ -176,19 +171,10 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
         # ----------------------------
         road = next((r for r in roads if str(r.id) == str(path_id)), None)
         if road is not None:
-            world_pts = [
-                svg_to_world(p, min_xy, max_xy, scale, margin, height)
-                for p in svg_points
-            ]
-
-            local_pts = inverse_transform(
-                world_pts,
-                road.translation,
-                road.rotation
-            )
-
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, road.translation, road.rotation)
             road.wayPoints = local_pts.tolist()
-            road_updates[str(road.id)] = (road.wayPoints, 'r')
+            node_updates[str(road.id)] = (road.wayPoints, 'r')
             continue
 
         # ----------------------------
@@ -196,20 +182,10 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
         # ----------------------------
         cross = next((c for c in crossroads if str(c.id) == str(path_id)), None)
         if cross is not None:
-            world_pts = [
-                svg_to_world(p, min_xy, max_xy, scale, margin, height)
-                for p in svg_points
-            ]
-
-            local_pts = inverse_transform(
-                world_pts,
-                cross.translation,
-                cross.rotation,
-                extra_rot=POSE_ROT
-            )
-
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, cross.translation, cross.rotation, extra_rot=POSE_ROT)
             cross.shape = local_pts.tolist()
-            road_updates[str(cross.id)] = (cross.shape, 'c')
+            node_updates[str(cross.id)] = (cross.shape, 'c')
             continue
         
         # ----------------------------
@@ -217,32 +193,51 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
         # ----------------------------
         forest = next((f for f in forests if str(f.id) == str(path_id)), None)
         if forest is not None:
-            world_pts = [
-                svg_to_world(p, min_xy, max_xy, scale, margin, height)
-                for p in svg_points
-            ]
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, forest.translation, forest.rotation)
+            forest.shape = [[p[0], -p[1]] for p in local_pts] # Undo the Y flip that was applied during export
+            node_updates[str(forest.id)] = (forest.shape, 'f')
+            continue
+        
+        # ----------------------------
+        # BUILDING UPDATE
+        # ----------------------------
+        building = next((f for f in buildings if str(f.id) == str(path_id)), None)
+        if building is not None:
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, building.translation, building.rotation)
+            building.corners = [[p[0], p[1]] for p in local_pts]
+            node_updates[str(building.id)] = (building.corners, 'b')
+            continue
 
-            local_pts = inverse_transform(
-                world_pts,
-                forest.translation,
-                forest.rotation
-            )
-
-            # Undo the Y flip that was applied during export
-            forest.shape = [
-                [p[0], -p[1]]
-                for p in local_pts
-            ]
-
-            road_updates[str(forest.id)] = (forest.shape, 'f')
+        # ----------------------------
+        # PARKING UPDATE
+        # ----------------------------
+        parking = next((c for c in parkings if str(c.id) == str(path_id)), None)
+        if parking is not None:
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, parking.translation, parking.rotation)
+            parking.point = local_pts.tolist()
+            node_updates[str(parking.id)] = (parking.point, 't')
+            continue
+        
+        # ----------------------------
+        # WATER UPDATE
+        # ----------------------------
+        water = next((c for c in waters if str(c.id) == str(path_id)), None)
+        if water is not None:
+            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+            local_pts = inverse_transform(world_pts, water.translation, water.rotation)
+            water.point = local_pts.tolist()
+            node_updates[str(water.id)] = (water.point, 't')
             continue
 
         print(f"[WARN] No match for SVG id: {path_id}")
 
     print("SVG → Webots conversion complete.")
-    return road_updates
+    return node_updates
 
-def format_points(points):
+def format_3d_points(points):
     """
     Convert list of points into Webots format.
     Supports:
@@ -263,9 +258,9 @@ def format_points(points):
 
     return "\n".join(lines)
 
-def format_forest_shape(points):
+def format_2d_points(points):
     """
-    Convert points into Forest shape format:
+    Convert points into 2d format:
 
     shape [
       x y,
@@ -291,59 +286,35 @@ def replace_field_block(node_block, field_name, new_points, type):
     """
 
     field_start = node_block.find(f"{field_name} [")
-
     if field_start == -1:
         return node_block
 
     content_start = node_block.find("[", field_start) + 1
     content_end = node_block.find("]", content_start)
 
-    if type == 'f':
-        new_content = "\n" + format_forest_shape(new_points) + "\n  "
+    if type == 'f' or type == 'b':
+        new_content = "\n" + format_2d_points(new_points) + "\n  "
     else:
-        new_content = "\n" + format_points(new_points) + "\n  "
+        new_content = "\n" + format_3d_points(new_points) + "\n  "
 
-    return (
-        node_block[:content_start]
-        + new_content
-        + node_block[content_end:]
-    )
+    return (node_block[:content_start] + new_content + node_block[content_end:])
 
-
-def write_wbt(road_updates, wbt_file, output_file):
-    """
-    road_updates format:
-
-    {
-        road_id: (points, type)
-
-        type:
-            'r' -> Road      -> update wayPoints
-            'c' -> Crossroad -> update shape
-    }
-    """
-
+def write_wbt(node_updates, wbt_file, output_file):
     shutil.copy(wbt_file, output_file)
-
     text = Path(output_file).read_text(encoding="utf-8")
 
     pos = 0
     output = []
 
     while True:
-
-        # find next Road or Crossroad
-        road_pos = text.find("Road {", pos)
-        cross_pos = text.find("Crossroad {", pos)
-        forest_pos = text.find("Forest {", pos)
-
-        candidates = [p for p in [road_pos, cross_pos, forest_pos] if p != -1]
-
-        if not candidates:
+        pattern = re.compile(r"^\s*(Road|Crossroad|Forest|SimpleBuilding|Transform)\s*\{", re.MULTILINE)        
+        
+        match = pattern.search(text, pos)
+        if not match:
             output.append(text[pos:])
             break
 
-        node_start = min(candidates)
+        node_start = match.start()
 
         output.append(text[pos:node_start])
 
@@ -371,31 +342,30 @@ def write_wbt(road_updates, wbt_file, output_file):
         id_pos = node_block.find(id_key)
 
         if id_pos != -1:
-
             id_start = id_pos + len(id_key)
             id_end = node_block.find('"', id_start)
-
             node_id = node_block[id_start:id_end]
 
-            if node_id in road_updates:
+            if node_id in node_updates:
+                points, geom_type = node_updates[node_id]
 
-                points, geom_type = road_updates[node_id]
-
-                # road -> update wayPoints
                 if geom_type == 'r':
                     node_block = replace_field_block(node_block, "wayPoints", points, geom_type)
                     print(f"Updated Road {node_id}")
-
-                # crossroad -> update shape
                 elif geom_type == 'c':
                     node_block = replace_field_block(node_block, "shape", points, geom_type)
                     print(f"Updated Crossroad {node_id}")
                 elif geom_type == 'f':
                     node_block = replace_field_block(node_block, "shape", points, geom_type)
                     print(f"Updated Forest {node_id}")
+                elif geom_type == 'b':
+                    node_block = replace_field_block(node_block, "corners", points, geom_type)
+                    print(f"Updated Building {node_id}")
+                elif geom_type == 't':
+                    node_block = replace_field_block(node_block, "point", points, geom_type)
+                    print(f"Updated Transform {node_id}")
 
         output.append(node_block)
-
         pos = node_end + 1
 
     updated_text = "".join(output)
@@ -404,7 +374,6 @@ def write_wbt(road_updates, wbt_file, output_file):
 
     print("Finished updating WBT")
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--svg")
@@ -412,5 +381,5 @@ if __name__ == '__main__':
     parser.add_argument("--output")
     args = parser.parse_args()
         
-    road_updates = svg_to_webots(args.svg, args.wbt)
-    write_wbt(road_updates, args.wbt, args.output)
+    node_updates = svg_to_webots(args.svg, args.wbt)
+    write_wbt(node_updates, args.wbt, args.output)

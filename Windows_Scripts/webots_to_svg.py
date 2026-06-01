@@ -29,7 +29,7 @@ def apply_transform(points, translation, rotation, extra_rot=None):
     return np.array(transformed)
 
 
-def compute_bounds(roads, crossroads, forests, buildings):
+def compute_bounds(roads, crossroads, forests, buildings, parkings, waters):
     """
     Compute world bounds for SVG sizing.
     """
@@ -58,14 +58,24 @@ def compute_bounds(roads, crossroads, forests, buildings):
         if pts.size > 0:
             all_pts.extend(pts[:, :2])
 
+    for parking in parkings:
+        pts = apply_transform(parking.point, parking.translation, parking.rotation)
+        if pts.size > 0:
+            all_pts.extend(pts[:, :2])
+
+    for water in waters:
+        pts = apply_transform(water.point, water.translation, water.rotation)
+        if pts.size > 0:
+            all_pts.extend(pts[:, :2])
+            
     all_pts = np.array(all_pts)
     min_xy = all_pts.min(axis=0)
     max_xy = all_pts.max(axis=0)
 
     return min_xy, max_xy
 
-def create_svg(roads, crossroads, forests, buildings, output_file="map.svg", scale=5.0, margin=50):
-    min_xy, max_xy = compute_bounds(roads, crossroads, forests, buildings)
+def create_svg(roads, crossroads, forests, buildings, parkings, waters, output_file="map.svg", scale=5.0, margin=50):
+    min_xy, max_xy = compute_bounds(roads, crossroads, forests, buildings, parkings, waters)
 
     width = (max_xy[0] - min_xy[0]) * scale + margin * 2
     height = (max_xy[1] - min_xy[1]) * scale + margin * 2
@@ -217,6 +227,69 @@ def create_svg(roads, crossroads, forests, buildings, output_file="map.svg", sca
         else:
             print(f"Skipping invalid building: {building.name}")
 
+    # =====================================================
+    # Draw parkings
+    # =====================================================
+    for parking in parkings:
+        pts = apply_transform(parking.point, parking.translation, parking.rotation)
+        svg_pts = [to_svg_coords(p[:2]) for p in pts]
+
+        if len(svg_pts) >= 3:
+            path_cmd = []
+
+            for i, p in enumerate(svg_pts):
+                if i == 0:
+                    path_cmd.append(f"M {p[0]} {p[1]}")
+                else:
+                    path_cmd.append(f"L {p[0]} {p[1]}")
+
+            path_cmd.append("Z")
+
+            path_data = " ".join(path_cmd)
+
+            dwg.add(
+                dwg.path(
+                    d=path_data,
+                    fill="lightgray",
+                    stroke="lightgray",
+                    stroke_width=1,
+                    id=parking.id,
+                )
+            )
+        else:
+            print(f"Skipping invalid parking: {parking.name}")
+    
+    # =====================================================
+    # Draw waters
+    # =====================================================
+    for water in waters:
+        pts = apply_transform(water.point, water.translation, water.rotation)
+        svg_pts = [to_svg_coords(p[:2]) for p in pts]
+
+        if len(svg_pts) >= 3:
+            path_cmd = []
+
+            for i, p in enumerate(svg_pts):
+                if i == 0:
+                    path_cmd.append(f"M {p[0]} {p[1]}")
+                else:
+                    path_cmd.append(f"L {p[0]} {p[1]}")
+
+            path_cmd.append("Z")
+
+            path_data = " ".join(path_cmd)
+
+            dwg.add(
+                dwg.path(
+                    d=path_data,
+                    fill="blue",
+                    stroke="blue",
+                    stroke_width=1,
+                    id=water.id,
+                )
+            )
+        else:
+            print(f"Skipping invalid water: {water.name}")
 
     dwg.save()
     print(f"SVG saved to: {output_file}")
@@ -227,5 +300,5 @@ if __name__ == '__main__':
     parser.add_argument("--output")
     args = parser.parse_args()
     
-    roads, crossroads, forests, buildings = extract_proto(args.input)
-    create_svg(roads, crossroads, forests, buildings, output_file=args.output, scale=5)
+    roads, crossroads, forests, buildings, parkings, waters = extract_proto(args.input)
+    create_svg(roads, crossroads, forests, buildings, parkings, waters, output_file=args.output, scale=5)
