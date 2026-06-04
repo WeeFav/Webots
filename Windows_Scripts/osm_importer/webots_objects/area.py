@@ -107,15 +107,15 @@ class Area(WebotsObject):
         return inside
 
     @staticmethod
-    def draw_area(file, refs, red=1, green=0, blue=0, defName="", transparency=0.0, texture="", drawFlat=False,
+    def draw_area(file, osmid, type, refs, red=1, green=0, blue=0, defName="", transparency=0.0, texture="", drawFlat=False,
                   verticalOffset=0.0):
         """Draw an area."""
         if len(refs) < 3:
             return
-        if defName:
-            file.write("DEF " + defName + " " + "Transform {\n")
         else:
             file.write("Transform {\n")
+        file.write('  id "%s"\n' % osmid)
+        file.write('  name "%s"\n' % (type + osmid))
         file.write("  translation %f %f 0\n" %
                    (OSMCoord.coordDictionnary[refs[0]].x, OSMCoord.coordDictionnary[refs[0]].y))
         file.write("  children [\n")
@@ -239,7 +239,7 @@ class Area(WebotsObject):
             else:
                 verticalOffset = -0.01 if area.type == 'parking' else 0.0
                 drawFlat = True if area.type == 'water' else False
-                Area.draw_area(file, area.ref, area.color[0], area.color[1], area.color[2], defName, area.transparency,
+                Area.draw_area(file, area.OSMID, area.type, area.ref, area.color[0], area.color[1], area.color[2], defName, area.transparency,
                                area.texture, verticalOffset=verticalOffset, drawFlat=drawFlat)
 
     def generate_tree_file(self, folder):

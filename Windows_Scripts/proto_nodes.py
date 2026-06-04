@@ -80,8 +80,7 @@ class SimpleBuildingPROTO:
         if data:
             self.update_from_dict(data)
             
-        if self.id == "":
-            self.id = self.name.replace("(", "").replace(")", "")
+        self.id = self.id.replace("(", "").replace(")", "")
 
     def update_from_dict(self, data: dict):
         for key, value in data.items():

@@ -193,7 +193,7 @@ class Building(WebotsObject):
             if name != '' and building.number != '':
                 name += ' ' + building.number
             if name == '':
-                name = "building(%d)" % Building.nameIndex
+                name = "building%d" % Building.nameIndex
                 Building.nameIndex += 1
             else:
                 newName = name
@@ -205,6 +205,7 @@ class Building(WebotsObject):
                 name = newName
             name = name.replace('"', '')
             file.write('  name "%s"\n' % name)
+            file.write('  id "%s"\n' % name)
 
             file.write("  corners [\n")
             for ref in building.ref:

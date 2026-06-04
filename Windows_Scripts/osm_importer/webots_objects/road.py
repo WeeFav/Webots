@@ -44,7 +44,7 @@ vOffset = 0.01
 
 ROAD_LINE_DASHED_TEXTURE = 'https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/textures/road_line_dashed.png'  # noqa: E501
 ROAD_LINE_TRIANGLE_TEXTURE = 'https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/textures/road_line_triangle.png'  # noqa: E501
-
+ROAD_LINE_LIST = ['D:/Webots/projects/objects/road/protos/textures/road_line_solid.png', 'D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png']
 
 class Road(WebotsObject):
     """Road class representing a Webots Road."""
@@ -418,43 +418,55 @@ class Road(WebotsObject):
             if road.noBorder:
                 f.write('  leftBorder FALSE\n')
                 f.write('  rightBorder FALSE\n')
-            if road.startingAngle:
-                if road.startingAngle > math.pi:
-                    road.startingAngle -= 2 * math.pi
-                elif road.startingAngle < -math.pi:
-                    road.startingAngle += 2 * math.pi
-                f.write('  startingAngle %f\n' % (-road.startingAngle - (0.5 * math.pi)))
-            if road.endingAngle:
-                if road.endingAngle > math.pi:
-                    road.endingAngle -= 2 * math.pi
-                elif road.endingAngle < -math.pi:
-                    road.endingAngle += 2 * math.pi
-                f.write('  endingAngle %f\n' % (-road.endingAngle - (0.5 * math.pi)))
+            # if road.startingAngle:
+            #     if road.startingAngle > math.pi:
+            #         road.startingAngle -= 2 * math.pi
+            #     elif road.startingAngle < -math.pi:
+            #         road.startingAngle += 2 * math.pi
+            #     f.write('  startingAngle %f\n' % (-road.startingAngle - (0.5 * math.pi)))
+            # if road.endingAngle:
+            #     if road.endingAngle > math.pi:
+            #         road.endingAngle -= 2 * math.pi
+            #     elif road.endingAngle < -math.pi:
+            #         road.endingAngle += 2 * math.pi
+            #     f.write('  endingAngle %f\n' % (-road.endingAngle - (0.5 * math.pi)))
             f.write('  lines [\n')
             for i in range(road.lanes - 1):
                 f.write('    RoadLine {\n')
-                f.write('      type "%s"\n' % ('continuous' if (i == road.forwardLanes - 1) else 'dashed'))
+                f.write('      type "%s"\n' % ('double' if (i == road.forwardLanes - 1) else 'dashed'))
+                f.write('      color %s\n' % ('1 1 0' if (i == road.forwardLanes - 1) else '1 1 1'))
                 f.write('    }\n')
             f.write('  ]\n')
             if road.turnLanesForward:
                 f.write('  turnLanesForward "%s"\n' % road.turnLanesForward)
             if road.turnLanesBackward:
                 f.write('  turnLanesBackward "%s"\n' % road.turnLanesBackward)
-            if not Road.noIntersectionRoadLines and not road.insideARoundAbout:
-                if road.startJunction is not None and len(road.startJunction.roads) > 2:
-                    f.write('  startLine [\n')
-                    for lane in range(road.forwardLanes):
-                        f.write(f'    "{ROAD_LINE_DASHED_TEXTURE}"\n')
-                    for lane in range(road.backwardLanes):
-                        f.write(f'    "{ROAD_LINE_TRIANGLE_TEXTURE}"\n')
-                    f.write('  ]\n')
-                if road.endJunction is not None and len(road.endJunction.roads) > 2:
-                    f.write('  endLine [\n')
-                    for lane in range(road.forwardLanes):
-                        f.write(f'    "{ROAD_LINE_TRIANGLE_TEXTURE}"\n')
-                    for lane in range(road.backwardLanes):
-                        f.write(f'    "{ROAD_LINE_DASHED_TEXTURE}"\n')
-                    f.write('  ]\n')
+            # if not Road.noIntersectionRoadLines and not road.insideARoundAbout:
+            #     if road.startJunction is not None and len(road.startJunction.roads) > 2:
+            #         f.write('  startLine [\n')
+            #         for lane in range(road.forwardLanes):
+            #             f.write(f'    "{ROAD_LINE_DASHED_TEXTURE}"\n')
+            #         for lane in range(road.backwardLanes):
+            #             f.write(f'    "{ROAD_LINE_TRIANGLE_TEXTURE}"\n')
+            #         f.write('  ]\n')
+            #     if road.endJunction is not None and len(road.endJunction.roads) > 2:
+            #         f.write('  endLine [\n')
+            #         for lane in range(road.forwardLanes):
+            #             f.write(f'    "{ROAD_LINE_TRIANGLE_TEXTURE}"\n')
+            #         for lane in range(road.backwardLanes):
+            #             f.write(f'    "{ROAD_LINE_DASHED_TEXTURE}"\n')
+            #         f.write('  ]\n')
+            if road.appearance != "CementTiles":
+                f.write('  startLine [\n')
+                for i in range(road.lanes - road.forwardLanes):
+                    f.write(f'    "{ROAD_LINE_LIST[0]}"\n')
+                for i in range(road.forwardLanes):
+                    f.write(f'    "{ROAD_LINE_LIST[i % 2]}"\n')
+                f.write('  ]\n')
+                f.write('  endLine [\n')
+                for i in range(road.forwardLanes):
+                    f.write(f'    "{ROAD_LINE_LIST[i % 2]}"\n')
+                f.write('  ]\n')
             f.write('  wayPoints [\n')
             for coord in coords:
                 height = 0
@@ -469,61 +481,61 @@ class Road(WebotsObject):
                 f.write('  }\n')
             f.write('}\n')
             # Export pedestrian crossings
-            for crossingNode in road.crossings:
-                for i in range(len(road.refs)):
-                    ref = road.refs[i]
-                    translation = Vector2D(OSMCoord.coordDictionnary[crossingNode.OSMID].x,
-                                           OSMCoord.coordDictionnary[crossingNode.OSMID].y)
-                    if (translation.x == OSMCoord.coordDictionnary[ref].x and
-                            translation.y == OSMCoord.coordDictionnary[ref].y):
-                        if i == len(road.refs) - 1:
-                            otherRef = road.refs[i - 1]
-                        else:
-                            otherRef = road.refs[i + 1]
-                        alpha = math.atan((OSMCoord.coordDictionnary[otherRef].y - OSMCoord.coordDictionnary[ref].y) /
-                                          (OSMCoord.coordDictionnary[otherRef].x - OSMCoord.coordDictionnary[ref].x))
-                        alpha += 0.5 * math.pi
-                        width = road.width
-                        for crossroad in cls.crossroads.values():
-                            # If the pedestrian crossing is on crossroad, it is moved.
-                            if (translation.x == OSMCoord.coordDictionnary[crossroad.nodeRef].x and
-                                    translation.y == OSMCoord.coordDictionnary[crossroad.nodeRef].y):
-                                # Crossing must be parallel to this vector.
-                                vector = Vector2D(OSMCoord.coordDictionnary[otherRef].x - OSMCoord.coordDictionnary[ref].x,
-                                                  OSMCoord.coordDictionnary[otherRef].y - OSMCoord.coordDictionnary[ref].y)
-                                normVector = math.sqrt(vector.x ** 2 + vector.y ** 2)
-                                distanceFromCenter = 6.0  # distance to add to the translation in the good direction
-                                if crossroad.shape is not None:
-                                    bounds = crossroad.shape.bounds
-                                    # center of the crossroad
-                                    centre = Vector2D((bounds[2] + bounds[0]) / 2, (bounds[3] + bounds[1]) / 2)
-                                    # difference between crossroad point and center
-                                    difference = Vector2D(centre.x - OSMCoord.coordDictionnary[crossroad.nodeRef].x,
-                                                          centre.y - OSMCoord.coordDictionnary[crossroad.nodeRef].y)
-                                    beta = math.atan(difference.x / difference.y)
-                                    normDifference = math.sqrt(difference.x ** 2 + difference.y ** 2)
-                                    # radius of the crossroad
-                                    radius = math.sqrt(((bounds[2] - bounds[0]) / 2) ** 2 + ((bounds[3] - bounds[1]) / 2) ** 2)
-                                    # We need to add a correction distance to crossing translation because the center of the
-                                    # crossroad is not the same point as the crossroad point.
-                                    corrector = normDifference * abs(math.cos(beta - alpha))
-                                    if normVector > math.sqrt((centre.x - OSMCoord.coordDictionnary[otherRef].x) ** 2 +
-                                                              (centre.y - OSMCoord.coordDictionnary[otherRef].y) ** 2):
-                                        corrector = -corrector
-                                    distanceFromCenter = radius - corrector
-                                translation = Vector2D(OSMCoord.coordDictionnary[ref].x +
-                                                       (distanceFromCenter / normVector * vector.x),
-                                                       OSMCoord.coordDictionnary[ref].y +
-                                                       (distanceFromCenter / normVector * vector.y))
-                                break
-                        f.write('PedestrianCrossing {\n')
-                        f.write('  translation %f %f %f\n' % (translation.x, translation.y, -0.07))
-                        f.write('  rotation 0 0 1 %f\n' % (alpha))
-                        f.write('  name "pedestrian crossing(%d)"\n' % (Road.pedestrianCrossingNameIndex))
-                        Road.pedestrianCrossingNameIndex += 1
-                        f.write('  size %f %f\n' % (width, width * 0.4))
-                        f.write('}\n')
-                        break
+            # for crossingNode in road.crossings:
+            #     for i in range(len(road.refs)):
+            #         ref = road.refs[i]
+            #         translation = Vector2D(OSMCoord.coordDictionnary[crossingNode.OSMID].x,
+            #                                OSMCoord.coordDictionnary[crossingNode.OSMID].y)
+            #         if (translation.x == OSMCoord.coordDictionnary[ref].x and
+            #                 translation.y == OSMCoord.coordDictionnary[ref].y):
+            #             if i == len(road.refs) - 1:
+            #                 otherRef = road.refs[i - 1]
+            #             else:
+            #                 otherRef = road.refs[i + 1]
+            #             alpha = math.atan((OSMCoord.coordDictionnary[otherRef].y - OSMCoord.coordDictionnary[ref].y) /
+            #                               (OSMCoord.coordDictionnary[otherRef].x - OSMCoord.coordDictionnary[ref].x))
+            #             alpha += 0.5 * math.pi
+            #             width = road.width
+            #             for crossroad in cls.crossroads.values():
+            #                 # If the pedestrian crossing is on crossroad, it is moved.
+            #                 if (translation.x == OSMCoord.coordDictionnary[crossroad.nodeRef].x and
+            #                         translation.y == OSMCoord.coordDictionnary[crossroad.nodeRef].y):
+            #                     # Crossing must be parallel to this vector.
+            #                     vector = Vector2D(OSMCoord.coordDictionnary[otherRef].x - OSMCoord.coordDictionnary[ref].x,
+            #                                       OSMCoord.coordDictionnary[otherRef].y - OSMCoord.coordDictionnary[ref].y)
+            #                     normVector = math.sqrt(vector.x ** 2 + vector.y ** 2)
+            #                     distanceFromCenter = 6.0  # distance to add to the translation in the good direction
+            #                     if crossroad.shape is not None:
+            #                         bounds = crossroad.shape.bounds
+            #                         # center of the crossroad
+            #                         centre = Vector2D((bounds[2] + bounds[0]) / 2, (bounds[3] + bounds[1]) / 2)
+            #                         # difference between crossroad point and center
+            #                         difference = Vector2D(centre.x - OSMCoord.coordDictionnary[crossroad.nodeRef].x,
+            #                                               centre.y - OSMCoord.coordDictionnary[crossroad.nodeRef].y)
+            #                         beta = math.atan(difference.x / difference.y)
+            #                         normDifference = math.sqrt(difference.x ** 2 + difference.y ** 2)
+            #                         # radius of the crossroad
+            #                         radius = math.sqrt(((bounds[2] - bounds[0]) / 2) ** 2 + ((bounds[3] - bounds[1]) / 2) ** 2)
+            #                         # We need to add a correction distance to crossing translation because the center of the
+            #                         # crossroad is not the same point as the crossroad point.
+            #                         corrector = normDifference * abs(math.cos(beta - alpha))
+            #                         if normVector > math.sqrt((centre.x - OSMCoord.coordDictionnary[otherRef].x) ** 2 +
+            #                                                   (centre.y - OSMCoord.coordDictionnary[otherRef].y) ** 2):
+            #                             corrector = -corrector
+            #                         distanceFromCenter = radius - corrector
+            #                     translation = Vector2D(OSMCoord.coordDictionnary[ref].x +
+            #                                            (distanceFromCenter / normVector * vector.x),
+            #                                            OSMCoord.coordDictionnary[ref].y +
+            #                                            (distanceFromCenter / normVector * vector.y))
+            #                     break
+            #             f.write('PedestrianCrossing {\n')
+            #             f.write('  translation %f %f %f\n' % (translation.x, translation.y, -0.07))
+            #             f.write('  rotation 0 0 1 %f\n' % (alpha))
+            #             f.write('  name "pedestrian crossing(%d)"\n' % (Road.pedestrianCrossingNameIndex))
+            #             Road.pedestrianCrossingNameIndex += 1
+            #             f.write('  size %f %f\n' % (width, width * 0.4))
+            #             f.write('}\n')
+            #             break
 
     @classmethod
     def process(cls):
@@ -805,6 +817,7 @@ class Crossroad:
             # Compute the starting and ending angles thanks to the intersection
             # point between the crossroad shape and the road path.
             crossroadCoords = convert_polygon_to_vector2d_list(self.shape)
+            
             if not firstPointPresent:
                 roadSegment = (roadPath[1], roadPath[0])
                 for i in range(len(crossroadCoords) - 1):
@@ -812,7 +825,11 @@ class Crossroad:
                     intersection = intersects(roadSegment[0], roadSegment[1], crossroadShapeSegment[0],
                                               crossroadShapeSegment[1])
                     if intersection and intersection != roadPath[1]:
-                        road.startingAngle = (crossroadShapeSegment[1] - crossroadShapeSegment[0]).angle() % (2.0 * math.pi)
+                        # Calculate angle based on the road's vector, strictly perpendicular
+                        alpha = (roadPath[0] - roadPath[1]).angle()
+                        road.startingAngle = (alpha + 0.5 * math.pi) % (2.0 * math.pi)
+                        break  # Stop checking once the intersection is found
+                        
             if not lastPointPresent:
                 nRoadPath = len(roadPath)
                 roadSegment = (roadPath[nRoadPath - 2], roadPath[nRoadPath - 1])
@@ -821,4 +838,7 @@ class Crossroad:
                     intersection = intersects(roadSegment[0], roadSegment[1], crossroadShapeSegment[0],
                                               crossroadShapeSegment[1])
                     if intersection and intersection != roadPath[nRoadPath - 2]:
-                        road.endingAngle = (crossroadShapeSegment[0] - crossroadShapeSegment[1]).angle() % (2.0 * math.pi)
+                        # Calculate angle based on the road's vector, strictly perpendicular
+                        alpha = (roadPath[nRoadPath - 1] - roadPath[nRoadPath - 2]).angle()
+                        road.endingAngle = (alpha - 0.5 * math.pi) % (2.0 * math.pi)
+                        break  # Stop checking once the intersection is found
