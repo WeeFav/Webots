@@ -20,6 +20,8 @@ find_package(OpenCV REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(webots_ros2_driver REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 pkg_check_modules(ZMQ REQUIRED libzmq)
 find_package(nlohmann_json REQUIRED)
 
@@ -45,6 +47,8 @@ ament_target_dependencies(${PROJECT_NAME}
   cv_bridge
   webots_ros2_driver
   pluginlib
+  tf2
+  tf2_ros
 )
 
 target_link_libraries(${PROJECT_NAME}

@@ -1,0 +1,7081 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/Soil.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/Road.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/Crossroad.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/road/protos/RoadLine.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CementTiles.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/PedestrianCrossing.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/SimpleBuilding.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/SimpleTree.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/street_furniture/protos/Fence.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/geometries/protos/Extrusion.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/Forest.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/traffic/protos/ParkingLines.proto"
+
+WorldInfo {
+  info [
+    "World generated using the Open Street Map to Webots importer"
+    "Author: David Mansolino <david.mansolino@epfl.ch>"
+  ]
+  gpsCoordinateSystem "WGS84"
+  gpsReference 25.012909999999998 121.46627050000001 0
+  lineScale 3
+}
+Viewpoint {
+  orientation -0.3922 0.3922 0.8321 1.7536
+  position 0 -1157.7 1362
+  near 3
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+  translation 0 0 -0.02
+  size 953 973
+  appearance Soil {
+  }
+}
+Crossroad {
+  translation -250.774491 78.548525 0.010000
+  name "crossroad(1)"
+  id "-26996"
+  shape [
+  ]
+  connectedRoadIDs [
+    "-2109"
+    "-2110"
+  ]
+}
+Crossroad {
+  translation -326.359416 50.550578 0.010000
+  name "crossroad(2)"
+  id "-27018"
+  shape [
+  ]
+  connectedRoadIDs [
+    "-2109"
+    "-2110"
+  ]
+}
+Crossroad {
+  translation -244.625162 -219.455911 0.010000
+  name "crossroad(3)"
+  id "-27164"
+  shape [
+  ]
+  connectedRoadIDs [
+    "-2229"
+    "-2230"
+  ]
+}
+Crossroad {
+  translation 52.546313 279.789842 0.010000
+  name "crossroad(4)"
+  id "1268538864"
+  shape [
+    17.629236 1.486622 0.000000
+    11.359906 -8.182453 0.000000
+    3.761913 -18.730937 0.000000
+    -18.957898 -2.366031 0.000000
+    -11.359906 8.182453 0.000000
+    -3.570147 17.327840 0.000000
+    -0.668429 16.697401 0.000000
+    16.183063 4.166350 0.000000
+    17.629236 1.486622 0.000000
+  ]
+  connectedRoadIDs [
+    "-1544"
+    "326955641_1"
+    "338478395_2"
+    "338478395_3"
+  ]
+}
+Crossroad {
+  translation -150.530645 -159.321753 0.010000
+  name "crossroad(5)"
+  id "1268538985"
+  shape [
+    10.547159 6.144707 0.000000
+    9.766922 4.196097 0.000000
+    2.862469 -10.237493 0.000000
+    1.813975 -12.071019 0.000000
+    -5.178032 -10.825340 0.000000
+    -14.199148 -6.510314 0.000000
+    -3.843085 15.140367 0.000000
+    5.178032 10.825340 0.000000
+    10.547159 6.144707 0.000000
+  ]
+  connectedRoadIDs [
+    "-1728"
+    "310261335_1"
+    "310849373_2"
+    "310849373_3"
+  ]
+}
+Crossroad {
+  translation 238.628027 35.913791 0.010000
+  name "crossroad(6)"
+  id "1268539000"
+  shape [
+    14.681850 5.333225 0.000000
+    2.598248 -15.402893 0.000000
+    -6.041801 -10.368059 0.000000
+    -6.331252 -10.193883 0.000000
+    -14.826154 -4.917839 0.000000
+    -2.163650 15.469926 0.000000
+    14.681850 5.333225 0.000000
+  ]
+  connectedRoadIDs [
+    "310849373_1"
+    "310849373_4"
+    "338478395_1"
+    "338478395_3"
+  ]
+}
+Crossroad {
+  translation 333.458068 -121.435766 0.010000
+  name "crossroad(7)"
+  id "1268539037"
+  shape [
+    11.947041 4.611746 0.000000
+    6.911892 -4.028119 0.000000
+    -6.035853 -10.371523 0.000000
+    -14.678788 -5.341646 0.000000
+    -2.607083 15.401400 0.000000
+    6.035853 10.371523 0.000000
+    11.947041 4.611746 0.000000
+  ]
+  connectedRoadIDs [
+    "128995034_2"
+    "338478395_1"
+  ]
+}
+Crossroad {
+  translation -72.708802 183.658941 0.010000
+  name "crossroad(8)"
+  id "1268539038"
+  shape [
+    17.351963 3.450999 0.000000
+    4.825913 -17.020886 0.000000
+    -6.263025 -10.235942 0.000000
+    -14.447242 -1.235794 0.000000
+    -0.394232 16.706124 0.000000
+    17.351963 3.450999 0.000000
+  ]
+  connectedRoadIDs [
+    "-1270_1"
+    "232201641"
+    "326955641_1"
+    "326955641_2"
+  ]
+}
+Crossroad {
+  translation 54.890614 -57.150539 0.010000
+  name "crossroad(9)"
+  id "1268539098"
+  shape [
+    10.607048 6.040740 0.000000
+    9.824942 4.058389 0.000000
+    2.718278 -10.276720 0.000000
+    1.717422 -12.085134 0.000000
+    -5.285563 -10.773245 0.000000
+    -14.263268 -6.368609 0.000000
+    -3.692141 15.177882 0.000000
+    5.285563 10.773245 0.000000
+    10.607048 6.040740 0.000000
+  ]
+  connectedRoadIDs [
+    "-1258"
+    "232201641"
+    "310849373_2"
+    "310849373_4"
+  ]
+}
+Crossroad {
+  translation 565.319170 204.289785 0.010000
+  name "crossroad(10)"
+  id "1268539100"
+  shape [
+    9.790227 1.466782 0.000000
+    5.628505 -4.161723 0.000000
+    -3.371833 -2.151917 0.000000
+    -7.137687 3.748790 0.000000
+    -1.466782 9.790227 0.000000
+    9.790227 1.466782 0.000000
+  ]
+  connectedRoadIDs [
+    "30336556"
+    "310849373_1"
+  ]
+}
+Crossroad {
+  translation 82.216834 -333.881977 0.010000
+  name "crossroad(11)"
+  id "1273003326"
+  shape [
+    5.273366 2.047342 0.000000
+    2.047342 -5.273366 0.000000
+    -1.613012 -3.660354 0.000000
+    -1.710401 -3.615872 0.000000
+    -8.038177 -0.622670 0.000000
+    -4.617375 6.609073 0.000000
+    -2.141026 6.958161 0.000000
+    1.858157 7.038981 0.000000
+    5.273366 2.047342 0.000000
+  ]
+  connectedRoadIDs [
+    "111808396_1"
+    "310261353_1"
+    "310261353_2"
+  ]
+}
+Crossroad {
+  translation 211.252253 158.642041 0.010000
+  name "crossroad(12)"
+  id "13190238293"
+  shape [
+    4.229415 1.453289 0.000000
+    3.700280 -2.511558 0.000000
+    -4.004032 -1.991916 0.000000
+    -3.995952 2.008076 0.000000
+    -1.466079 4.224998 0.000000
+    2.500351 3.707862 0.000000
+    4.229415 1.453289 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_3"
+    "291409438_6"
+    "356796887"
+  ]
+}
+Crossroad {
+  translation -242.027607 -204.834762 0.010000
+  name "crossroad(13)"
+  id "1403019720"
+  shape [
+    9.374036 3.182366 0.000000
+    4.848193 -6.441663 0.000000
+    4.419316 -6.743118 0.000000
+    -8.053109 -0.383981 0.000000
+    -3.182366 9.374036 0.000000
+    9.374036 3.182366 0.000000
+  ]
+  connectedRoadIDs [
+    "126672566_1"
+    "310849373_3"
+    "310849373_5"
+  ]
+}
+Crossroad {
+  translation -207.938442 -281.248755 0.010000
+  name "crossroad(14)"
+  id "1403752408"
+  shape [
+    5.300209 -1.976812 0.000000
+    2.725793 -4.956819 0.000000
+    -4.956819 -2.725793 0.000000
+    -5.215478 -2.190613 0.000000
+    -2.190613 5.215478 0.000000
+    1.976812 5.300209 0.000000
+    5.300209 -1.976812 0.000000
+  ]
+  connectedRoadIDs [
+    "126672536"
+    "126672566_1"
+    "126672566_2"
+  ]
+}
+Crossroad {
+  translation -67.156154 -323.628807 0.010000
+  name "crossroad(15)"
+  id "2414182038"
+  shape [
+    10.614421 0.577988 0.000000
+    7.241288 -7.782271 0.000000
+    -3.654556 -7.116475 0.000000
+    -8.674634 -6.144161 0.000000
+    -9.881472 -3.918739 0.000000
+    -6.298144 4.932888 0.000000
+    -2.572360 10.314212 0.000000
+    -1.981867 10.443764 0.000000
+    3.654556 7.116475 0.000000
+    10.614421 0.577988 0.000000
+  ]
+  connectedRoadIDs [
+    "-1728"
+    "128995034_1"
+    "128995034_3"
+  ]
+}
+Crossroad {
+  translation -291.444053 4.168552 0.010000
+  name "crossroad(16)"
+  id "2414182080"
+  shape [
+    18.739642 3.882761 0.000000
+    17.292981 -3.735348 0.000000
+    -2.342185 -17.536082 0.000000
+    -16.656151 -1.350055 0.000000
+    -18.628491 7.278689 0.000000
+    1.771564 19.921385 0.000000
+    3.895413 18.737016 0.000000
+    18.739642 3.882761 0.000000
+  ]
+  connectedRoadIDs [
+    "310261335_1"
+    "310261335_2"
+    "326955641_2"
+    "326955641_3"
+  ]
+}
+Crossroad {
+  translation -398.996067 84.379772 0.010000
+  name "crossroad(17)"
+  id "2414182093"
+  shape [
+    15.618933 0.221229 0.000000
+    -2.598926 -15.402778 0.000000
+    -9.108929 -7.812004 0.000000
+    -12.798217 0.453468 0.000000
+    -4.773222 6.419996 0.000000
+    9.108929 7.812004 0.000000
+    15.618933 0.221229 0.000000
+  ]
+  connectedRoadIDs [
+    "310261335_2"
+    "327350097"
+  ]
+}
+Crossroad {
+  translation 215.927122 291.799449 0.010000
+  name "crossroad(18)"
+  id "2917075370"
+  shape [
+    4.386967 0.868633 0.000000
+    3.327086 -2.988394 0.000000
+    1.956768 -4.021326 0.000000
+    -2.043000 -3.978210 0.000000
+    -4.315049 -1.174884 0.000000
+    -3.528937 2.747109 0.000000
+    -0.962659 4.367297 0.000000
+    2.916242 3.390506 0.000000
+    4.386967 0.868633 0.000000
+  ]
+  connectedRoadIDs [
+    "288160105_2"
+    "288160106"
+    "356796893"
+    "356796894"
+  ]
+}
+Crossroad {
+  translation 215.365115 127.824039 0.010000
+  name "crossroad(19)"
+  id "2948748864"
+  shape [
+    4.366315 0.967104 0.000000
+    3.393472 -2.912790 0.000000
+    -0.012745 -4.472118 0.000000
+    -3.585341 -2.673074 0.000000
+    -4.229415 -1.453289 0.000000
+    -3.700280 2.511558 0.000000
+    0.264567 1.982424 0.000000
+    0.486421 1.939947 0.000000
+    4.366315 0.967104 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_2"
+    "291409438_6"
+    "356796896"
+  ]
+}
+Crossroad {
+  translation 229.264444 185.022849 0.010000
+  name "crossroad(20)"
+  id "2948748867"
+  shape [
+    4.281403 1.292127 0.000000
+    0.540872 -4.439308 0.000000
+    -3.226923 -3.096283 0.000000
+    -4.424037 -0.654137 0.000000
+    -3.177732 3.146747 0.000000
+    1.535140 4.200398 0.000000
+    4.281403 1.292127 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_3"
+    "291409438_7"
+    "444610456"
+  ]
+}
+Crossroad {
+  translation 273.670411 275.672322 0.010000
+  name "crossroad(21)"
+  id "2948748871"
+  shape [
+  ]
+  connectedRoadIDs [
+    "291409438_5"
+    "291409439"
+  ]
+}
+Crossroad {
+  translation 250.377198 192.825977 0.010000
+  name "crossroad(22)"
+  id "3622032799"
+  shape [
+    4.469291 0.159480 0.000000
+    2.809159 -3.479745 0.000000
+    -0.959269 -4.368043 0.000000
+    -4.069996 -1.853410 0.000000
+    -0.445483 4.449893 0.000000
+    3.292624 3.026322 0.000000
+    4.469291 0.159480 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_4"
+    "291409438_7"
+    "356796888"
+  ]
+}
+Crossroad {
+  translation 169.050202 231.694830 0.010000
+  name "crossroad(23)"
+  id "3622032802"
+  shape [
+    4.273167 -1.319106 0.000000
+    1.508615 -4.209998 0.000000
+    -4.369415 0.953002 0.000000
+    -1.859247 4.067333 0.000000
+    0.706344 4.416003 0.000000
+    3.956608 2.084527 0.000000
+    4.273167 -1.319106 0.000000
+  ]
+  connectedRoadIDs [
+    "356796889"
+    "356796892_1"
+    "356796892_2"
+  ]
+}
+Crossroad {
+  translation 193.819149 205.793950 0.010000
+  name "crossroad(24)"
+  id "3622032804"
+  shape [
+  ]
+  connectedRoadIDs [
+    "356796890"
+    "356796892_1"
+  ]
+}
+Crossroad {
+  translation 290.838450 246.135712 0.010000
+  name "crossroad(25)"
+  id "3622032805"
+  shape [
+    4.375628 -0.924057 0.000000
+    1.886131 -4.054937 0.000000
+    -1.222201 -4.301886 0.000000
+    -4.174829 -1.603371 0.000000
+    -4.336718 1.092190 0.000000
+    -1.728278 4.124688 0.000000
+    4.375628 -0.924057 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_4"
+    "291409438_5"
+    "356796891"
+  ]
+}
+Crossroad {
+  translation 143.100971 263.889691 0.010000
+  name "crossroad(26)"
+  id "3622032808"
+  shape [
+    4.369415 -0.953002 0.000000
+    1.859247 -4.067333 0.000000
+    -0.660521 -4.423089 0.000000
+    -3.934783 -2.125436 0.000000
+    0.592209 4.432752 0.000000
+    3.901527 2.185884 0.000000
+    4.369415 -0.953002 0.000000
+  ]
+  connectedRoadIDs [
+    "288160105_1"
+    "288160105_2"
+    "356796892_2"
+  ]
+}
+Crossroad {
+  translation 235.235348 91.776859 0.010000
+  name "crossroad(27)"
+  id "3622032813"
+  shape [
+    4.368640 -0.956549 0.000000
+    1.855945 -4.068841 0.000000
+    -0.063276 -4.471688 0.000000
+    -3.615316 -2.632392 0.000000
+    -4.321330 1.151568 0.000000
+    -1.671544 4.148005 0.000000
+    4.368640 -0.956549 0.000000
+  ]
+  connectedRoadIDs [
+    "291409438_1"
+    "291409438_2"
+    "356796897"
+  ]
+}
+Crossroad {
+  translation -167.065172 -316.559818 0.010000
+  name "crossroad(28)"
+  id "3656522213"
+  shape [
+    4.470366 -0.125820 0.000000
+    3.289127 -3.030123 0.000000
+    -0.450623 -4.449375 0.000000
+    -1.869875 -0.709626 0.000000
+    -1.886111 -0.665272 0.000000
+    -3.216654 3.106950 0.000000
+    0.555568 4.437493 0.000000
+    2.782875 3.500801 0.000000
+    4.470366 -0.125820 0.000000
+  ]
+  connectedRoadIDs [
+    "266756876_1"
+    "266756876_2"
+    "361135239"
+  ]
+}
+Crossroad {
+  translation 28.746205 -332.435088 0.010000
+  name "crossroad(29)"
+  id "3656522221"
+  shape [
+    2.424913 -3.757632 0.000000
+    -1.551158 -4.194509 0.000000
+    -4.465363 -0.246030 0.000000
+    -2.876042 3.424673 0.000000
+    -1.999065 4.000467 0.000000
+    2.000935 3.999533 0.000000
+    2.424913 -3.757632 0.000000
+  ]
+  connectedRoadIDs [
+    "111808396_1"
+    "111808396_2"
+    "361135242"
+  ]
+}
+Crossroad {
+  translation 77.383550 -203.485935 0.010000
+  name "crossroad(30)"
+  id "3656526227"
+  shape [
+    5.279223 2.032193 0.000000
+    4.471076 -0.097363 0.000000
+    2.604755 -3.635278 0.000000
+    -4.472064 -0.025347 0.000000
+    -2.032193 5.279223 0.000000
+    5.279223 2.032193 0.000000
+  ]
+  connectedRoadIDs [
+    "222521511"
+    "222521512_1"
+    "222521512_2"
+  ]
+}
+Crossroad {
+  translation 51.913754 -269.819777 0.010000
+  name "crossroad(31)"
+  id "4401736616"
+  shape [
+    10.273912 2.728871 0.000000
+    7.171213 -3.545941 0.000000
+    7.069838 -3.743980 0.000000
+    5.197848 -7.278899 0.000000
+    -8.941828 0.209061 0.000000
+    -4.068515 9.820753 0.000000
+    10.273912 2.728871 0.000000
+  ]
+  connectedRoadIDs [
+    "128995034_3"
+    "128995034_4"
+    "310261353_2"
+  ]
+}
+Crossroad {
+  translation 138.383119 -224.025502 0.010000
+  name "crossroad(32)"
+  id "5713208683"
+  shape [
+    11.792014 4.994838 0.000000
+    2.459845 -12.567783 0.000000
+    -11.721285 -5.158631 0.000000
+    -12.565080 -2.473614 0.000000
+    -5.171471 11.715626 0.000000
+    -2.284521 12.600832 0.000000
+    11.792014 4.994838 0.000000
+  ]
+  connectedRoadIDs [
+    "-1258"
+    "128995034_2"
+    "128995034_4"
+  ]
+}
+Crossroad {
+  translation -231.935548 309.371469 0.010000
+  name "crossroad(33)"
+  id "8512521313"
+  shape [
+    12.806197 0.036287 0.000000
+    12.537531 -2.609658 0.000000
+    0.206133 -12.804589 0.000000
+    -6.165699 -5.097466 0.000000
+    -6.306020 -4.922816 0.000000
+    -12.459540 2.959708 0.000000
+    0.152500 12.805340 0.000000
+    2.775715 12.501816 0.000000
+    12.806197 0.036287 0.000000
+  ]
+  connectedRoadIDs [
+    "-1270_1"
+    "-1270_2"
+    "248676581"
+    "327350097"
+  ]
+}
+Road {
+  translation 133.762113 -215.157227 0.010000
+  name "新站路"
+  id "-1258"
+  startJunction "5713208683"
+  endJunction "1268539098"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -1.030480 1.977617 0.000000
+    -73.390724 146.951219 0.000000
+    -75.762333 151.735077 0.000000
+  ]
+}
+Road {
+  translation 304.522647 465.885188 0.010000
+  name "縣民大道二段"
+  id "-1544"
+  endJunction "1268538864"
+  splineSubdivision 0
+  numberOfLanes 8
+  numberOfForwardLanes 4
+  speedLimit 8.333333
+  width 28.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -65.552074 -51.655841 0.000000
+    -155.540071 -114.388928 0.000000
+    -219.878949 -162.745956 0.000000
+    -236.499571 -174.947552 0.000000
+    -241.427849 -178.497353 0.000000
+  ]
+}
+Road {
+  translation -70.682809 -316.761390 0.010000
+  name "新府路"
+  id "-1728"
+  startJunction "2414182038"
+  endJunction "1268538985"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -18.249864 35.537752 0.000000
+    -37.023813 73.001903 0.000000
+    -40.166016 79.860847 0.000000
+    -74.578359 146.423926 0.000000
+    -76.827137 151.124941 0.000000
+  ]
+}
+Road {
+  translation -42.767421 177.500373 0.010000
+  name "road(1)"
+  id "-1982"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    38.138369 -81.536676 0.000000
+    69.347232 -144.861949 0.000000
+    95.781115 -204.710340 0.000000
+    100.526705 -214.378760 0.000000
+    102.310167 -218.220460 0.000000
+    128.428047 -204.326544 0.000000
+    183.441015 -176.392756 0.000000
+    205.033862 -165.438271 0.000000
+    222.640334 -157.108199 0.000000
+    259.151902 -139.853446 0.000000
+    258.163891 -132.609091 0.000000
+    234.397131 -103.739935 0.000000
+    214.802229 -79.946804 0.000000
+    197.848715 -55.541057 0.000000
+    196.472196 -51.415974 0.000000
+    174.916573 -21.619094 0.000000
+    170.817750 -16.344450 0.000000
+    162.560565 -5.705867 0.000000
+    118.657966 50.817650 0.000000
+    103.623802 69.984615 0.000000
+    97.682891 73.020454 0.000000
+    96.154279 74.589883 0.000000
+    93.942183 75.814301 0.000000
+    91.492274 75.189389 0.000000
+    89.284597 73.857661 0.000000
+    45.088144 41.083080 0.000000
+    -1.286927 6.682849 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -187.470990 -58.846716 0.010000
+  name "road(2)"
+  id "-2095"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    29.677291 -58.600684 0.000000
+    36.523928 -73.465890 0.000000
+    40.812847 -80.670146 0.000000
+    44.959461 -83.508503 0.000000
+    98.193384 -55.887731 0.000000
+    115.230946 -47.019831 0.000000
+    145.285360 -31.365200 0.000000
+    218.954198 4.150869 0.000000
+    220.642647 5.797341 0.000000
+    220.303301 8.131131 0.000000
+    174.031929 99.680914 0.000000
+    169.625852 108.127065 0.000000
+    150.054853 150.939225 0.000000
+    132.634164 181.298824 0.000000
+    128.883687 188.807110 0.000000
+    126.080862 194.432674 0.000000
+    125.343770 196.191168 0.000000
+    121.589552 205.150569 0.000000
+    113.877294 216.658177 0.000000
+    111.079262 216.468334 0.000000
+    108.705350 216.295841 0.000000
+    91.112174 202.903821 0.000000
+    69.762254 185.777173 0.000000
+    -0.207949 125.913173 0.000000
+    -33.251968 99.393118 0.000000
+    -54.929977 82.735596 0.000000
+    -67.289806 72.474562 0.000000
+    -74.716094 65.546995 0.000000
+    -75.728184 63.610246 0.000000
+    -74.377050 61.892758 0.000000
+    -66.196899 56.699773 0.000000
+    -55.662674 48.383435 0.000000
+    -50.758353 43.830615 0.000000
+    -47.252930 41.420418 0.000000
+    -41.304076 37.298834 0.000000
+    -34.369016 32.025153 0.000000
+    -16.891248 16.507699 0.000000
+    -3.878579 4.219943 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -250.774491 78.548525 0.010000
+  name "road(3)"
+  id "-2109"
+  startJunction "-26996"
+  endJunction "-27018"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    12.162415 18.670623 0.000000
+    40.949080 45.382894 0.000000
+    60.677516 56.579504 0.000000
+    78.123556 61.432808 0.000000
+    96.611987 63.859561 0.000000
+    108.027208 72.724617 0.000000
+    141.165263 97.781624 0.000000
+    153.270203 106.949053 0.000000
+    153.372342 109.728190 0.000000
+    153.516678 113.559152 0.000000
+    131.816620 130.553243 0.000000
+    44.547839 197.217152 0.000000
+    28.186842 209.709067 0.000000
+    23.258444 213.232015 0.000000
+    20.960904 213.953676 0.000000
+    18.949437 212.629484 0.000000
+    -23.374683 159.461999 0.000000
+    -49.720566 126.352971 0.000000
+    -117.946441 29.905284 0.000000
+    -130.358734 12.356367 0.000000
+    -128.023356 8.242492 0.000000
+    -124.468025 5.787381 0.000000
+    -81.133172 -24.157783 0.000000
+    -75.584925 -27.997946 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -326.359416 50.550578 0.010000
+  name "road(4)"
+  id "-2110"
+  startJunction "-27018"
+  endJunction "-26996"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    13.517882 -10.443778 0.000000
+    26.067933 -20.787948 0.000000
+    32.868223 -23.700765 0.000000
+    78.827217 12.176630 0.000000
+    78.625811 18.448426 0.000000
+    75.584925 27.997946 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -412.831423 -166.483330 0.010000
+  name "road(5)"
+  id "-2119"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    3.936538 6.224834 0.000000
+    6.873496 10.644406 0.000000
+    62.782734 73.834926 0.000000
+    122.971129 146.813379 0.000000
+    126.920434 147.942735 0.000000
+    131.835963 146.158991 0.000000
+    170.081065 115.939567 0.000000
+    201.073934 91.495986 0.000000
+    218.696271 63.792353 0.000000
+    220.015202 61.717105 0.000000
+    245.239124 10.942848 0.000000
+    245.042451 8.729703 0.000000
+    235.865719 4.137109 0.000000
+    89.276810 -63.342635 0.000000
+    77.137152 -66.627676 0.000000
+    68.622706 -59.098496 0.000000
+    59.685519 -51.464821 0.000000
+    15.088371 -15.269042 0.000000
+    5.047040 -5.318805 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -196.339512 501.511145 0.010000
+  name "road(6)"
+  id "-2127"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    9.587234 -3.675450 0.000000
+    124.372976 -87.787010 0.000000
+    143.320201 -105.414480 0.000000
+    152.138818 -115.472471 0.000000
+    208.644946 -194.459035 0.000000
+    220.714301 -209.815289 0.000000
+    220.858341 -214.923355 0.000000
+    174.285143 -251.691852 0.000000
+    167.475593 -258.515628 0.000000
+    158.133975 -267.891637 0.000000
+    130.708809 -286.732927 0.000000
+    124.740029 -289.722534 0.000000
+    113.837438 -288.092578 0.000000
+    110.739736 -287.115952 0.000000
+    85.843416 -268.047520 0.000000
+    82.078585 -266.265794 0.000000
+    -2.469867 -201.825966 0.000000
+    -16.897604 -190.946717 0.000000
+    -18.165987 -189.059530 0.000000
+    -17.180468 -187.010380 0.000000
+    21.138791 -148.370745 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -28.863919 242.995517 0.010000
+  name "road(7)"
+  id "-2128"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -146.336802 110.144883 0.000000
+    -163.995575 123.433543 0.000000
+    -166.263762 124.202276 0.000000
+    -168.274136 122.900732 0.000000
+    -175.575652 113.832648 0.000000
+    -198.385022 85.479693 0.000000
+    -205.546626 84.109831 0.000000
+    -265.809299 129.887322 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation 67.979400 -59.590834 0.010000
+  name "road(8)"
+  id "-2178"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    8.189909 4.814375 0.000000
+    37.576374 19.446724 0.000000
+    47.682787 24.150825 0.000000
+    155.449160 78.382862 0.000000
+    161.831834 78.698398 0.000000
+    166.665289 76.793926 0.000000
+    238.472242 -49.917037 0.000000
+    236.900577 -57.697379 0.000000
+    234.195326 -60.391719 0.000000
+    93.275588 -134.708488 0.000000
+    85.899841 -138.036748 0.000000
+    74.441071 -142.714511 0.000000
+    72.013867 -141.346761 0.000000
+    65.726019 -137.731051 0.000000
+    32.348506 -69.718214 0.000000
+    3.523700 -11.504422 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation 119.374601 -213.187998 0.010000
+  name "road(9)"
+  id "-2182"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -8.755963 18.320471 0.000000
+    -50.536523 101.924979 0.000000
+    -71.490504 142.094180 0.000000
+    -74.499649 145.550985 0.000000
+    -102.367946 132.186490 0.000000
+    -143.889175 109.350832 0.000000
+    -254.835555 55.256353 0.000000
+    -255.502693 51.608546 0.000000
+    -253.847329 48.045192 0.000000
+    -223.614708 -16.820059 0.000000
+    -218.989250 -26.398558 0.000000
+    -203.108368 -62.633629 0.000000
+    -196.613794 -77.406182 0.000000
+    -185.804355 -98.884790 0.000000
+    -182.314804 -100.031994 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -126.752349 -240.984971 0.010000
+  name "road(10)"
+  id "-2228"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -68.027241 -29.878831 0.000000
+    -72.906292 -25.758319 0.000000
+    -101.846893 30.175634 0.000000
+    -97.638987 37.194975 0.000000
+    -38.672473 65.614482 0.000000
+    -32.267215 63.459445 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -244.625162 -219.455911 0.010000
+  name "road(11)"
+  id "-2229"
+  startJunction "-27164"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.208157 3.515297 0.000000
+    -61.795036 -23.247435 0.000000
+    -83.307616 -33.282755 0.000000
+    -84.075650 -36.032185 0.000000
+    -83.576849 -38.330757 0.000000
+    -77.011560 -57.523919 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -228.599241 -210.809336 0.010000
+  name "road(12)"
+  id "-2230"
+  endJunction "-27164"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -8.667600 -5.085710 0.000000
+    -16.025921 -8.646575 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation 55.979276 308.839554 0.010000
+  name "road(13)"
+  id "-2234"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -5.916185 3.434330 0.000000
+    -13.353442 4.460048 0.000000
+    -31.372866 30.063285 0.000000
+    -34.278103 33.773695 0.000000
+    -48.886630 52.182689 0.000000
+    -51.923429 55.861363 0.000000
+    -56.507178 61.086161 0.000000
+    -71.847274 80.843768 0.000000
+    -73.535316 83.299795 0.000000
+    -88.657980 102.645119 0.000000
+    -90.362494 106.319791 0.000000
+    -98.931878 115.211883 0.000000
+    -108.275457 122.584142 0.000000
+    -113.040957 126.016567 0.000000
+    -135.968282 144.231904 0.000000
+    -163.196415 165.907693 0.000000
+    -232.430299 218.033705 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -310.694003 350.401289 0.010000
+  name "road(14)"
+  id "-2247"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    5.583519 0.169268 0.000000
+    9.156422 -1.621414 0.000000
+    62.081714 -41.134820 0.000000
+    64.083460 -43.516897 0.000000
+    62.724012 -45.019012 0.000000
+    -4.068855 -135.335506 0.000000
+    -74.169709 -230.676312 0.000000
+    -84.800865 -245.143904 0.000000
+    -87.208862 -248.317791 0.000000
+    -92.441327 -250.451621 0.000000
+    -109.608591 -238.736782 0.000000
+    -148.159517 -212.412394 0.000000
+    -150.567961 -210.291513 0.000000
+    -152.434129 -206.637102 0.000000
+    -152.777289 -202.191373 0.000000
+    -151.600025 -198.959213 0.000000
+    -141.046640 -185.122169 0.000000
+    -65.135039 -85.627345 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation 424.218528 -299.531865 0.010000
+  name "road(15)"
+  id "-2252"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -81.379758 139.058218 0.000000
+    -90.453463 154.291680 0.000000
+    -95.795165 162.369234 0.000000
+    -97.716338 163.929759 0.000000
+    -100.170266 163.606675 0.000000
+    -110.590240 158.761593 0.000000
+    -270.189348 79.460884 0.000000
+    -323.212106 50.862023 0.000000
+    -364.278845 30.102509 0.000000
+    -365.922195 28.432067 0.000000
+    -365.497531 26.127584 0.000000
+    -347.313970 -6.551627 0.000000
+    -345.511746 -8.270928 0.000000
+    -343.022415 -8.185824 0.000000
+    -342.162060 -7.885977 0.000000
+    -339.696808 -7.813703 0.000000
+    -337.966816 -9.571492 0.000000
+    -322.009095 -40.879014 0.000000
+    -301.593025 -81.363227 0.000000
+    -299.235555 -86.067035 0.000000
+    -298.844120 -88.505370 0.000000
+    -300.358176 -90.456352 0.000000
+    -300.195931 -90.344060 0.000000
+    -301.645529 -92.258652 0.000000
+    -301.060720 -94.587813 0.000000
+    -294.481814 -105.004118 0.000000
+    -287.318586 -113.337384 0.000000
+    -274.908230 -126.282568 0.000000
+    -266.039046 -127.468391 0.000000
+    -254.203423 -126.970837 0.000000
+    -237.786805 -124.830307 0.000000
+    -214.210726 -116.179965 0.000000
+    -117.113973 -68.461543 0.000000
+    -60.870440 -44.251456 0.000000
+    1.433597 -16.963744 0.000000
+    3.078829 -16.074016 0.000000
+    6.562176 -14.197044 0.000000
+    6.804589 -12.394256 0.000000
+    6.361839 -10.484042 0.000000
+    0.000000 0.000000 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation -164.358749 558.094827 0.010000
+  name "road(16)"
+  id "-4488"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -14.955463 -19.359000 0.000000
+    -16.155752 -21.959537 0.000000
+    -16.472853 -25.002084 0.000000
+    -16.192823 -27.010174 0.000000
+    -14.863113 -29.019087 0.000000
+    -12.092274 -31.221567 0.000000
+  ]
+  appearance CementTiles {
+  }
+}
+Road {
+  translation 84.643698 303.139232 0.010000
+  name "板新路"
+  id "30336556"
+  endJunction "1268539100"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    52.312564 10.012306 0.000000
+    110.081228 25.597590 0.000000
+    123.831047 25.840875 0.000000
+    171.592216 26.707664 0.000000
+    211.347401 17.574080 0.000000
+    229.548822 13.391809 0.000000
+    297.044748 -10.554545 0.000000
+    341.609700 -27.274316 0.000000
+    358.244657 -32.535330 0.000000
+    370.639307 -38.789677 0.000000
+    398.095975 -50.165375 0.000000
+    432.216287 -65.836488 0.000000
+    455.762747 -82.950048 0.000000
+    473.917438 -94.536442 0.000000
+  ]
+}
+Road {
+  translation -204.097136 -280.133242 0.010000
+  name "road(17)"
+  id "126672536"
+  startJunction "1403752408"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    10.255617 2.978224 0.000000
+    78.778453 36.506812 0.000000
+    93.248311 43.232699 0.000000
+  ]
+}
+Road {
+  translation -93.608411 -466.796746 0.010000
+  name "民族路69巷"
+  id "222521510"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    14.507024 39.402252 0.000000
+    22.830521 69.359516 0.000000
+    26.576726 81.069643 0.000000
+    32.844773 100.660092 0.000000
+    44.780436 128.715550 0.000000
+    46.141071 137.450864 0.000000
+    47.156494 150.415562 0.000000
+  ]
+}
+Road {
+  translation -27.763531 -96.600419 0.010000
+  name "中山路一段158巷"
+  id "222521511"
+  endJunction "3656526227"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    3.248957 -7.236748 0.000000
+    58.410501 -124.359695 0.000000
+    60.054628 -126.090828 0.000000
+    62.430524 -125.856114 0.000000
+    101.491373 -108.509031 0.000000
+  ]
+}
+Road {
+  translation 50.485978 -48.172835 0.010000
+  name "新站路(1)"
+  id "232201641"
+  startJunction "1268539098"
+  endJunction "1268539038"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 27.777778
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -1.296364 2.642301 0.000000
+    -95.029542 182.077159 0.000000
+    -110.982783 211.873161 0.000000
+    -116.409836 220.742838 0.000000
+  ]
+}
+Road {
+  translation -26.909373 220.369303 0.010000
+  name "站前路"
+  id "248676581"
+  endJunction "8512521313"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -11.296165 13.250206 0.000000
+    -145.183123 114.027019 0.000000
+    -155.178338 122.680593 0.000000
+    -156.237545 123.623058 0.000000
+    -162.227396 125.895260 0.000000
+    -166.862437 126.590265 0.000000
+    -170.706314 125.847385 0.000000
+    -174.568525 123.487489 0.000000
+    -181.753541 116.490826 0.000000
+    -196.560214 97.816939 0.000000
+    -199.469270 94.788025 0.000000
+  ]
+}
+Road {
+  translation -222.719311 -245.059220 0.010000
+  name "新民街7巷"
+  id "266755962"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -57.882019 -28.024106 0.000000
+    -59.665835 -29.714709 0.000000
+    -59.616939 -32.171892 0.000000
+    -38.106381 -95.471526 0.000000
+    -15.051345 -108.759319 0.000000
+  ]
+}
+Road {
+  translation -193.841519 -277.155018 0.010000
+  name "新民街6巷"
+  id "266756877"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    8.134579 -0.978344 0.000000
+    83.710326 -29.161292 0.000000
+    100.155688 -67.252598 0.000000
+  ]
+}
+Road {
+  translation 287.493821 -43.980403 0.010000
+  name "road(18)"
+  id "285594503"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    41.536515 14.823657 0.000000
+  ]
+}
+Road {
+  translation 219.926889 291.842565 0.010000
+  name "road(19)"
+  id "288160106"
+  startJunction "2917075370"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    31.109080 0.335344 0.000000
+    39.092974 2.128161 0.000000
+    45.135692 3.632771 0.000000
+    70.813494 14.386178 0.000000
+    74.106727 19.100931 0.000000
+    76.064210 28.870747 0.000000
+  ]
+}
+Road {
+  translation 273.670411 275.672322 0.010000
+  name "road(20)"
+  id "291409439"
+  startJunction "2948748871"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    20.712498 17.056881 0.000000
+  ]
+}
+Road {
+  translation -238.204600 301.580513 0.010000
+  name "站前路(1)"
+  id "327350097"
+  startJunction "8512521313"
+  endJunction "2414182093"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -3.475902 -4.319728 0.000000
+    -69.768204 -91.210823 0.000000
+    -117.244397 -158.629818 0.000000
+    -153.760012 -207.743415 0.000000
+  ]
+}
+Road {
+  translation -143.724408 126.805631 0.010000
+  name "road(21)"
+  id "337591650"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -24.278213 6.521200 0.000000
+    -40.048080 1.726428 0.000000
+    -59.105791 -9.067951 0.000000
+    -71.506504 -19.383935 0.000000
+    -83.427035 -30.968118 0.000000
+    -94.425417 -44.899969 0.000000
+    -97.075103 -55.149266 0.000000
+    -94.139940 -75.427133 0.000000
+  ]
+}
+Road {
+  translation 207.285822 158.124905 0.010000
+  name "漢生東路131巷"
+  id "356796887"
+  startJunction "13190238293"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -2.209754 -0.288104 0.000000
+    -13.928221 -0.288522 0.000000
+    -37.118759 -5.276700 0.000000
+    -50.007709 -13.605416 0.000000
+  ]
+}
+Road {
+  translation 264.136750 162.663257 0.010000
+  name "中山路一段265巷"
+  id "356796888"
+  endJunction "3622032799"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -12.099419 26.523495 0.000000
+  ]
+}
+Road {
+  translation 119.306096 196.012446 0.010000
+  name "漢生東路117巷"
+  id "356796889"
+  endJunction "3622032802"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    46.493842 33.350908 0.000000
+  ]
+}
+Road {
+  translation 142.208722 164.734761 0.010000
+  name "漢生東路125巷"
+  id "356796890"
+  endJunction "3622032804"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    51.610427 41.059190 0.000000
+  ]
+}
+Road {
+  translation 293.791079 248.834227 0.010000
+  name "中山路一段265巷36弄"
+  id "356796891"
+  startJunction "3622032805"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    34.711027 31.723671 0.000000
+  ]
+}
+Road {
+  translation 228.442678 246.253915 0.010000
+  name "漢生東路113巷28弄"
+  id "356796893"
+  endJunction "2917075370"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -11.455676 41.688507 0.000000
+  ]
+}
+Road {
+  translation 215.141010 295.721442 0.010000
+  name "road(22)"
+  id "356796894"
+  startJunction "2917075370"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.666265 33.258665 0.000000
+  ]
+}
+Road {
+  translation 240.966509 140.716069 0.010000
+  name "中山路一段265巷4弄"
+  id "356796896"
+  endJunction "2948748864"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -22.028798 -11.092987 0.000000
+  ]
+}
+Road {
+  translation 267.683970 108.579206 0.010000
+  name "中山路一段265巷2弄"
+  id "356796897"
+  endJunction "3622032813"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -28.896582 -14.963051 0.000000
+  ]
+}
+Road {
+  translation -168.752663 -320.186439 0.010000
+  name "新民街4巷2弄"
+  id "361135239"
+  startJunction "3656522213"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -10.479130 -22.520911 0.000000
+  ]
+}
+Road {
+  translation 10.583601 -290.486674 0.010000
+  name "road(23)"
+  id "361135242"
+  endJunction "3656522221"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    16.573282 -38.277712 0.000000
+  ]
+}
+Road {
+  translation 228.018139 188.823734 0.010000
+  name "中山路一段265巷7弄"
+  id "444610456"
+  startJunction "2948748867"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -22.238663 67.821744 0.000000
+  ]
+}
+Road {
+  translation -44.543564 133.904324 0.010000
+  name "road(24)"
+  id "808480743"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -14.043739 -3.943930 0.000000
+    -31.389656 -11.545575 0.000000
+    -38.261839 -16.762474 0.000000
+    -38.624519 -22.939259 0.000000
+  ]
+}
+Road {
+  translation -215.886851 -14.538339 0.010000
+  name "road(25)"
+  id "1008805992"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -12.888215 -7.009543 0.000000
+    -23.808219 -18.472142 0.000000
+  ]
+}
+Road {
+  translation -27.763531 -96.600419 0.010000
+  name "road(26)"
+  id "1008806002"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.946268 3.401711 0.000000
+    -14.422099 6.388502 0.000000
+    -22.772264 8.820279 0.000000
+    -29.751076 8.456237 0.000000
+    -37.028105 4.041443 0.000000
+    -41.544038 0.115994 0.000000
+    -42.528409 -3.915913 0.000000
+    -44.476514 -9.266129 0.000000
+    -45.456050 -21.782970 0.000000
+  ]
+}
+Road {
+  translation 147.246325 -219.394782 0.010000
+  name "區運路"
+  id "128995034_2"
+  startJunction "5713208683"
+  endJunction "1268539037"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    5.990286 3.129718 0.000000
+    165.611262 85.953449 0.000000
+    175.845486 91.917760 0.000000
+  ]
+}
+Road {
+  translation 42.114437 272.032525 0.010000
+  name "縣民大道二段(1)"
+  id "326955641_1"
+  startJunction "1268538864"
+  endJunction "1268539038"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 8.333333
+  width 21.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -2.208546 -1.642312 0.000000
+    -69.023810 -51.663223 0.000000
+    -98.888035 -75.600807 0.000000
+    -105.722112 -81.078624 0.000000
+  ]
+}
+Road {
+  translation -79.619003 191.725832 0.010000
+  name "新站路(2)"
+  id "-1270_1"
+  startJunction "1268539038"
+  endJunction "8512521313"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -3.949200 4.610252 0.000000
+    -65.316615 48.449852 0.000000
+    -120.539573 91.374158 0.000000
+    -144.609422 111.273805 0.000000
+  ]
+}
+Road {
+  translation -239.818073 315.524989 0.010000
+  name "新站路(3)"
+  id "-1270_2"
+  startJunction "8512521313"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -70.540406 55.067612 0.000000
+  ]
+}
+Road {
+  translation 44.386928 291.166364 0.010000
+  name "漢生東路"
+  id "338478395_2"
+  startJunction "1268538864"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 13.888889
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.241244 8.702083 0.000000
+    -47.878517 63.766291 0.000000
+    -67.996106 91.100903 0.000000
+    -94.703291 122.151043 0.000000
+    -106.434687 132.131957 0.000000
+    -183.709647 189.993278 0.000000
+    -241.481772 234.980170 0.000000
+  ]
+}
+Road {
+  translation -136.250508 -448.568588 0.010000
+  name "區運路(1)"
+  id "128995034_1"
+  endJunction "2414182038"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    25.859249 63.155337 0.000000
+    42.564677 104.160972 0.000000
+    63.016630 120.179532 0.000000
+  ]
+}
+Road {
+  translation 44.044753 -62.288095 0.010000
+  name "中山路一段"
+  id "310849373_2"
+  startJunction "1268539098"
+  endJunction "1268538985"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 14.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -4.301483 -2.037562 0.000000
+    -29.789096 -14.585457 0.000000
+    -71.808284 -34.312323 0.000000
+    -117.264334 -56.095293 0.000000
+    -182.097534 -90.827146 0.000000
+    -183.829853 -91.688805 0.000000
+  ]
+}
+Road {
+  translation 153.474951 -435.996844 0.010000
+  name "海山路"
+  id "310261353_1"
+  endJunction "1273003326"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -14.715799 7.233443 0.000000
+    -26.966207 17.363307 0.000000
+    -41.367706 43.457105 0.000000
+    -64.762961 87.375631 0.000000
+    -69.645105 98.454513 0.000000
+  ]
+}
+Road {
+  translation 79.223632 -327.554201 0.010000
+  name "海山路(1)"
+  id "310261353_2"
+  startJunction "1273003326"
+  endJunction "4401736616"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -23.888559 50.501589 0.000000
+  ]
+}
+Road {
+  translation 75.218263 -333.740543 0.010000
+  name "民族路69巷18弄"
+  id "111808396_1"
+  startJunction "1273003326"
+  endJunction "3656522221"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -5.454320 0.110226 0.000000
+    -34.334225 -0.028210 0.000000
+    -42.495987 0.868577 0.000000
+  ]
+}
+Road {
+  translation 24.746205 -332.436023 0.010000
+  name "民族路69巷18弄(1)"
+  id "111808396_2"
+  startJunction "3656522221"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -4.630216 -0.001082 0.000000
+    -18.724551 2.373818 0.000000
+    -42.748013 10.377412 0.000000
+    -69.981488 15.906440 0.000000
+  ]
+}
+Road {
+  translation -239.207655 -211.386118 0.010000
+  name "新民街"
+  id "126672566_1"
+  startJunction "1403019720"
+  endJunction "1403752408"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    1.940814 -4.508928 0.000000
+    16.488344 -33.673102 0.000000
+    29.756780 -66.159591 0.000000
+  ]
+}
+Road {
+  translation -209.600140 -284.887265 0.010000
+  name "新民街(1)"
+  id "126672566_2"
+  startJunction "1403752408"
+  splineSubdivision 0
+  numberOfLanes 2
+  numberOfForwardLanes 1
+  speedLimit 13.888889
+  width 8.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.556741 -14.356860 0.000000
+    -28.170516 -68.931274 0.000000
+    -47.404656 -115.701294 0.000000
+    -50.353195 -122.923213 0.000000
+  ]
+}
+Road {
+  translation 14.289114 -76.907587 0.010000
+  name "民安街"
+  id "222521512_1"
+  endJunction "3656526227"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 0
+  speedLimit 13.888889
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    2.717541 -4.093922 0.000000
+    61.302115 -122.942332 0.000000
+  ]
+}
+Road {
+  translation 79.249870 -207.023850 0.010000
+  name "民安街(1)"
+  id "222521512_2"
+  startJunction "3656526227"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 0
+  speedLimit 13.888889
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    16.616109 -31.498551 0.000000
+  ]
+}
+Road {
+  translation -93.685831 -344.407616 0.010000
+  name "新民街4巷"
+  id "266756876_1"
+  endJunction "3656522213"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -69.639592 26.428546 0.000000
+  ]
+}
+Road {
+  translation -170.837394 -315.229275 0.010000
+  name "新民街4巷(1)"
+  id "266756876_2"
+  startJunction "3656522213"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -45.319487 15.985150 0.000000
+  ]
+}
+Road {
+  translation 94.622245 224.329074 0.010000
+  name "漢生東路113巷"
+  id "288160105_1"
+  endJunction "3622032808"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    24.616438 23.359273 0.000000
+    45.169407 37.313750 0.000000
+  ]
+}
+Road {
+  translation 146.375233 266.187343 0.010000
+  name "漢生東路113巷(1)"
+  id "288160105_2"
+  startJunction "3622032808"
+  endJunction "2917075370"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    15.507121 10.881830 0.000000
+    25.561018 14.534251 0.000000
+    65.672987 24.635314 0.000000
+  ]
+}
+Road {
+  translation 269.099763 49.831473 0.010000
+  name "中山路一段265巷(1)"
+  id "291409438_1"
+  endJunction "3622032813"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -31.351720 38.833093 0.000000
+  ]
+}
+Road {
+  translation -154.845671 -150.300636 0.010000
+  name "新府路(1)"
+  id "310261335_1"
+  startJunction "1268538985"
+  endJunction "2414182080"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 27.777778
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -0.845730 1.768106 0.000000
+    -40.730458 82.551370 0.000000
+    -84.849399 117.290155 0.000000
+    -119.988638 142.794896 0.000000
+    -125.962667 146.993790 0.000000
+  ]
+}
+Road {
+  translation -305.044089 12.597015 0.010000
+  name "新府路(2)"
+  id "310261335_2"
+  startJunction "2414182080"
+  endJunction "2414182093"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 13.888889
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -3.972400 2.461849 0.000000
+    -18.848181 12.894151 0.000000
+    -79.775576 59.624785 0.000000
+    -86.361204 65.272753 0.000000
+  ]
+}
+Road {
+  translation -83.130838 175.639925 0.010000
+  name "縣民大道二段(2)"
+  id "326955641_2"
+  startJunction "1268539038"
+  endJunction "2414182080"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 8.333333
+  width 21.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -5.587277 -4.299013 0.000000
+    -60.593570 -48.834294 0.000000
+    -154.733510 -124.261427 0.000000
+    -188.040359 -151.213613 0.000000
+    -198.372116 -161.018133 0.000000
+    -199.092469 -161.775596 0.000000
+  ]
+}
+Road {
+  translation -302.753941 -7.148976 0.010000
+  name "縣民大道二段(3)"
+  id "326955641_3"
+  startJunction "2414182080"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 8.333333
+  width 21.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -0.730288 -0.730781 0.000000
+    -140.432100 -159.520354 0.000000
+  ]
+}
+Road {
+  translation 193.819149 205.793950 0.010000
+  name "漢生東路113巷6弄"
+  id "356796892_1"
+  startJunction "3622032804"
+  endJunction "3622032802"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -22.004395 23.009988 0.000000
+  ]
+}
+Road {
+  translation 166.540034 234.809161 0.010000
+  name "漢生東路113巷6弄(1)"
+  id "356796892_2"
+  startJunction "3622032802"
+  endJunction "3622032808"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -20.928896 25.966199 0.000000
+  ]
+}
+Road {
+  translation 253.487925 195.340610 0.010000
+  name "中山路一段265巷(2)"
+  id "291409438_4"
+  startJunction "3622032799"
+  endJunction "3622032805"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    44.989302 36.368212 0.000000
+    46.272305 38.369733 0.000000
+    45.455224 40.602346 0.000000
+    39.840022 47.664223 0.000000
+  ]
+}
+Road {
+  translation 288.230011 249.168210 0.010000
+  name "中山路一段265巷(3)"
+  id "291409438_5"
+  startJunction "3622032805"
+  endJunction "2948748871"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -6.666606 7.750408 0.000000
+    -16.152878 22.168917 0.000000
+    -14.559600 26.504112 0.000000
+  ]
+}
+Road {
+  translation 232.585562 94.773296 0.010000
+  name "中山路一段265巷(4)"
+  id "291409438_2"
+  startJunction "3622032813"
+  endJunction "2948748864"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -12.468723 14.099908 0.000000
+    -16.247604 29.170849 0.000000
+  ]
+}
+Road {
+  translation 214.835981 131.788886 0.010000
+  name "中山路一段265巷(5)"
+  id "291409438_6"
+  startJunction "2948748864"
+  endJunction "13190238293"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -3.054593 22.888307 0.000000
+  ]
+}
+Road {
+  translation 211.244173 162.642033 0.010000
+  name "中山路一段265巷(6)"
+  id "291409438_3"
+  startJunction "13190238293"
+  endJunction "2948748867"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -0.004160 2.059186 0.000000
+    7.733049 11.486726 0.000000
+    15.274009 19.472545 0.000000
+  ]
+}
+Road {
+  translation 233.032239 186.365875 0.010000
+  name "中山路一段265巷(7)"
+  id "291409438_7"
+  startJunction "2948748867"
+  endJunction "3622032799"
+  splineSubdivision 0
+  numberOfLanes 1
+  numberOfForwardLanes 1
+  speedLimit 27.777778
+  width 4.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    5.961070 2.124815 0.000000
+    13.606852 5.036532 0.000000
+  ]
+}
+Road {
+  translation 559.690666 200.128063 0.010000
+  name "中山路一段(1)"
+  id "310849373_1"
+  startJunction "1268539100"
+  endJunction "1268539000"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 14.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -22.626891 -16.730350 0.000000
+    -104.733304 -57.870707 0.000000
+    -150.529562 -81.543863 0.000000
+    -192.647274 -101.501206 0.000000
+    -278.278868 -144.849032 0.000000
+    -306.593316 -157.635005 0.000000
+    -310.083090 -159.221821 0.000000
+  ]
+}
+Road {
+  translation 227.606161 30.685510 0.010000
+  name "中山路一段(2)"
+  id "310849373_4"
+  startJunction "1268539000"
+  endJunction "1268539098"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 27.777778
+  width 14.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -2.813184 -1.334449 0.000000
+    -23.493136 -11.077232 0.000000
+    -90.224673 -46.587604 0.000000
+    -134.821874 -69.578090 0.000000
+    -161.793931 -82.294272 0.000000
+    -162.013375 -82.405621 0.000000
+  ]
+}
+Road {
+  translation 328.428191 -112.792830 0.010000
+  name "漢生東路(1)"
+  id "338478395_1"
+  startJunction "1268539037"
+  endJunction "1268539000"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 13.888889
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -15.314530 26.315254 0.000000
+    -81.994496 135.311669 0.000000
+    -84.765330 140.066572 0.000000
+  ]
+}
+Road {
+  translation 233.351984 44.408693 0.010000
+  name "漢生東路(2)"
+  id "338478395_3"
+  startJunction "1268539000"
+  endJunction "1268538864"
+  splineSubdivision 0
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 13.888889
+  width 24.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -3.319873 5.345292 0.000000
+    -21.589517 30.061447 0.000000
+    -76.073871 100.110795 0.000000
+    -91.143261 120.326067 0.000000
+    -114.045888 151.603753 0.000000
+    -138.729739 179.920381 0.000000
+    -163.273528 212.851368 0.000000
+    -172.201846 224.324754 0.000000
+  ]
+}
+Road {
+  translation -59.865242 -322.828920 0.010000
+  name "區運路(2)"
+  id "128995034_3"
+  startJunction "2414182038"
+  endJunction "4401736616"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    13.954729 6.441605 0.000000
+    70.721068 32.473787 0.000000
+    103.220018 48.776996 0.000000
+    105.504185 49.906445 0.000000
+  ]
+}
+Road {
+  translation 55.448673 -267.947787 0.010000
+  name "區運路(3)"
+  id "128995034_4"
+  startJunction "4401736616"
+  endJunction "5713208683"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 16.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    43.798685 23.194508 0.000000
+    71.671317 37.836463 0.000000
+    74.136611 39.168539 0.000000
+  ]
+}
+Road {
+  translation -161.426461 -164.352445 0.010000
+  name "中山路一段(3)"
+  id "310849373_3"
+  startJunction "1268538985"
+  endJunction "1403019720"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 14.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -1.507453 -0.696004 0.000000
+    -28.290536 -13.811451 0.000000
+    -77.037596 -38.665420 0.000000
+  ]
+}
+Road {
+  translation -248.305808 -207.930597 0.010000
+  name "中山路一段(4)"
+  id "310849373_5"
+  startJunction "1403019720"
+  splineSubdivision 0
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  width 14.000000
+  leftBorder FALSE
+  rightBorder FALSE
+  lines [
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+    RoadLine {
+      type "double"
+      color 1 1 0
+    }
+    RoadLine {
+      type "dashed"
+      color 1 1 1
+    }
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  wayPoints [
+    0.000000 0.000000 0.000000
+    -97.386830 -48.022286 0.000000
+  ]
+}
+SimpleBuilding {
+  translation -151.44 508.10 0.00
+  name "building1"
+  id "building1"
+  corners [
+    0.00 0.00,
+    -6.61 5.24,
+    12.47 29.09,
+    19.08 23.85,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone wall"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -122.70 486.35 0.00
+  name "building2"
+  id "building2"
+  corners [
+    0.00 0.00,
+    -17.91 13.34,
+    -9.00 25.16,
+    9.35 11.48,
+    5.26 6.05,
+  ]
+  roofShape "flat roof"
+  wallType "glass highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 15.84 480.35 0.00
+  name "building3"
+  id "building3"
+  corners [
+    0.00 0.00,
+    -15.05 -11.68,
+    -12.53 -14.90,
+    -44.02 -39.33,
+    -37.42 -47.74,
+    -5.69 -23.11,
+    -6.51 -22.08,
+    8.31 -10.58,
+  ]
+  roofShape "flat roof"
+  wallType "classic building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -117.44 492.41 0.00
+  name "building4"
+  id "building4"
+  corners [
+    0.00 0.00,
+    6.47 -4.81,
+    8.96 -1.51,
+    14.10 -5.58,
+    8.84 -12.56,
+    4.19 -13.10,
+    -5.26 -6.05,
+  ]
+  roofShape "flat roof"
+  wallType "old brick building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 54.32 425.11 0.00
+  name "building5"
+  id "building5"
+  corners [
+    0.00 0.00,
+    -12.30 -9.19,
+    -4.13 -20.00,
+    8.16 -10.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -2.73 400.23 0.00
+  name "building6"
+  id "building6"
+  corners [
+    0.00 0.00,
+    -13.34 -10.25,
+    -5.90 -19.83,
+    7.44 -9.58,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 10.61 410.47 0.00
+  name "building7"
+  id "building7"
+  corners [
+    0.00 0.00,
+    -13.34 -10.24,
+    -5.90 -19.82,
+    7.43 -9.58,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone wall"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 23.95 420.71 0.00
+  name "building8"
+  id "building8"
+  corners [
+    0.00 0.00,
+    -13.34 -10.24,
+    -5.91 -19.82,
+    7.43 -9.58,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 5.12 388.36 0.00
+  name "building9"
+  id "building9"
+  corners [
+    0.00 0.00,
+    -12.30 -9.19,
+    -4.13 -20.00,
+    8.17 -10.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 17.42 397.55 0.00
+  name "building10"
+  id "building10"
+  corners [
+    0.00 0.00,
+    -12.30 -9.19,
+    -4.12 -20.00,
+    8.17 -10.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone brick"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 29.71 406.74 0.00
+  name "building11"
+  id "building11"
+  corners [
+    0.00 0.00,
+    -12.30 -9.19,
+    -4.12 -20.00,
+    8.17 -10.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "residential building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 42.02 415.92 0.00
+  name "building12"
+  id "building12"
+  corners [
+    0.00 0.00,
+    -12.31 -9.19,
+    -4.13 -20.00,
+    8.16 -10.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "transparent highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -26.77 403.65 0.00
+  name "building13"
+  id "building13"
+  corners [
+    0.00 0.00,
+    13.49 10.31,
+    20.94 0.68,
+    7.45 -9.63,
+  ]
+  roofShape "pyramidal roof"
+  wallType "highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 44.72 421.39 0.00
+  name "building14"
+  id "building14"
+  corners [
+    0.00 0.00,
+    10.82 8.72,
+    1.74 16.16,
+    -7.43 9.58,
+  ]
+  roofShape "pyramidal roof"
+  wallType "blue glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 13.70 434.61 0.00
+  name "building15"
+  id "building15"
+  corners [
+    0.00 0.00,
+    13.64 10.36,
+    20.85 0.55,
+    7.45 -9.63,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 0.21 424.28 0.00
+  name "building16"
+  id "building16"
+  corners [
+    0.00 0.00,
+    13.49 10.33,
+    20.94 0.69,
+    7.45 -9.62,
+  ]
+  roofShape "pyramidal roof"
+  wallType "blue glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -13.28 413.97 0.00
+  name "building17"
+  id "building17"
+  corners [
+    0.00 0.00,
+    13.49 10.31,
+    20.94 0.69,
+    7.45 -9.63,
+  ]
+  roofShape "pyramidal roof"
+  wallType "gray glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 81.14 403.04 0.00
+  name "building18"
+  id "building18"
+  corners [
+    0.00 0.00,
+    -10.05 -7.63,
+    -0.98 -19.27,
+    9.08 -11.63,
+    7.55 -9.68,
+  ]
+  roofShape "flat roof"
+  wallType "old office building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 30.92 364.91 0.00
+  name "building19"
+  id "building19"
+  corners [
+    0.00 0.00,
+    -14.75 -11.38,
+    -7.45 -20.85,
+    1.73 -13.83,
+    3.44 -16.05,
+    8.99 -11.71,
+  ]
+  roofShape "flat roof"
+  wallType "old brick building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 66.10 410.26 0.00
+  name "building20"
+  id "building20"
+  corners [
+    0.00 0.00,
+    11.84 9.03,
+    19.24 -0.58,
+    7.39 -9.60,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 54.26 401.24 0.00
+  name "building21"
+  id "building21"
+  corners [
+    0.00 0.00,
+    11.84 9.02,
+    19.23 -0.58,
+    7.39 -9.61,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 40.96 372.54 0.00
+  name "building22"
+  id "building22"
+  corners [
+    0.00 0.00,
+    -10.05 -7.63,
+    -1.06 -19.34,
+    9.01 -11.70,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old office building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 51.00 380.16 0.00
+  name "building23"
+  id "building23"
+  corners [
+    0.00 0.00,
+    -10.04 -7.63,
+    -1.03 -19.33,
+    9.03 -11.69,
+  ]
+  roofShape "pyramidal roof"
+  wallType "blue glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 61.05 387.78 0.00
+  name "building24"
+  id "building24"
+  corners [
+    0.00 0.00,
+    -10.05 -7.62,
+    -1.02 -19.31,
+    9.04 -11.66,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 71.09 395.41 0.00
+  name "building25"
+  id "building25"
+  corners [
+    0.00 0.00,
+    -10.04 -7.63,
+    -1.00 -19.28,
+    9.07 -11.64,
+  ]
+  roofShape "pyramidal roof"
+  wallType "gray glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 12.59 451.26 0.00
+  name "building26"
+  id "building26"
+  corners [
+    0.00 0.00,
+    17.01 13.23,
+    22.59 6.12,
+    12.40 -1.80,
+    13.37 -3.03,
+    6.56 -8.33,
+  ]
+  roofShape "flat roof"
+  wallType "concrete building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 3.52 430.77 0.00
+  name "building27"
+  id "building27"
+  corners [
+    0.00 0.00,
+    -6.56 8.33,
+    9.06 20.49,
+    15.62 12.16,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -18.34 427.18 0.00
+  name "building28"
+  id "building28"
+  corners [
+    0.00 0.00,
+    15.31 11.91,
+    21.86 3.59,
+    6.55 -8.33,
+  ]
+  roofShape "pyramidal roof"
+  wallType "tall house"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -28.25 406.05 0.00
+  name "building29"
+  id "building29"
+  corners [
+    0.00 0.00,
+    -6.56 8.33,
+    9.91 21.13,
+    16.46 12.81,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 42.41 392.21 0.00
+  name "building30"
+  id "building30"
+  corners [
+    0.00 0.00,
+    11.85 9.03,
+    19.24 -0.58,
+    7.40 -9.60,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 30.57 383.20 0.00
+  name "building31"
+  id "building31"
+  corners [
+    0.00 0.00,
+    11.84 9.02,
+    19.24 -0.58,
+    7.40 -9.60,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 18.73 374.18 0.00
+  name "building32"
+  id "building32"
+  corners [
+    0.00 0.00,
+    11.84 9.02,
+    19.24 -0.58,
+    7.39 -9.61,
+  ]
+  roofShape "pyramidal roof"
+  wallType "gray glass building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 6.89 365.16 0.00
+  name "building33"
+  id "building33"
+  corners [
+    0.00 0.00,
+    11.84 9.03,
+    19.23 -0.58,
+    7.39 -9.60,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone brick"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 88.69 393.36 0.00
+  name "building34"
+  id "building34"
+  corners [
+    0.00 0.00,
+    5.89 4.49,
+    4.73 6.01,
+    6.83 7.60,
+    0.52 15.81,
+    -7.55 9.68,
+  ]
+  roofShape "flat roof"
+  wallType "glass highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 38.23 441.56 0.00
+  name "building35"
+  id "building35"
+  corners [
+    0.00 0.00,
+    3.23 2.35,
+    -2.19 9.72,
+    -10.89 3.40,
+    -3.69 -6.41,
+    1.79 -2.42,
+  ]
+  roofShape "flat roof"
+  wallType "construction building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 62.48 414.30 0.00
+  name "building36"
+  id "building36"
+  corners [
+    0.00 0.00,
+    2.69 2.20,
+    -0.10 5.67,
+    3.64 7.99,
+    -2.99 14.58,
+    -8.16 10.81,
+  ]
+  roofShape "flat roof"
+  wallType "old office building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 37.29 430.96 0.00
+  name "building37"
+  id "building37"
+  corners [
+    0.00 0.00,
+    -13.34 -10.25,
+    -5.91 -19.83,
+    7.43 -9.58,
+  ]
+  roofShape "pyramidal roof"
+  wallType "factory building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -179.79 532.45 0.00
+  name "building38"
+  id "building38"
+  corners [
+    0.00 0.00,
+    -0.06 3.29,
+    17.34 26.91,
+    30.09 17.61,
+    11.22 -7.96,
+  ]
+  roofShape "flat roof"
+  wallType "transparent highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -194.14 -279.71 0.00
+  name "building39"
+  id "building39"
+  corners [
+    0.00 0.00,
+    -3.12 -8.20,
+    83.93 -40.12,
+    77.44 -26.43,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -164.06 -189.71 0.00
+  name "遠東百貨"
+  id "遠東百貨"
+  corners [
+    0.00 0.00,
+    3.23 -6.56,
+    23.57 -48.92,
+    -28.64 -73.06,
+    -30.46 -69.49,
+    -52.76 -26.03,
+    -2.19 -0.95,
+  ]
+  roofShape "flat roof"
+  wallType "old building"
+  floorNumber 13
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 2.59 109.26 0.00
+  name "大遠百"
+  id "大遠百"
+  corners [
+    0.00 0.00,
+    36.17 -72.55,
+    41.02 -82.64,
+    44.15 -80.44,
+    49.61 -76.58,
+    89.35 -48.59,
+    82.06 -38.15,
+    138.82 1.60,
+    101.53 52.66,
+    60.27 22.14,
+    51.21 34.89,
+    43.63 29.79,
+    38.63 26.62,
+    23.90 16.03,
+    4.42 2.38,
+    2.67 1.44,
+  ]
+  roofShape "flat roof"
+  wallType "old house"
+  floorNumber 13
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -324.78 127.53 0.00
+  name "板橋車站大樓"
+  id "板橋車站大樓"
+  corners [
+    0.00 0.00,
+    102.11 127.80,
+    133.02 103.44,
+    165.41 79.74,
+    177.19 62.79,
+    178.61 60.75,
+    181.28 56.90,
+    188.29 56.46,
+    193.14 50.82,
+    191.75 46.03,
+    188.72 41.54,
+    183.09 40.03,
+    177.32 41.31,
+    162.60 27.53,
+    100.90 -1.08,
+    76.61 -25.04,
+    58.16 -58.31,
+    50.05 -62.76,
+    49.64 -67.29,
+    47.31 -71.79,
+    42.38 -74.01,
+    36.80 -71.67,
+    33.51 -67.63,
+    1.16 -44.07,
+    17.17 -21.69,
+    21.83 -15.18,
+  ]
+  roofShape "flat roof"
+  wallType "highrise"
+  floorNumber 25
+  floorHeight 4.67
+}
+SimpleBuilding {
+  translation -233.20 -169.45 0.00
+  name "新北市政府稅捐稽徵處"
+  id "新北市政府稅捐稽徵處"
+  corners [
+    0.00 0.00,
+    -15.85 34.45,
+    33.19 58.40,
+    38.97 61.21,
+    55.87 26.23,
+    51.14 23.96,
+  ]
+  roofShape "flat roof"
+  wallType "old brick building"
+  floorNumber 10
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 3.00 134.17 0.00
+  name "東方富域"
+  id "東方富域"
+  corners [
+    0.00 0.00,
+    -24.95 47.18,
+    -24.39 53.37,
+    -20.60 57.02,
+    2.87 72.38,
+    17.00 43.76,
+    18.17 41.39,
+    31.51 15.12,
+    17.34 7.90,
+  ]
+  roofShape "flat roof"
+  wallType "classic building"
+  floorNumber 30
+  floorHeight 4.23
+}
+SimpleBuilding {
+  translation -344.33 -97.34 0.00
+  name "板信雙子星花園廣場"
+  id "板信雙子星花園廣場"
+  corners [
+    0.00 0.00,
+    1.30 1.59,
+    60.56 73.92,
+    89.74 50.28,
+    68.82 24.74,
+    46.67 -2.31,
+    27.04 -26.28,
+  ]
+  roofShape "flat roof"
+  wallType "brick building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 78.63 211.31 0.00
+  name "權世界"
+  id "權世界"
+  corners [
+    0.00 0.00,
+    -21.14 28.94,
+    -35.20 18.77,
+    -24.25 3.82,
+    -36.45 -5.00,
+    -38.83 -1.76,
+    -48.29 11.19,
+    -64.27 -0.36,
+    -42.23 -30.52,
+  ]
+  roofShape "flat roof"
+  wallType "glass building"
+  floorNumber 25
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 83.79 205.07 0.00
+  name "國鼎"
+  id "國鼎"
+  corners [
+    0.00 0.00,
+    -43.16 -31.56,
+    -44.89 -32.82,
+    -33.43 -49.05,
+    -21.39 -64.61,
+    -6.13 -53.45,
+    -17.55 -38.01,
+    -4.57 -28.50,
+    6.97 -44.12,
+    23.62 -31.94,
+  ]
+  roofShape "flat roof"
+  wallType "orange building"
+  floorNumber 28
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -266.73 -79.55 0.00
+  name "史丹佛社區"
+  id "史丹佛社區"
+  corners [
+    0.00 0.00,
+    18.00 21.73,
+    19.30 23.29,
+    41.32 7.70,
+    49.91 1.04,
+    55.42 -10.44,
+    1.67 -45.47,
+    -7.73 -26.33,
+    6.87 -16.14,
+    12.74 -23.87,
+    40.00 -7.49,
+    20.65 5.51,
+    6.56 -11.00,
+  ]
+  roofShape "flat roof"
+  wallType "concrete building"
+  floorNumber 24
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 142.36 -168.06 0.00
+  name "building40"
+  id "building40"
+  corners [
+    0.00 0.00,
+    -5.47 10.91,
+    2.67 14.95,
+    8.15 4.04,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone wall"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 139.65 -176.71 0.00
+  name "深丘福德宮"
+  id "深丘福德宮"
+  corners [
+    0.00 0.00,
+    14.59 7.27,
+    22.24 -7.89,
+    7.65 -15.17,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 283.92 -85.40 0.00
+  name "國家世紀館D棟"
+  id "國家世紀館D棟"
+  corners [
+    0.00 0.00,
+    13.22 -24.29,
+    -2.80 -32.09,
+    -10.30 -36.13,
+    -14.24 -38.24,
+    -27.01 -14.62,
+  ]
+  roofShape "flat roof"
+  wallType "tall house"
+  floorNumber 29
+  floorHeight 3.72
+}
+SimpleBuilding {
+  translation 31.82 337.92 0.00
+  name "Honda"
+  id "Honda"
+  corners [
+    0.00 0.00,
+    16.52 -22.26,
+    19.14 -21.98,
+    61.97 4.46,
+    50.34 21.83,
+    43.71 14.87,
+    8.05 3.75,
+    5.95 4.55,
+  ]
+  roofShape "flat roof"
+  wallType "factory building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -255.05 -243.24 0.00
+  name "building41"
+  id "building41"
+  corners [
+    0.00 0.00,
+    14.65 6.95,
+    18.11 -0.05,
+    18.44 -2.40,
+    16.54 -4.61,
+    4.67 -10.20,
+  ]
+  roofShape "flat roof"
+  wallType "glass building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -254.81 -219.61 0.00
+  name "building42"
+  id "building42"
+  corners [
+    0.00 0.00,
+    4.55 -8.36,
+    8.28 -6.44,
+    4.38 0.35,
+    3.54 0.89,
+    2.42 0.99,
+  ]
+  roofShape "flat roof"
+  wallType "old office building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -254.81 -219.61 0.00
+  name "building43"
+  id "building43"
+  corners [
+    0.00 0.00,
+    -3.01 -1.66,
+    1.26 -9.77,
+    4.55 -8.36,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -324.19 -255.58 0.00
+  name "building44"
+  id "building44"
+  corners [
+    0.00 0.00,
+    -0.26 -3.54,
+    5.92 -23.00,
+    27.62 -16.59,
+    5.28 4.88,
+    1.80 3.31,
+  ]
+  roofShape "flat roof"
+  wallType "construction building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -308.32 -245.71 0.00
+  name "building45"
+  id "building45"
+  corners [
+    0.00 0.00,
+    4.73 2.13,
+    11.43 -11.71,
+    7.80 -13.85,
+  ]
+  roofShape "pyramidal roof"
+  wallType "windowed building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -303.59 -243.58 0.00
+  name "building46"
+  id "building46"
+  corners [
+    0.00 0.00,
+    4.61 2.04,
+    11.12 -11.19,
+    6.71 -13.83,
+  ]
+  roofShape "pyramidal roof"
+  wallType "concrete building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -298.99 -241.54 0.00
+  name "building47"
+  id "building47"
+  corners [
+    0.00 0.00,
+    8.29 4.77,
+    15.11 -7.54,
+    6.51 -13.23,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -265.37 -224.99 0.00
+  name "building48"
+  id "building48"
+  corners [
+    0.00 0.00,
+    3.90 1.89,
+    8.09 -5.96,
+    3.88 -8.02,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -259.92 -232.96 0.00
+  name "building49"
+  id "building49"
+  corners [
+    0.00 0.00,
+    14.56 6.91,
+    17.21 1.51,
+    2.55 -5.43,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -257.82 -221.27 0.00
+  name "building50"
+  id "building50"
+  corners [
+    0.00 0.00,
+    -3.65 -1.83,
+    0.54 -9.69,
+    4.27 -8.11,
+  ]
+  roofShape "pyramidal roof"
+  wallType "transparent highrise"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -265.37 -224.99 0.00
+  name "building51"
+  id "building51"
+  corners [
+    0.00 0.00,
+    -3.33 -1.59,
+    0.55 -9.61,
+    3.88 -8.02,
+  ]
+  roofShape "pyramidal roof"
+  wallType "residential building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -273.69 -228.67 0.00
+  name "building52"
+  id "building52"
+  corners [
+    0.00 0.00,
+    4.99 2.09,
+    8.87 -5.93,
+    9.47 -7.79,
+    4.91 -10.15,
+  ]
+  roofShape "flat roof"
+  wallType "windowed building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -273.69 -228.67 0.00
+  name "building53"
+  id "building53"
+  corners [
+    0.00 0.00,
+    -7.90 -3.85,
+    -1.38 -15.76,
+    5.88 -12.12,
+    4.91 -10.15,
+  ]
+  roofShape "flat roof"
+  wallType "windowed building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -281.59 -232.53 0.00
+  name "building54"
+  id "building54"
+  corners [
+    0.00 0.00,
+    -4.25 -2.07,
+    1.97 -14.38,
+    6.52 -11.90,
+  ]
+  roofShape "pyramidal roof"
+  wallType "blue glass building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -285.84 -234.60 0.00
+  name "building55"
+  id "building55"
+  corners [
+    0.00 0.00,
+    -4.86 -2.17,
+    1.96 -14.48,
+    6.22 -12.31,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -315.77 -285.22 0.00
+  name "building56"
+  id "building56"
+  corners [
+    0.00 0.00,
+    5.85 -20.49,
+    13.75 -9.65,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old house"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -306.73 -334.10 0.00
+  name "building57"
+  id "building57"
+  corners [
+    0.00 0.00,
+    -3.38 9.42,
+    17.22 16.13,
+    20.20 6.92,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -279.14 -330.60 0.00
+  name "building58"
+  id "building58"
+  corners [
+    0.00 0.00,
+    -3.39 9.32,
+    7.73 12.46,
+    11.01 3.03,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -282.53 -321.28 0.00
+  name "building59"
+  id "building59"
+  corners [
+    0.00 0.00,
+    -6.16 17.83,
+    4.55 21.27,
+    11.12 3.14,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -289.18 -301.87 0.00
+  name "building60"
+  id "building60"
+  corners [
+    0.00 0.00,
+    -2.68 7.23,
+    8.22 10.16,
+    10.51 3.61,
+  ]
+  roofShape "pyramidal roof"
+  wallType "highrise"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -291.87 -294.64 0.00
+  name "building61"
+  id "building61"
+  corners [
+    0.00 0.00,
+    -2.89 7.79,
+    8.95 11.02,
+    10.90 2.93,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -294.76 -286.86 0.00
+  name "building62"
+  id "building62"
+  corners [
+    0.00 0.00,
+    -2.78 8.49,
+    -1.18 8.95,
+    8.54 11.73,
+    11.84 3.23,
+  ]
+  roofShape "flat roof"
+  wallType "gray glass building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -295.94 -277.90 0.00
+  name "building63"
+  id "building63"
+  corners [
+    0.00 0.00,
+    -1.14 3.31,
+    1.34 4.91,
+    -0.75 10.65,
+    3.48 13.05,
+    2.48 15.00,
+    7.43 17.10,
+    10.64 10.93,
+    9.72 2.78,
+  ]
+  roofShape "flat roof"
+  wallType "red and white building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -291.23 -255.94 0.00
+  name "building64"
+  id "building64"
+  corners [
+    0.00 0.00,
+    5.93 -11.03,
+    12.42 -8.35,
+    6.29 2.74,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -284.94 -253.19 0.00
+  name "building65"
+  id "building65"
+  corners [
+    0.00 0.00,
+    7.12 3.49,
+    13.14 -7.90,
+    6.13 -11.09,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -277.82 -249.71 0.00
+  name "building66"
+  id "building66"
+  corners [
+    0.00 0.00,
+    8.46 3.88,
+    12.69 -3.71,
+    11.65 -4.11,
+    13.86 -8.52,
+    6.03 -11.39,
+  ]
+  roofShape "flat roof"
+  wallType "office building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -269.36 -245.83 0.00
+  name "building67"
+  id "building67"
+  corners [
+    0.00 0.00,
+    10.82 4.36,
+    15.92 -7.33,
+    5.40 -12.40,
+    3.19 -7.99,
+    4.22 -7.59,
+  ]
+  roofShape "flat roof"
+  wallType "gray glass building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -257.17 -279.65 0.00
+  name "building68"
+  id "building68"
+  corners [
+    0.00 0.00,
+    6.03 -19.31,
+    16.34 -4.64,
+    11.04 5.34,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -231.04 -255.08 0.00
+  name "building69"
+  id "building69"
+  corners [
+    0.00 0.00,
+    -12.56 -5.82,
+    -5.26 -17.00,
+    6.30 -11.41,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -236.30 -272.08 0.00
+  name "新時代華廈"
+  id "新時代華廈"
+  corners [
+    0.00 0.00,
+    2.29 -6.92,
+    5.35 -7.24,
+    18.15 -8.60,
+    17.90 -1.03,
+    13.94 6.73,
+    11.56 5.58,
+  ]
+  roofShape "flat roof"
+  wallType "brick building"
+  floorNumber 7
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -230.95 -279.32 0.00
+  name "新時代華廈(1)"
+  id "新時代華廈(1)"
+  corners [
+    0.00 0.00,
+    -4.36 -9.74,
+    7.92 -14.59,
+    12.80 -1.36,
+  ]
+  roofShape "pyramidal roof"
+  wallType "transparent highrise"
+  floorNumber 7
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -238.52 -288.77 0.00
+  name "building70"
+  id "building70"
+  corners [
+    0.00 0.00,
+    -1.92 -5.44,
+    11.01 -12.48,
+    13.46 -6.12,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old office building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -240.44 -294.21 0.00
+  name "building71"
+  id "building71"
+  corners [
+    0.00 0.00,
+    -5.24 -15.07,
+    8.22 -19.92,
+    12.93 -7.04,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -245.67 -309.28 0.00
+  name "building72"
+  id "building72"
+  corners [
+    0.00 0.00,
+    -3.50 -10.37,
+    9.26 -17.07,
+    13.46 -4.85,
+  ]
+  roofShape "pyramidal roof"
+  wallType "residential building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -249.17 -319.65 0.00
+  name "building73"
+  id "building73"
+  corners [
+    0.00 0.00,
+    -8.34 -19.91,
+    4.77 -25.94,
+    12.76 -6.70,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -267.16 -305.64 0.00
+  name "building74"
+  id "building74"
+  corners [
+    0.00 0.00,
+    15.59 4.11,
+    18.99 -8.47,
+    17.84 -11.18,
+    15.33 -13.70,
+    7.77 -15.72,
+    5.28 -14.99,
+  ]
+  roofShape "flat roof"
+  wallType "old house"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -270.38 -296.49 0.00
+  name "building75"
+  id "building75"
+  corners [
+    0.00 0.00,
+    14.99 4.97,
+    18.81 -5.04,
+    3.22 -9.15,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -273.48 -288.00 0.00
+  name "building76"
+  id "building76"
+  corners [
+    0.00 0.00,
+    14.20 5.13,
+    18.09 -3.52,
+    3.10 -8.49,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old office building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -278.13 -274.81 0.00
+  name "building77"
+  id "building77"
+  corners [
+    0.00 0.00,
+    5.04 -11.18,
+    14.17 -8.06,
+    13.61 -6.84,
+    8.63 3.96,
+  ]
+  roofShape "flat roof"
+  wallType "stone wall"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -269.49 -270.86 0.00
+  name "building78"
+  id "building78"
+  corners [
+    0.00 0.00,
+    5.51 2.60,
+    10.93 -8.05,
+    4.97 -10.80,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -263.98 -268.26 0.00
+  name "building79"
+  id "building79"
+  corners [
+    0.00 0.00,
+    7.70 3.38,
+    12.54 -5.86,
+    12.89 -6.53,
+    5.42 -10.65,
+  ]
+  roofShape "flat roof"
+  wallType "residential building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -256.28 -264.88 0.00
+  name "building80"
+  id "building80"
+  corners [
+    0.00 0.00,
+    8.15 3.49,
+    13.21 -5.29,
+    4.84 -9.24,
+  ]
+  roofShape "pyramidal roof"
+  wallType "windowed building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -242.71 -231.45 0.00
+  name "building81"
+  id "building81"
+  corners [
+    0.00 0.00,
+    2.32 -4.84,
+    -12.34 -11.79,
+    -14.65 -6.95,
+  ]
+  roofShape "pyramidal roof"
+  wallType "red and white building"
+  floorNumber 6
+  floorHeight 3.2
+}
+SimpleBuilding {
+  translation -115.42 -200.82 0.00
+  name "超級F1"
+  id "超級F1"
+  corners [
+    0.00 0.00,
+    4.05 1.91,
+    27.53 13.05,
+    32.97 15.61,
+    46.88 -13.42,
+    23.72 -24.41,
+    17.80 -27.21,
+    13.91 -29.05,
+  ]
+  roofShape "flat roof"
+  wallType "arcade-style building"
+  floorNumber 24
+  floorHeight 4.19
+}
+SimpleBuilding {
+  translation 135.35 86.08 0.00
+  name "画世紀"
+  id "画世紀"
+  corners [
+    0.00 0.00,
+    17.70 -24.68,
+    42.15 -7.36,
+    24.44 17.34,
+  ]
+  roofShape "pyramidal roof"
+  wallType "transparent highrise"
+  floorNumber 29
+  floorHeight 3.74
+}
+SimpleBuilding {
+  translation 195.78 61.91 0.00
+  name "新都廳"
+  id "新都廳"
+  corners [
+    0.00 0.00,
+    12.39 -18.68,
+    -12.09 -34.74,
+    -17.79 -26.15,
+    -11.03 -21.73,
+    -17.72 -11.63,
+  ]
+  roofShape "flat roof"
+  wallType "arcade-style building"
+  floorNumber 23
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 210.39 -128.43 0.00
+  name "巴黎16區"
+  id "巴黎16區"
+  corners [
+    0.00 0.00,
+    13.47 -25.31,
+    53.51 -4.23,
+    51.16 0.17,
+    40.04 21.08,
+  ]
+  roofShape "flat roof"
+  wallType "classic building"
+  floorNumber 28
+  floorHeight 3.87
+}
+SimpleBuilding {
+  translation 209.72 -124.87 0.00
+  name "巴黎16區(1)"
+  id "巴黎16區(1)"
+  corners [
+    0.00 0.00,
+    39.27 20.45,
+    26.82 44.08,
+    -12.45 23.63,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old office building"
+  floorNumber 28
+  floorHeight 3.87
+}
+SimpleBuilding {
+  translation 105.15 -92.99 0.00
+  name "橋峰B棟"
+  id "橋峰B棟"
+  corners [
+    0.00 0.00,
+    6.19 -12.75,
+    -0.73 -16.09,
+    5.21 -28.30,
+    36.03 -13.51,
+    21.79 -3.97,
+    16.11 7.74,
+  ]
+  roofShape "flat roof"
+  wallType "tall house"
+  floorNumber 35
+  floorHeight 3.99
+}
+SimpleBuilding {
+  translation 143.50 -73.86 0.00
+  name "橋峰C棟"
+  id "橋峰C棟"
+  corners [
+    0.00 0.00,
+    12.33 -25.85,
+    46.35 -9.80,
+    34.02 16.05,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old brick building"
+  floorNumber 37
+  floorHeight 3.95
+}
+SimpleBuilding {
+  translation 161.12 -18.72 0.00
+  name "橋峰D棟"
+  id "橋峰D棟"
+  corners [
+    0.00 0.00,
+    11.78 -25.19,
+    41.31 -11.53,
+    29.53 13.66,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 31
+  floorHeight 4.06
+}
+SimpleBuilding {
+  translation 62.13 -145.85 0.00
+  name "謙岳"
+  id "謙岳"
+  corners [
+    0.00 0.00,
+    9.79 4.20,
+    20.58 0.58,
+    47.76 -61.33,
+    26.67 -70.68,
+    -2.82 -10.20,
+  ]
+  roofShape "flat roof"
+  wallType "orange building"
+  floorNumber 24
+  floorHeight 5.10
+}
+SimpleBuilding {
+  translation -304.43 322.56 0.00
+  name "表演台"
+  id "表演台"
+  corners [
+    0.00 0.00,
+    -30.15 -40.20,
+    -23.61 -45.20,
+    -18.34 -37.75,
+    -14.60 -40.14,
+    -4.59 -31.12,
+    3.83 -15.27,
+    1.03 -13.60,
+    6.30 -4.76,
+  ]
+  roofShape "flat roof"
+  wallType "orange building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -203.09 305.41 0.00
+  name "捷運環狀線板橋站"
+  id "捷運環狀線板橋站"
+  corners [
+    0.00 0.00,
+    34.00 -25.55,
+    59.64 -44.83,
+    75.46 -56.72,
+    82.85 -62.27,
+    94.69 -71.17,
+    110.79 -49.97,
+    39.88 3.34,
+    37.77 0.56,
+    27.83 8.03,
+    30.09 11.00,
+    22.39 16.78,
+    25.10 20.36,
+    20.12 24.11,
+    9.75 10.47,
+    8.62 11.33,
+  ]
+  roofShape "flat roof"
+  wallType "tall house"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -132.11 -163.18 0.00
+  name "曼哈頓金融中心"
+  id "曼哈頓金融中心"
+  corners [
+    0.00 0.00,
+    40.23 18.45,
+    52.11 -7.18,
+    11.88 -25.63,
+  ]
+  roofShape "pyramidal roof"
+  wallType "brick building"
+  wallColor [ 0.25 0.41 0.88 ]
+  floorNumber 22
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -115.31 -8.32 0.00
+  name "市民廣場舞台"
+  id "市民廣場舞台"
+  corners [
+    0.00 0.00,
+    5.78 -13.61,
+    31.29 -2.23,
+    24.27 11.54,
+    18.08 9.25,
+    3.51 3.27,
+  ]
+  roofShape "flat roof"
+  wallType "blue glass building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 58.77 -1.39 0.00
+  name "百揚大樓"
+  id "百揚大樓"
+  corners [
+    0.00 0.00,
+    6.55 -5.67,
+    12.88 -9.23,
+    21.87 -10.94,
+    27.86 -10.61,
+    33.57 -9.72,
+    42.08 -5.62,
+    72.50 11.19,
+    66.46 28.21,
+    62.04 35.67,
+    58.72 41.15,
+    49.81 51.24,
+    41.91 57.47,
+    33.17 62.06,
+    -6.57 34.07,
+    -2.02 26.59,
+    -4.13 19.54,
+    -4.54 11.21,
+    -2.90 4.60,
+  ]
+  roofShape "flat roof"
+  wallType "classic building"
+  floorNumber 50
+  floorHeight 4.40
+}
+SimpleBuilding {
+  translation -66.75 -186.50 0.00
+  name "超級F1(1)"
+  id "超級F1(1)"
+  corners [
+    0.00 0.00,
+    38.66 18.77,
+    50.18 -4.73,
+    11.52 -23.48,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 24
+  floorHeight 4.19
+}
+SimpleBuilding {
+  translation -67.40 -170.47 0.00
+  name "東方明珠"
+  id "東方明珠"
+  corners [
+    0.00 0.00,
+    35.53 17.04,
+    20.50 48.05,
+    -15.03 31.02,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 28
+  floorHeight 3.88
+}
+SimpleBuilding {
+  translation 47.64 -255.06 0.00
+  name "building82"
+  id "building82"
+  corners [
+    0.00 0.00,
+    29.27 13.44,
+    24.97 22.71,
+    37.58 28.50,
+    29.61 45.68,
+    13.16 38.13,
+    17.59 28.59,
+    11.35 25.72,
+    8.98 30.85,
+    -0.80 26.36,
+    2.35 19.57,
+    -5.85 15.81,
+    -5.36 11.54,
+  ]
+  roofShape "flat roof"
+  wallType "brick building"
+  floorNumber 14
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -130.55 244.83 0.00
+  name "building83"
+  id "building83"
+  corners [
+    0.00 0.00,
+    7.38 -5.54,
+    10.31 -1.70,
+    2.92 3.85,
+  ]
+  roofShape "pyramidal roof"
+  wallType "tall house"
+  floorNumber 4
+  startingFloor 3
+  bottom TRUE
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -172.05 275.97 0.00
+  name "building84"
+  id "building84"
+  corners [
+    0.00 0.00,
+    25.66 -19.25,
+    28.59 -15.39,
+    2.95 3.89,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone wall"
+  floorNumber 3
+  startingFloor 2
+  bottom TRUE
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 359.06 291.89 0.00
+  name "building85"
+  id "building85"
+  corners [
+    0.00 0.00,
+    -3.74 -10.57,
+    -43.86 3.48,
+    -40.11 14.04,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 305.35 253.05 0.00
+  name "building86"
+  id "building86"
+  corners [
+    0.00 0.00,
+    8.61 -10.16,
+    0.20 -17.19,
+    -8.40 -7.04,
+  ]
+  roofShape "pyramidal roof"
+  wallType "highrise"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 307.13 254.10 0.00
+  name "building87"
+  id "building87"
+  corners [
+    0.00 0.00,
+    23.10 20.21,
+    31.14 11.10,
+    8.04 -9.10,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old brick building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -4.73 130.08 0.00
+  name "building88"
+  id "building88"
+  corners [
+    0.00 0.00,
+    7.73 4.09,
+    25.07 11.99,
+    31.22 -4.78,
+    11.73 -18.44,
+    9.99 -19.38,
+    3.54 -3.54,
+    0.09 -3.83,
+  ]
+  roofShape "flat roof"
+  wallType "highrise"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 87.74 265.80 0.00
+  name "building89"
+  id "building89"
+  corners [
+    0.00 0.00,
+    17.57 -26.26,
+    38.77 -9.70,
+    20.38 12.05,
+  ]
+  roofShape "pyramidal roof"
+  wallType "windowed building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 113.08 279.67 0.00
+  name "building90"
+  id "building90"
+  corners [
+    0.00 0.00,
+    38.59 22.50,
+    93.78 37.50,
+    99.24 13.85,
+    48.08 -0.43,
+    16.32 -22.47,
+  ]
+  roofShape "flat roof"
+  wallType "transparent highrise"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 147.03 255.38 0.00
+  name "building91"
+  id "building91"
+  corners [
+    0.00 0.00,
+    -34.59 -22.77,
+    -17.77 -48.48,
+    17.38 -23.68,
+  ]
+  roofShape "pyramidal roof"
+  wallType "tall house"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 172.54 221.60 0.00
+  name "building92"
+  id "building92"
+  corners [
+    0.00 0.00,
+    -36.80 -26.51,
+    -22.06 -44.99,
+    16.61 -15.92,
+  ]
+  roofShape "pyramidal roof"
+  wallType "residential building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 192.14 199.89 0.00
+  name "building93"
+  id "building93"
+  corners [
+    0.00 0.00,
+    -38.47 -30.79,
+    -28.11 -43.61,
+    -18.72 -37.04,
+    14.24 -33.21,
+  ]
+  roofShape "flat roof"
+  wallType "glass highrise"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 207.51 153.01 0.00
+  name "building94"
+  id "building94"
+  corners [
+    0.00 0.00,
+    -32.15 -8.03,
+    38.63 -98.66,
+    48.02 -91.33,
+    10.31 -46.32,
+  ]
+  roofShape "flat roof"
+  wallType "residential building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -297.55 -158.07 0.00
+  name "趣淘漫旅-台北"
+  id "趣淘漫旅-台北"
+  corners [
+    0.00 0.00,
+    -17.55 -8.03,
+    5.19 -55.04,
+    23.83 -45.82,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old brick building"
+  floorNumber 20
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -252.97 -156.41 0.00
+  name "新光人壽新板金融大樓"
+  id "新光人壽新板金融大樓"
+  corners [
+    0.00 0.00,
+    -24.48 -12.08,
+    -10.93 -39.24,
+    13.55 -27.16,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old house"
+  floorNumber 17
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -205.69 -310.90 0.00
+  name "building95"
+  id "building95"
+  corners [
+    0.00 0.00,
+    -7.00 -22.46,
+    20.17 -31.30,
+    27.15 -9.14,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -198.38 -289.79 0.00
+  name "building96"
+  id "building96"
+  corners [
+    0.00 0.00,
+    -2.86 -9.42,
+    86.23 -40.28,
+    88.47 -32.07,
+  ]
+  roofShape "pyramidal roof"
+  wallType "tall house"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -10.70 -108.16 0.00
+  name "皇翔高更"
+  id "皇翔高更"
+  corners [
+    0.00 0.00,
+    6.50 -13.99,
+    27.93 -4.14,
+    33.73 -16.60,
+    44.27 -11.76,
+    31.97 14.70,
+  ]
+  roofShape "flat roof"
+  wallType "factory building"
+  floorNumber 13
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 10.95 -118.22 0.00
+  name "building97"
+  id "building97"
+  corners [
+    0.00 0.00,
+    -14.70 -6.90,
+    28.99 -98.92,
+    43.71 -92.01,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 45.47 -144.01 0.00
+  name "building98"
+  id "building98"
+  corners [
+    0.00 0.00,
+    -12.71 -7.80,
+    13.26 -57.27,
+    25.95 -51.01,
+  ]
+  roofShape "pyramidal roof"
+  wallType "stone brick"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -22.08 -119.45 0.00
+  name "building99"
+  id "building99"
+  corners [
+    0.00 0.00,
+    -11.90 -5.67,
+    2.52 -35.35,
+    14.98 -28.43,
+  ]
+  roofShape "pyramidal roof"
+  wallType "orange building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -6.07 -153.14 0.00
+  name "building100"
+  id "building100"
+  corners [
+    0.00 0.00,
+    -12.08 -4.94,
+    8.87 -36.69,
+    15.65 -33.33,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -16.43 -239.32 0.00
+  name "building101"
+  id "building101"
+  corners [
+    0.00 0.00,
+    -12.81 -16.25,
+    -24.59 -9.71,
+    -30.32 -16.05,
+    -18.10 -28.74,
+    -7.69 -19.13,
+    -3.88 -23.78,
+    11.22 -9.10,
+  ]
+  roofShape "flat roof"
+  wallType "old office building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -64.39 -289.24 0.00
+  name "building102"
+  id "building102"
+  corners [
+    0.00 0.00,
+    22.16 23.58,
+    30.60 18.10,
+    38.67 25.95,
+    43.52 22.05,
+    31.53 9.12,
+    24.11 13.56,
+    5.08 -6.97,
+  ]
+  roofShape "flat roof"
+  wallType "gray glass building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -57.80 -298.53 0.00
+  name "building103"
+  id "building103"
+  corners [
+    0.00 0.00,
+    6.52 7.09,
+    33.69 18.06,
+    41.22 24.12,
+    38.96 29.01,
+    55.29 38.31,
+    59.58 29.80,
+    76.45 40.63,
+    81.98 29.29,
+    9.17 -8.57,
+  ]
+  roofShape "flat roof"
+  wallType "old building"
+  floorNumber 2
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 6.39 -240.64 0.00
+  name "building104"
+  id "building104"
+  corners [
+    0.00 0.00,
+    7.29 -6.53,
+    9.28 -4.51,
+    19.38 -13.04,
+    20.87 -11.34,
+    33.41 -20.15,
+    40.86 -16.05,
+    13.32 4.44,
+    12.92 3.99,
+    11.33 5.03,
+    9.58 2.79,
+    7.63 4.57,
+    5.70 2.56,
+    5.00 3.24,
+    3.85 2.17,
+    2.95 3.23,
+  ]
+  roofShape "flat roof"
+  wallType "residential building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 23.25 -219.69 0.00
+  name "building105"
+  id "building105"
+  corners [
+    0.00 0.00,
+    -7.76 -9.33,
+    7.25 -19.82,
+    10.29 -16.23,
+  ]
+  roofShape "pyramidal roof"
+  wallType "factory building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -323.37 -147.87 0.00
+  name "building106"
+  id "building106"
+  corners [
+    0.00 0.00,
+    51.29 25.48,
+    61.79 6.19,
+    25.83 -10.20,
+    8.27 -18.23,
+  ]
+  roofShape "flat roof"
+  wallType "construction building"
+  floorNumber 5
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -303.91 -49.09 0.00
+  name "building107"
+  id "building107"
+  corners [
+    0.00 0.00,
+    15.89 19.63,
+    22.24 20.14,
+    41.94 5.22,
+    42.90 -4.22,
+    28.57 -21.79,
+    17.98 -22.69,
+    0.79 -7.82,
+  ]
+  roofShape "flat roof"
+  wallType "transparent highrise"
+  floorNumber 34
+  floorHeight 4.94
+}
+SimpleBuilding {
+  translation -318.61 -74.88 0.00
+  name "building108"
+  id "building108"
+  corners [
+    0.00 0.00,
+    -2.09 -2.50,
+    -3.97 -0.94,
+    -19.11 -19.02,
+    -17.73 -20.17,
+    -20.29 -23.22,
+    -0.36 -39.73,
+    2.53 -36.28,
+    6.18 -39.32,
+    19.48 -23.43,
+    15.83 -20.41,
+    19.44 -16.08,
+  ]
+  roofShape "flat roof"
+  wallType "windowed building"
+  floorNumber 32
+  floorHeight 3.85
+}
+SimpleBuilding {
+  translation 104.46 65.53 0.00
+  name "画世紀(1)"
+  id "画世紀(1)"
+  corners [
+    0.00 0.00,
+    18.58 -22.81,
+    33.88 -10.47,
+    15.31 12.33,
+  ]
+  roofShape "pyramidal roof"
+  wallType "glass building"
+  floorNumber 29
+  floorHeight 3.74
+}
+SimpleBuilding {
+  translation 155.90 50.06 0.00
+  name "領御"
+  id "領御"
+  corners [
+    0.00 0.00,
+    -28.60 -19.43,
+    -11.79 -43.91,
+    16.82 -24.48,
+  ]
+  roofShape "pyramidal roof"
+  wallType "concrete building"
+  floorNumber 29
+  floorHeight 3.76
+}
+SimpleBuilding {
+  translation 226.88 14.03 0.00
+  name "國家世紀館A棟"
+  id "國家世紀館A棟"
+  corners [
+    0.00 0.00,
+    12.37 -24.04,
+    -13.95 -37.43,
+    -26.31 -13.38,
+  ]
+  roofShape "pyramidal roof"
+  wallType "old brick building"
+  floorNumber 29
+  floorHeight 3.72
+}
+SimpleBuilding {
+  translation 241.64 -14.91 0.00
+  name "國家世紀館B棟"
+  id "國家世紀館B棟"
+  corners [
+    0.00 0.00,
+    12.36 -24.03,
+    -5.94 -33.33,
+    -13.96 -37.41,
+    -26.32 -13.38,
+  ]
+  roofShape "flat roof"
+  wallType "gray glass building"
+  floorNumber 29
+  floorHeight 3.72
+}
+SimpleBuilding {
+  translation 268.11 -56.83 0.00
+  name "國家世紀館C棟"
+  id "國家世紀館C棟"
+  corners [
+    0.00 0.00,
+    12.37 -24.04,
+    -13.95 -37.43,
+    -26.31 -13.39,
+  ]
+  roofShape "pyramidal roof"
+  wallType "office building"
+  floorNumber 29
+  floorHeight 3.72
+}
+SimpleBuilding {
+  translation 306.44 46.08 0.00
+  name "building109"
+  id "building109"
+  corners [
+    0.00 0.00,
+    8.83 5.00,
+    23.78 -21.13,
+    14.96 -26.12,
+  ]
+  roofShape "pyramidal roof"
+  wallType "windowed building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 317.72 -68.46 0.00
+  name "building110"
+  id "building110"
+  corners [
+    0.00 0.00,
+    -13.32 22.30,
+    -13.67 24.01,
+    -13.41 25.61,
+    -12.66 26.82,
+    7.89 35.89,
+    21.55 12.04,
+  ]
+  roofShape "flat roof"
+  wallType "stone brick"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 45.30 -68.69 0.00
+  name "building111"
+  id "building111"
+  corners [
+    0.00 0.00,
+    21.69 -43.28,
+    -3.71 -55.86,
+    -25.40 -12.59,
+  ]
+  roofShape "pyramidal roof"
+  wallType "arcade-style building"
+  floorNumber 4
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 23.02 -124.76 0.00
+  name "building112"
+  id "building112"
+  corners [
+    0.00 0.00,
+    10.54 4.84,
+    21.68 -18.07,
+    10.45 -23.27,
+  ]
+  roofShape "pyramidal roof"
+  wallType "construction building"
+  floorNumber 1
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -62.84 -264.08 0.00
+  name "三輝白昀"
+  id "三輝白昀"
+  corners [
+    0.00 0.00,
+    -19.68 -9.39,
+    -34.06 20.38,
+    -14.37 29.78,
+  ]
+  roofShape "pyramidal roof"
+  wallType "glass highrise"
+  floorNumber 24
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -113.74 -32.22 5.00
+  name "新北市政府大樓"
+  id "新北市政府大樓"
+  corners [
+    0.00 0.00,
+    -2.33 4.51,
+    -7.31 1.97,
+    -19.35 -4.01,
+    -17.20 -8.29,
+    -47.46 -23.73,
+    -49.16 -37.29,
+    -40.61 -54.10,
+    -29.59 -61.22,
+    -10.26 -50.95,
+    0.85 -74.77,
+    90.97 -30.01,
+    80.69 -5.12,
+    102.19 4.86,
+    105.60 18.55,
+    97.94 36.14,
+    82.84 41.43,
+    76.64 50.57,
+    73.87 54.66,
+    51.25 45.41,
+    49.56 50.39,
+    44.26 48.84,
+    46.45 43.95,
+    30.10 36.38,
+    37.76 18.89,
+  ]
+  roofShape "flat roof"
+  wallType "classic building"
+  floorNumber 33
+  bottom TRUE
+  floorHeight 4.26
+}
+SimpleBuilding {
+  translation 107.03 -322.11 0.00
+  name "building113"
+  id "building113"
+  corners [
+    0.00 0.00,
+    23.30 -48.41,
+    24.63 -50.37,
+    30.99 -59.70,
+    40.79 -70.18,
+    53.53 -80.67,
+    67.67 -86.12,
+    77.28 -88.14,
+    87.48 -88.64,
+    100.15 -87.76,
+    114.49 -84.86,
+    171.54 -57.15,
+    177.69 -53.18,
+    186.96 -44.48,
+    195.63 -33.99,
+    202.47 -23.11,
+    205.97 -15.32,
+    208.71 -5.86,
+    210.19 7.97,
+    209.90 19.71,
+    207.06 31.34,
+    210.04 33.27,
+    210.84 35.91,
+    210.42 38.83,
+    184.76 92.92,
+    183.76 93.97,
+    181.95 95.39,
+    179.13 95.69,
+    176.70 94.95,
+    171.42 102.30,
+    164.30 109.66,
+    154.83 116.04,
+    144.53 121.00,
+    133.62 124.44,
+    122.33 126.29,
+    110.90 126.52,
+    102.12 124.93,
+    93.50 123.19,
+    28.56 89.99,
+    19.56 84.30,
+    13.20 78.56,
+    6.28 67.86,
+    0.22 57.82,
+    -3.29 48.30,
+    -5.44 35.16,
+    -5.82 24.77,
+    -5.55 22.77,
+    -4.07 11.79,
+  ]
+  roofShape "flat roof"
+  wallType "gray glass building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation -203.09 305.41 -5.00
+  name "板捷變電所"
+  id "板捷變電所"
+  corners [
+    0.00 0.00,
+    34.00 -25.55,
+    59.64 -44.83,
+    75.46 -56.72,
+    82.85 -62.27,
+    94.69 -71.17,
+    110.79 -49.97,
+    39.88 3.34,
+    37.77 0.56,
+    27.83 8.03,
+    30.09 11.00,
+    22.39 16.78,
+    25.10 20.36,
+    20.12 24.11,
+    9.75 10.47,
+    8.62 11.33,
+    9.98 1.36,
+  ]
+  roofShape "flat roof"
+  wallType "blue glass building"
+  floorNumber 3
+  floorHeight 3
+}
+SimpleBuilding {
+  translation 119.41 -68.20 0.00
+  name "橋峰A棟"
+  id "橋峰A棟"
+  corners [
+    0.00 0.00,
+    -14.39 26.78,
+    -42.01 12.09,
+    -40.15 9.25,
+    -27.62 -14.69,
+  ]
+  roofShape "flat roof"
+  wallType "office building"
+  floorNumber 33
+  floorHeight 4.03
+}
+Forest {
+  id "-2821"
+  translation 5.82 64.19 0
+  shape [
+    -47.05 -106.16,     52.08 105.24,     49.91 106.16,     -52.08 -103.52,     -47.05 -106.16, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3657"
+  translation 3.27 -29.77 0
+  shape [
+    -15.58 -40.67,     -6.32 -44.87,     25.14 21.72,     -22.23 44.87,     -25.14 38.92,     14.62 18.37,     -15.58 -40.67, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3671"
+  translation -135.09 -102.49 0
+  shape [
+    -43.27 -33.42,     -37.01 -36.05,     -4.83 27.32,     40.48 6.16,     43.27 11.58,     -7.10 36.05,     -43.27 -33.42, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3707"
+  translation 144.09 146.85 0
+  shape [
+    -80.87 -102.55,     -78.13 -105.21,     80.87 102.82,     77.46 105.21,     -80.87 -102.55, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3738"
+  translation -222.67 -84.85 0
+  shape [
+    -60.67 -68.40,     -59.02 -71.07,     12.89 -13.71,     60.67 69.49,     57.95 71.07,     11.11 -11.98,     -60.67 -68.40, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3792"
+  translation -105.21 -238.25 0
+  shape [
+    -34.38 -77.47,     38.33 76.42,     36.01 77.47,     -38.33 -76.03,     -34.38 -77.47, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3828"
+  translation -2.62 220.80 0
+  shape [
+    -49.09 31.22,     55.72 -44.06,     59.46 -38.90,     -56.54 44.06,     -59.46 38.37,     -49.09 31.22, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3846"
+  translation 162.61 156.73 0
+  shape [
+    -77.84 -106.69,     81.39 104.58,     77.85 106.69,     -81.39 -103.50,     -77.84 -106.69, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3870"
+  translation 275.14 -44.99 0
+  shape [
+    -40.95 -67.10,     -37.13 -69.48,     40.95 64.14,     36.56 69.48,     -40.95 -67.10, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3875"
+  translation 294.82 -39.55 0
+  shape [
+    -42.11 -71.42,     45.93 67.43,     41.55 71.42,     -45.93 -69.31,     -42.11 -71.42, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3893"
+  translation 227.61 -164.93 0
+  shape [
+    -84.79 40.24,     82.40 -45.10,     84.79 -41.04,     -83.22 45.10,     -84.79 40.24, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3920"
+  translation 33.80 -268.15 0
+  shape [
+    -98.00 47.90,     96.01 -50.06,     98.00 -46.81,     -97.21 50.06,     -98.00 47.90, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3955"
+  translation -241.69 -209.13 0
+  shape [
+    -86.62 42.61,     -87.11 41.12,     85.86 -42.61,     87.11 -39.97,     -86.62 42.61, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-3978"
+  translation 127.58 -341.47 0
+  shape [
+    -63.21 -70.14,     -38.16 -83.32,     -26.87 -75.65,     -27.50 -67.58,     -29.81 -55.49,     -30.49 -43.11,     -28.46 -30.70,     -23.71 -19.88,     -1.00 30.73,     7.79 43.48,     16.88 53.54,     30.30 64.20,     46.20 70.57,     57.55 72.04,     66.47 73.22,     64.65 78.86,     42.40 83.32,     30.62 83.05,     21.99 80.80,     13.44 70.06,     5.69 61.50,     -2.99 51.03,     1.26 46.37,     -2.99 38.65,     -23.64 -1.97,     -41.10 -38.12,     -48.03 -35.77,     -66.47 -69.10,     -63.21 -70.14, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-4018"
+  translation -146.69 -277.87 0
+  shape [
+    25.04 19.35,     -31.59 -1.21,     7.06 -19.35,     31.59 14.85,     25.04 19.35, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "-4023"
+  translation -111.83 -280.27 0
+  shape [
+    -21.25 -25.72,     -9.05 -27.20,     -0.70 -23.87,     21.25 22.42,     14.97 27.20,     -7.24 -19.37,     -17.55 -17.60,     -21.25 -25.72, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Transform {
+  id "-4746"
+  name "water-4746"
+  translation 229.881538 -191.080230 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColor 0.3 0.5 0.8
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 0.00,
+            11.60 -3.36 0.00,
+            21.32 -5.63 0.00,
+            33.99 -10.62 0.00,
+            41.78 -15.82 0.00,
+            52.23 -25.90 0.00,
+            58.13 -31.08 0.00,
+            64.59 -34.12 0.00,
+            73.08 -49.29 0.00,
+            82.04 -71.47 0.00,
+            147.96 -35.60 0.00,
+            129.89 -5.24 0.00,
+            98.89 -17.81 0.00,
+            94.08 -12.10 0.00,
+            85.95 -12.28 0.00,
+            70.07 19.13 0.00,
+            72.58 25.83 0.00,
+            75.88 30.37 0.00,
+            74.34 37.93 0.00,
+            70.30 39.86 0.00,
+            -2.39 4.07 0.00,
+            0.00 0.00 0.00,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          10
+          11
+          12
+          13
+          14
+          15
+          16
+          17
+          18
+          19
+          20
+          21
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Forest {
+  id "-4795"
+  translation 365.91 -296.69 0
+  shape [
+    -50.50 -31.41,     14.33 -66.76,     59.73 12.37,     -59.73 66.76,     -59.67 61.37,     -52.80 51.76,     -48.09 42.93,     -45.81 32.45,     -42.94 18.48,     -43.60 4.21,     -43.75 -6.03,     -43.67 -13.03,     -50.50 -31.41, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "182810255"
+  translation -354.45 228.86 0
+  shape [
+    50.89 -118.29,     98.94 -84.77,     101.33 -79.00,     -44.27 117.31,     -55.42 118.29,     -100.90 85.22,     -101.33 79.09,     -18.50 -33.90,     42.25 -116.73,     50.89 -118.29, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Transform {
+  id "232201649"
+  name "parking232201649"
+  translation -50.430829 385.810164 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 135.00 135.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            73.08 -94.55 -0.01,
+            72.76 -100.04 -0.01,
+            24.49 -135.07 -0.01,
+            -55.83 -76.22 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        ccw FALSE
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Transform {
+  id "232201651"
+  name "parking232201651"
+  translation -192.188983 372.617827 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 121.00 121.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            2.51 0.72 -0.01,
+            44.18 57.44 -0.01,
+            89.26 19.70 -0.01,
+            87.43 11.84 -0.01,
+            121.12 -13.70 -0.01,
+            82.85 -63.35 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        ccw FALSE
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Forest {
+  id "233076434"
+  translation 164.57 -146.67 0
+  shape [
+    -57.52 -13.30,     22.52 -53.23,     55.76 10.66,     57.52 14.03,     -20.19 53.23,     -28.00 50.34,     -46.13 11.43,     -57.52 -13.30, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Transform {
+  id "337591647"
+  name "parking337591647"
+  translation 404.192268 129.534135 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 96.00 96.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            -21.78 22.54 -0.01,
+            -14.74 28.18 -0.01,
+            -29.51 58.36 -0.01,
+            -50.59 48.17 -0.01,
+            -35.17 16.65 -0.01,
+            -93.99 -11.81 -0.01,
+            -81.31 -37.71 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Transform {
+  id "337591649"
+  name "parking337591649"
+  translation 295.418923 79.831500 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 31.00 31.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            -8.79 17.07 -0.01,
+            13.79 28.57 -0.01,
+            22.58 11.50 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        ccw FALSE
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Forest {
+  id "345803332"
+  translation 330.68 -177.58 0
+  shape [
+    7.70 -23.15,     19.91 -0.60,     26.18 9.65,     -2.49 23.15,     -5.48 16.56,     -13.77 20.44,     -26.18 -7.59,     -22.85 -9.89,     -20.71 -12.45,     -19.48 -16.42,     -12.13 -20.33,     -8.64 -16.30,     -2.56 -12.48,     3.59 -14.05,     6.23 -18.71,     7.70 -23.15, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Transform {
+  id "443767460"
+  name "water443767460"
+  translation -131.650283 73.265907 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColor 0.3 0.5 0.8
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 0.00,
+            -2.79 3.06 0.00,
+            -6.45 4.99 0.00,
+            -10.56 5.58 0.00,
+            -14.62 4.76 0.00,
+            -18.17 2.62 0.00,
+            -20.78 -0.58 0.00,
+            -22.07 -4.04 0.00,
+            -22.24 -7.71 0.00,
+            -21.29 -11.27 0.00,
+            -19.31 -14.37 0.00,
+            -16.48 -16.74 0.00,
+            -13.06 -18.14 0.00,
+            -9.37 -18.45 0.00,
+            -5.35 -17.46 0.00,
+            -1.89 -15.18 0.00,
+            0.59 -11.87 0.00,
+            1.80 -7.93 0.00,
+            1.59 -3.81 0.00,
+            0.00 0.00 0.00,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          10
+          11
+          12
+          13
+          14
+          15
+          16
+          17
+          18
+          19
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Transform {
+  id "906800905"
+  name "parking906800905"
+  translation 251.105261 199.392090 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 71.00 71.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            44.68 34.90 -0.01,
+            27.96 55.90 -0.01,
+            18.34 70.59 -0.01,
+            -4.31 63.82 -0.01,
+            -3.98 57.34 -0.01,
+            -25.74 42.18 -0.01,
+            -13.91 25.23 -0.01,
+            -14.94 15.62 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Forest {
+  id "992724451"
+  translation -23.24 -218.64 0
+  shape [
+    16.33 -24.15,     44.23 -1.86,     21.41 24.15,     0.79 8.41,     -10.19 22.93,     -44.23 6.61,     16.33 -24.15, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Forest {
+  id "1008806026"
+  translation -131.00 42.99 0
+  shape [
+    33.85 -92.61,     43.18 -86.87,     51.19 -85.10,     64.13 -87.77,     111.86 13.04,     -59.49 92.61,     -109.92 48.19,     -105.85 35.78,     -108.98 28.14,     -111.86 22.66,     33.85 -92.61, 
+  ]
+  density 0.100
+  type "random"
+  groundTexture "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+}
+Transform {
+  id "1082645022"
+  name "parking1082645022"
+  translation 296.841163 -35.483486 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 133.00 133.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            31.59 7.57 -0.01,
+            42.42 14.25 -0.01,
+            30.55 37.48 -0.01,
+            97.32 73.97 -0.01,
+            70.13 123.36 -0.01,
+            -21.86 75.04 -0.01,
+            -19.11 69.07 -0.01,
+            -35.97 61.06 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          9
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}
+Transform {
+  id "1101044423"
+  name "parking1101044423"
+  translation 259.970495 137.864968 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+        metalness 0
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/worlds/textures/light_asphalt.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 49.00 49.00
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.00 0.00 -0.01,
+            12.99 -25.78 -0.01,
+            49.43 -7.61 -0.01,
+            35.70 19.65 -0.01,
+            16.14 9.90 -0.01,
+            14.61 12.95 -0.01,
+            2.34 6.83 -0.01,
+            4.62 2.31 -0.01,
+            0.00 0.00 -0.01,
+          ]
+        }
+        coordIndex [
+          0
+          1
+          2
+          3
+          4
+          5
+          6
+          7
+          8
+          -1
+        ]
+      }
+      castShadows FALSE
+    }
+  ]
+}

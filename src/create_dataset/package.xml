@@ -22,6 +22,8 @@
   <depend>visualization_msgs</depend>
   <depend>cv_bridge</depend>
   <depend>pluginlib</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
   <export>
     <build_type>ament_cmake</build_type>
     <webots_ros2_driver plugin="${prefix}/robot_driver.xml"/>

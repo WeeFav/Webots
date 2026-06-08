@@ -5,6 +5,9 @@
 #include "webots_ros2_driver/WebotsNode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include <geometry_msgs/msg/pose_stamped.hpp>
+#include <geometry_msgs/msg/transform_stamped.hpp>
+#include <tf2_ros/transform_broadcaster.h>
 
 #include <iostream>
 #include <unordered_map>
@@ -62,6 +65,7 @@ private:
     Corners8x3 get_bounding_box(const std::vector<BoxInfo>& boxes);
     visualization_msgs::msg::MarkerArray corners_to_marker_array(const std::vector<Corners8x3>& all_corners);
     void save_lane(cv::Mat &img, cv::Mat &seg, std::vector<bool> &lane_exist);
+    void publish_pose();
 
     // ---- ROS / Webots handles ----
     webots_ros2_driver::WebotsNode *node;
@@ -85,7 +89,9 @@ private:
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr   obj_det_pub;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr          lidar_pub;
     rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr     imu_pub;
- 
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_pub;
+    std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster;
+    
     // ---- Camera intrinsics / extrinsics ----
     Eigen::Matrix3d K;
     Eigen::Matrix3d R_webots_to_opencv;

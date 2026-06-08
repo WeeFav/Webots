@@ -15,6 +15,8 @@
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
 #include <nlohmann/json.hpp>
+#include <tf2/LinearMath/Matrix3x3.h>
+#include <tf2/LinearMath/Quaternion.h>
 
 #include <webots/robot.h>
 #include <webots/camera.h>
@@ -100,7 +102,9 @@ void create_dataset::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_no
     vehicle_node = wb_supervisor_node_get_from_def("SUMO_VEHICLE0");
 
     // ---- Publishers / Subscribers ----
-
+    pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>(
+            "/vehicle/pose", 10);
+    tf_broadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(node);
 
     R_webots_to_opencv <<  0, -1,  0,
                             0,  0, -1,
@@ -130,6 +134,8 @@ void create_dataset::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_no
 void create_dataset::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
+
+    publish_pose();
 
     const unsigned char *image = wb_camera_get_image(camera);
     
@@ -312,6 +318,49 @@ void create_dataset::RobotDriver::save_lane(cv::Mat &img, cv::Mat &seg, std::vec
     gt_file << "\n";
 
     save_counter++;
+}
+
+void create_dataset::RobotDriver::publish_pose() {
+    const double* pos = wb_supervisor_node_get_position(vehicle_node);
+    const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+
+    // Convert Webots rotation matrix -> quaternion
+    tf2::Matrix3x3 m(
+        rot[0], rot[1], rot[2],
+        rot[3], rot[4], rot[5],
+        rot[6], rot[7], rot[8]);
+
+    tf2::Quaternion q;
+    m.getRotation(q);
+
+    // -------- Publish PoseStamped --------
+    geometry_msgs::msg::PoseStamped pose_msg;
+    pose_msg.header.stamp = node->get_clock()->now();
+    pose_msg.header.frame_id = "map";
+
+    pose_msg.pose.position.x = pos[0];
+    pose_msg.pose.position.y = pos[1];
+    pose_msg.pose.position.z = pos[2];
+
+    pose_msg.pose.orientation.x = q.x();
+    pose_msg.pose.orientation.y = q.y();
+    pose_msg.pose.orientation.z = q.z();
+    pose_msg.pose.orientation.w = q.w();
+
+    pose_pub->publish(pose_msg);
+
+    // -------- Publish TF --------
+    geometry_msgs::msg::TransformStamped tf_msg;
+    tf_msg.header = pose_msg.header;
+    tf_msg.child_frame_id = "vehicle";
+
+    tf_msg.transform.translation.x = pos[0];
+    tf_msg.transform.translation.y = pos[1];
+    tf_msg.transform.translation.z = pos[2];
+
+    tf_msg.transform.rotation = pose_msg.pose.orientation;
+
+    tf_broadcaster->sendTransform(tf_msg);
 }
 
 #include "pluginlib/class_list_macros.hpp"
