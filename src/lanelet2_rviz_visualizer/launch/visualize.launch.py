@@ -34,6 +34,12 @@ def generate_launch_description():
         description="Longitude of the UTM projection origin (decimal degrees)",
     )
 
+    proj_parameter_arg = DeclareLaunchArgument(
+        "proj_parameter",
+        default_value="+proj=tmerc +lat_0=25.01291 +lon_0=121.46627 +datum=WGS84 +ellps=WGS84 +units=m +no_defs",
+        description="PROJ projection parameter string",
+    )
+
     frame_id_arg = DeclareLaunchArgument(
         "frame_id",
         default_value="map",
@@ -46,6 +52,24 @@ def generate_launch_description():
         description="How often (Hz) to republish markers (keep alive for RViz)",
     )
 
+    points_x_arg = DeclareLaunchArgument(
+        "points_x",
+        default_value="[-463.29]",
+        description="X coordinates of custom points to visualize as spheres",
+    )
+
+    points_y_arg = DeclareLaunchArgument(
+        "points_y",
+        default_value="[144.96]",
+        description="Y coordinates of custom points to visualize as spheres",
+    )
+
+    points_z_arg = DeclareLaunchArgument(
+        "points_z",
+        default_value="[0.05]",
+        description="Z coordinates of custom points to visualize as spheres",
+    )
+
     visualizer_node = Node(
         package="lanelet2_rviz_visualizer",
         executable="lanelet2_visualizer",
@@ -55,8 +79,12 @@ def generate_launch_description():
             "map_file":        LaunchConfiguration("map_file"),
             "origin_lat":      LaunchConfiguration("origin_lat"),
             "origin_lon":      LaunchConfiguration("origin_lon"),
+            "projParameter":   LaunchConfiguration("proj_parameter"),
             "frame_id":        LaunchConfiguration("frame_id"),
             "publish_rate_hz": LaunchConfiguration("publish_rate_hz"),
+            "points_x":        LaunchConfiguration("points_x"),
+            "points_y":        LaunchConfiguration("points_y"),
+            "points_z":        LaunchConfiguration("points_z"),
         }],
     )
 
@@ -64,7 +92,11 @@ def generate_launch_description():
         map_file_arg,
         origin_lat_arg,
         origin_lon_arg,
+        proj_parameter_arg,
         frame_id_arg,
         publish_rate_arg,
+        points_x_arg,
+        points_y_arg,
+        points_z_arg,
         visualizer_node,
     ])

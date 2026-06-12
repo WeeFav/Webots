@@ -19,10 +19,16 @@ find_package(lanelet2_core REQUIRED)
 find_package(lanelet2_io REQUIRED)
 find_package(lanelet2_projection REQUIRED)
 
+# PROJ
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(PROJ REQUIRED IMPORTED_TARGET proj)
+
 # ---- Executable ------------------------------------------------------------
 add_executable(lanelet2_visualizer
   src/lanelet2_visualizer.cpp
 )
+
+target_link_libraries(lanelet2_visualizer PkgConfig::PROJ)
 
 ament_target_dependencies(lanelet2_visualizer
   rclcpp
