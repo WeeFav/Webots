@@ -21,8 +21,8 @@ WorldInfo {
   lineScale 3
 }
 Viewpoint {
-  orientation 0.5621762432365286 -0.49678214163462747 -0.6611848268777621 4.124278892940451
-  position 73.30437821862249 -206.38274485408684 1829.051376790835
+  orientation -0.690949658518304 0.2356877705498287 0.683403134472392 2.7453274317756393
+  position 0.05857381827835814 -240.5134950389086 595.3134952271117
   near 3
 }
 TexturedBackground {
@@ -184,6 +184,25 @@ Crossroad {
   ]
 }
 Crossroad {
+  translation -309.977281 357.367276 0
+  name "crossroad(12)"
+  id "1268539183"
+  shape [
+    0 0 0
+    -15.921978 -12.065189 -0.000429
+    -30.435281 7.04931 -0.000359
+    -22.470906 13.096519 -0.000144
+    -22.452535 13.11044 -0.000143
+    -14.47656 19.14234 7.2e-05
+    0 0 0
+  ]
+  connectedRoadIDs [
+    "-1270_2"
+    "338478395_2"
+    "338478395_4"
+  ]
+}
+Crossroad {
   translation 563.852388 194.49956 0
   name "crossroad(10)"
   id "1268539100"
@@ -235,7 +254,7 @@ Crossroad {
   ]
   connectedRoadIDs [
     "291409438_3"
-    "291409438_6"
+    "291409438_1"
     "356796887"
   ]
 }
@@ -318,7 +337,7 @@ Crossroad {
   ]
 }
 Crossroad {
-  translation -399.217296 68.76084 0
+  translation -399.217295 68.760843 0
   name "crossroad(17)"
   id "2414182093"
   shape [
@@ -326,74 +345,54 @@ Crossroad {
     -18.21786 -15.624006 -0.000519
     -20.4883 -13.67603 -0.000524
     -29.82038 -0.902292 -0.000471
-    -20.39216 6.198766 -0.000218
-    -6.51 7.590774 1.7e-05
+    -27.1778 1.785094 -0.000389
+    -7.52944 15.299594 0.000119
+    0.72602 2.426478 4.8e-05
   ]
   connectedRoadIDs [
     "310261335_2"
     "327350097"
+    "338478395_4"
   ]
 }
 Crossroad {
-  translation 215.058489 287.412482 0
+  translation 215.058495 287.412483 0
   name "crossroad(18)"
   id "2917075370"
   shape [
     0 0 0
-    -1.059881 -3.857027 -7.5e-05
-    -2.430199 -4.889959 -0.000112
-    -6.429967 -4.846843 -0.000173
-    -8.702016 -2.043517 -0.000165
-    -7.915904 1.878476 -9.3e-05
-    -5.349626 3.498664 -2.8e-05
-    -1.470725 2.521873 1.6e-05
-    0 0 0
+    -1.05988 -3.85702 -7.5e-05
+    -2.4302 -4.88996 -0.000112
+    -6.42996 -4.84684 -0.000173
+    -8.70202 -2.04352 -0.000165
+    -7.9159 1.87848 -9.3e-05
+    -7.21116 3.904 -5.1e-05
+    0.39082 1.99644 3.7e-05
   ]
   connectedRoadIDs [
     "288160105_2"
-    "288160106"
-    "356796893"
+    "288160106_1"
+    "-5737"
     "356796894"
   ]
 }
 Crossroad {
-  translation 214.398011 123.457724 0
-  name "crossroad(19)"
-  id "2948748864"
-  shape [
-    0 0 0
-    -0.972843 -3.879894 -7.4e-05
-    -4.37906 -5.439222 -0.000151
-    -7.951656 -3.640178 -0.000178
-    -8.59573 -2.420393 -0.000169
-    -8.066595 1.544454 -0.0001
-    -4.101748 1.01532 -4.7e-05
-    -3.879894 0.972843 -4.5e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "291409438_2"
-    "291409438_6"
-    "356796896"
-  ]
-}
-Crossroad {
   translation 227.972317 180.741446 0
-  name "crossroad(20)"
+  name "crossroad(24)"
   id "2948748867"
   shape [
     0 0 0
     -3.740531 -5.731435 -0.000145
     -7.508326 -4.38841 -0.000182
-    -8.70544 -1.946264 -0.000163
-    -7.459135 1.85462 -8.6e-05
+    -8.355403 0.287229 -0.000124
+    -5.519531 3.108191 -3.7e-05
     -2.746263 2.908271 2e-06
     0 0 0
   ]
   connectedRoadIDs [
+    "-5737"
+    "291409438_2"
     "291409438_3"
-    "291409438_7"
-    "444610456"
   ]
 }
 Crossroad {
@@ -407,44 +406,6 @@ Crossroad {
   ]
 }
 Crossroad {
-  translation 250.217718 188.356686 0
-  name "crossroad(22)"
-  id "3622032799"
-  shape [
-    0 0 0
-    -1.660132 -3.639225 -8.1e-05
-    -5.42856 -4.527523 -0.000153
-    -8.539287 -2.01289 -0.000162
-    -4.914774 4.290413 -1e-05
-    -1.176667 2.866842 2.6e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "291409438_4"
-    "291409438_7"
-    "356796888"
-  ]
-}
-Crossroad {
-  translation 170.369308 227.421663 0
-  name "crossroad(23)"
-  id "3622032802"
-  shape [
-    0 0 0
-    -2.764552 -2.890892 -8.7e-05
-    -8.642582 2.272108 -9.8e-05
-    -6.132414 5.386439 -1.1e-05
-    -3.566823 5.735109 3.3e-05
-    -0.316559 3.403633 4.7e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "356796889"
-    "356796892_1"
-    "356796892_2"
-  ]
-}
-Crossroad {
   translation 193.819149 205.79395 0.01
   name "crossroad(24)"
   id "3622032804"
@@ -455,81 +416,21 @@ Crossroad {
   ]
 }
 Crossroad {
-  translation 291.762507 241.760084 0
-  name "crossroad(25)"
-  id "3622032805"
-  shape [
-    0 0 0
-    -2.489497 -3.13088 -8.6e-05
-    -5.597829 -3.377829 -0.000138
-    -8.550457 -0.679314 -0.000142
-    -8.712346 2.016247 -0.000103
-    -6.103906 5.048745 -1.6e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "291409438_4"
-    "291409438_5"
-    "356796891"
-  ]
-}
-Crossroad {
-  translation 144.053973 259.520276 0
+  translation 144.053975 259.520283 0
   name "crossroad(26)"
   id "3622032808"
   shape [
     0 0 0
-    -2.510168 -3.114331 -8.6e-05
-    -5.029936 -3.470087 -0.00013
-    -8.304198 -1.172434 -0.000145
-    -3.777206 5.385754 2.5e-05
-    -0.467888 3.138886 4.1e-05
-    0 0 0
+    -2.51016 -3.11432 -8.6e-05
+    -3.46946 -4.49978 -0.000122
+    -9.85404 -0.0472 -0.000152
+    -5.39074 6.43668 1.6e-05
+    1.15628 1.99242 4.8e-05
   ]
   connectedRoadIDs [
     "288160105_1"
     "288160105_2"
-    "356796892_2"
-  ]
-}
-Crossroad {
-  translation 236.191897 87.408219 0
-  name "crossroad(27)"
-  id "3622032813"
-  shape [
-    0 0 0
-    -2.512695 -3.112292 -8.6e-05
-    -4.431916 -3.515139 -0.000122
-    -7.983956 -1.675843 -0.000148
-    -8.68997 2.108117 -0.000101
-    -6.040184 5.104554 -1.4e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "291409438_1"
-    "291409438_2"
-    "356796897"
-  ]
-}
-Crossroad {
-  translation -166.939352 -321.030184 0
-  name "crossroad(28)"
-  id "3656522213"
-  shape [
-    0 0 0
-    -1.181239 -2.904303 -6.3e-05
-    -4.920989 -4.323555 -0.000142
-    -6.340241 -0.583806 -0.000106
-    -6.356477 -0.539452 -0.000106
-    -7.68702 3.23277 -6.8e-05
-    -3.914798 4.563313 1e-05
-    -1.687491 3.626621 3e-05
-    0 0 0
-  ]
-  connectedRoadIDs [
-    "266756876_1"
-    "266756876_2"
-    "361135239"
+    "356796892"
   ]
 }
 Crossroad {
@@ -629,8 +530,134 @@ Crossroad {
     "327350097"
   ]
 }
+Crossroad {
+  translation -350.073041 -264.830497 0
+  name "crossroad(34)"
+  id "1268538923"
+  shape [
+    0 0 0
+    -4.49722 -13.258018 -0.000272
+    -6.40774 -15.28167 -0.000333
+    -19.27536 -10.424006 -0.000455
+    -21.26274 -5.563894 -0.000411
+    -5.18116 8.625062 5.3e-05
+    -0.88186 4.24535 5.2e-05
+  ]
+  connectedRoadIDs [
+    "-5341_1"
+    "310849373_5"
+    "326955641_3"
+  ]
+}
+Crossroad {
+  translation -255.495463 -416.649447 0
+  name "crossroad(35)"
+  id "1403752407"
+  shape [
+    0 0 0
+    -13.296841 -4.381097 -0.000271
+    -18.110529 7.92748 -0.000156
+    -5.369361 13.729432 0.000128
+    -2.468385 7.358848 7.5e-05
+    -2.190548 6.648421 6.8e-05
+    0 0 0
+  ]
+  connectedRoadIDs [
+    "-5341_1"
+    "-5341_2"
+    "126672566_2"
+  ]
+}
+Crossroad {
+  translation -131.705505 -458.053837 0
+  name "crossroad(36)"
+  id "13167198010"
+  shape [
+    0 0 0
+    -6.45388 -2.85842 -0.000143
+    -12.93188 -5.51088 -0.000283
+    -19.17478 9.59624 -0.000147
+    -12.51662 11.94844 -9e-06
+    -5.3246 14.13766 0.000135
+  ]
+  connectedRoadIDs [
+    "-5341_2"
+    "-5341_3"
+    "128995034_1"
+  ]
+}
+Crossroad {
+  translation 289.072523 299.14226 0
+  name "crossroad(37)"
+  id "2948748877"
+  shape [
+    0 0 0
+    -6.761025 -3.880116 -0.000163
+    -8.931248 -0.895305 -0.000151
+    -9.051562 -0.600872 -0.000148
+    -6.227306 5.561373 -1e-05
+    -2.537776 4.016264 2.3e-05
+    -1.950791 3.49205 2.4e-05
+    0 0 0
+  ]
+  connectedRoadIDs [
+    "288160106_1"
+    "288160106_2"
+    "291409438_2"
+  ]
+}
+Crossroad {
+  translation -96.359848 -473.233329 0
+  name "crossroad(38)"
+  id "2314788028"
+  shape [
+    0 0 0
+    -5.054566 -6.505106 -0.000177
+    -11.623487 -8.923635 -0.000315
+    -15.624603 0.933709 -0.000225
+    -2.751437 6.436583 5.6e-05
+    0 0 0
+  ]
+  connectedRoadIDs [
+    "-5341_3"
+    "222521510"
+  ]
+}
 Road {
-  translation 133.762 -215.157 0.03
+  translation 233.032239 186.365875 0
+  name "中山路一段265巷"
+  id "291409438_2"
+  startJunction "2948748867"
+  endJunction "2948748877"
+  width 4
+  numberOfLanes 1
+  speedLimit 27.777778
+  lines []
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    5.96107 2.124815 0
+    17.344959 6.460102 0
+    65.444988 45.342947 0
+    66.727991 47.344468 0
+    65.910911 49.577081 0
+    57.806211 59.769837 0
+    48.531166 70.552743 0
+    39.044893 84.971252 0
+    40.638171 89.306447 0
+    54.29426 113.751781 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation 133.762 -215.157 0
   name "新站路"
   id "-1258"
   startJunction "5713208683"
@@ -664,61 +691,6 @@ Road {
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
   ]
   endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 304.523 465.885 0.03
-  name "縣民大道二段"
-  id "-1544"
-  endJunction "1268538864"
-  width 28
-  numberOfLanes 8
-  numberOfForwardLanes 4
-  speedLimit 8.333333
-  lines [
-    RoadLine {
-    }
-    RoadLine {
-    }
-    RoadLine {
-    }
-    RoadLine {
-      color 1 1 0
-      type "double"
-    }
-    RoadLine {
-    }
-    RoadLine {
-    }
-    RoadLine {
-    }
-  ]
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -65.55208 -51.655842 0
-    -155.54008 -114.388928 0
-    -219.87894 -162.745948 0
-    -236.49958 -174.947548 0
-    -241.42784 -178.497348 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
   ]
@@ -808,7 +780,7 @@ Road {
   }
 }
 Road {
-  translation -184.979852 -57.79114 0
+  translation -184.98 -57.7911 -0.01
   name "road(2)"
   id "-2095"
   width 4
@@ -869,7 +841,7 @@ Road {
   }
 }
 Road {
-  translation -431.407666 -172.2806 0
+  translation -423.934399 -160.476237 0
   name "road(5)"
   id "-2119"
   width 4
@@ -881,27 +853,29 @@ Road {
   wayPoints [
     0 0 0
     71.25095 81.07774 0
-    132.790478 151.5228 0
-    136.739782 152.65216 0
-    141.655312 150.86842 0
-    180.855814 121.36554 0
-    220.208374 91.6673 0
-    231.501214 69.21832 0
-    249.658994 35.01794 0
-    258.689634 17.80564 0
-    260.730774 13.27022 0
-    243.236154 4.8776 0
-    184.855174 -24.78862 0
-    83.153016 -74.99436 0
-    40.939516 -30.84584 0
-    -2.720202 0.52958 0
+    125.317212 139.71844 0
+    129.266516 140.8478 0
+    134.182054 139.06406 0
+    173.382554 109.56118 0
+    212.735114 79.86294 0
+    224.027954 57.41396 0
+    242.185734 23.21358 0
+    251.216374 6.00128 0
+    253.257514 1.46586 0
+    235.762894 -6.92676 0
+    177.381914 -36.59298 0
+    83.1963 -82.97134 0
+    78.882778 -80.16862 0
+    34.310484 -40.49694 0
+    1.30447 -11.03004 0
+    1.004538 1.56678 0
   ]
   splineSubdivision 0
   appearance CementTiles {
   }
 }
 Road {
-  translation -205.950172 515.269156 0
+  translation -195.844 507.541 -0.01
   name "road(6)"
   id "-2127"
   width 4
@@ -911,7 +885,7 @@ Road {
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
-    0 0 0, 58.24964 -45.25932 0, 134.40162 -102.32128 0, 145.58626 -111.708474 0, 171.42284 -141.71032 0, 191.77442 -169.682176 0, 231.39228 -221.652296 0, 235.81848 -227.782996 0, 238.53612 -231.620536 0, 239.65248 -234.553116 0, 233.33518 -238.683156 0, 189.3296 -271.600216 0, 177.62366 -280.394496 0, 162.48998 -292.099276 0, 141.63312 -308.970056 0, 135.84348 -313.810736 0, 132.62176 -315.638876 0, 129.5686 -311.852376 0, 116.91696 -302.784736 0, 92.20292 -285.098916 0, 66.10218 -266.512476 0, 3.02066 -217.136496 0, -11.16822 -205.242136 0, -11.86934 -199.354236 0, 1.7453 -182.406916 0, 9.79172 -174.687316 0, 30.74946 -162.128756 0
+    0 0 0, 48.14376 -37.531282 0, 124.29574 -94.593242 0, 135.48038 -103.980436 0, 161.31696 -133.982282 0, 181.66854 -161.954136 0, 221.2864 -213.924256 0, 225.7126 -220.054956 0, 228.43024 -223.892496 0, 229.5466 -226.825076 0, 223.2293 -230.955116 0, 179.22372 -263.872176 0, 167.51778 -272.666456 0, 152.3841 -284.371236 0, 131.52724 -301.242016 0, 125.7376 -306.082696 0, 122.51588 -307.910836 0, 119.46272 -304.124336 0, 106.81108 -295.056696 0, 82.09704 -277.370876 0, 55.9963 -258.784436 0, -7.08522 -209.408456 0, -21.2741 -197.514096 0, -21.97522 -191.626196 0, -8.36058 -174.678876 0, -0.31416 -166.959276 0, 20.64358 -154.400716 0
   ]
   splineSubdivision 0
   appearance CementTiles {
@@ -978,7 +952,7 @@ Road {
   }
 }
 Road {
-  translation 124.868 -219.575 -0.02
+  translation 124.868 -219.575 -0.01
   name "road(9)"
   id "-2182"
   width 4
@@ -1183,7 +1157,7 @@ Road {
   }
 }
 Road {
-  translation 84.643708 303.13924 0
+  translation 79.704 254.636 0.01
   name "板新路"
   id "30336556"
   endJunction "1268539100"
@@ -1194,20 +1168,29 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    52.31256 10.0123 0
-    110.08122 25.59758 0
-    123.83104 25.84086 0
-    171.5922 26.70766 0
-    211.3474 17.57408 0
-    229.54882 13.3918 0
-    297.04474 -10.55456 0
-    341.60968 -27.27432 0
-    358.24464 -32.53534 0
-    370.6393 -38.78968 0
-    398.09596 -50.16538 0
-    432.21628 -65.8365 0
-    455.76274 -82.95006 0
-    473.91742 -94.53646 0
+    -8.92136 11.40968 0
+    -9.54336 20.2757 0
+    -3.14052 28.52874 0
+    6.1968 35.94246 0
+    17.22322 42.54534 0
+    28.7995 48.21718 0
+    39.78638 52.8378 0
+    49.04462 56.28706 0
+    55.43502 58.44474 0
+    57.81832 59.19066 0
+    115.58698 74.77596 0
+    129.3368 75.01924 0
+    177.09796 75.88604 0
+    216.85314 66.75244 0
+    235.05456 62.57018 0
+    302.55048 38.62382 0
+    347.11544 21.90406 0
+    363.7504 16.64304 0
+    376.14504 10.3887 0
+    403.6017 -0.987 0
+    437.72202 -16.6581 0
+    461.26848 -33.77166 0
+    479.43836 -45.36776 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1220,7 +1203,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -204.097 -280.133 0
+  translation -204.097 -280.133 0.01
   name "road(17)"
   id "126672536"
   startJunction "1403752408"
@@ -1250,26 +1233,32 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -93.608411 -466.796746 0
+  translation -91.144525 -460.104631 0
   name "民族路69巷"
   id "222521510"
-  width 4
-  numberOfLanes 1
+  startJunction "2314788028"
+  width 8
   speedLimit 13.888889
-  lines []
+  lines [
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+  ]
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
     0 0 0
-    14.507024 39.402252 0
-    22.830521 69.359516 0
-    26.576726 81.069643 0
-    32.844773 100.660092 0
-    44.780436 128.71555 0
-    46.141071 137.450864 0
-    47.156494 150.415562 0
+    12.043138 32.710137 0
+    20.366635 62.667401 0
+    24.11284 74.377528 0
+    30.380887 93.967977 0
+    42.316549 122.023435 0
+    43.677185 130.758749 0
+    44.692608 143.723446 0
   ]
   startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
   ]
   endLine [
@@ -1310,7 +1299,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 50.486 -48.1728 0.03
+  translation 50.486 -48.1728 0
   name "新站路(1)"
   id "232201641"
   startJunction "1268539098"
@@ -1358,7 +1347,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -26.9094 220.369 -0.02
+  translation -26.9094 220.369 0
   name "站前路"
   id "248676581"
   endJunction "8512521313"
@@ -1418,7 +1407,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -193.842 -277.155 -0.02
+  translation -193.842 -277.155 -0.01
   name "新民街6巷"
   id "266756877"
   width 4
@@ -1442,32 +1431,11 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 287.493821 -43.980403 0
-  name "road(18)"
-  id "285594503"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    41.536515 14.823657 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
   translation 219.926889 291.842565 0
   name "road(19)"
-  id "288160106"
+  id "288160106_1"
   startJunction "2917075370"
+  endJunction "2948748877"
   width 4
   numberOfLanes 1
   speedLimit 27.777778
@@ -1479,32 +1447,7 @@ Road {
     31.10908 0.335344 0
     39.092974 2.128161 0
     45.135692 3.632771 0
-    70.813494 14.386178 0
-    74.106727 19.100931 0
-    76.06421 28.870747 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 273.670411 275.672322 0
-  name "road(20)"
-  id "291409439"
-  startJunction "2948748871"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    20.712498 17.056881 0
+    64.356816 11.682236 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1611,52 +1554,6 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 264.13675 162.663257 0
-  name "中山路一段265巷"
-  id "356796888"
-  endJunction "3622032799"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -12.099419 26.523495 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 119.306096 196.012446 0
-  name "漢生東路117巷"
-  id "356796889"
-  endJunction "3622032802"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    46.493842 33.350908 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
   translation 142.208722 164.734761 0
   name "漢生東路125巷"
   id "356796890"
@@ -1680,53 +1577,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 293.791079 248.834227 0
-  name "中山路一段265巷36弄"
-  id "356796891"
-  startJunction "3622032805"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    34.711027 31.723671 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 228.442678 246.253915 0
-  name "漢生東路113巷28弄"
-  id "356796893"
-  endJunction "2917075370"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -11.455676 41.688507 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 215.14101 295.721442 0
+  translation 215.141 295.721 -0.01
   name "road(22)"
   id "356796894"
   startJunction "2917075370"
@@ -1739,75 +1590,6 @@ Road {
   wayPoints [
     0 0 0
     -6.666265 33.258665 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 240.966509 140.716069 0
-  name "中山路一段265巷4弄"
-  id "356796896"
-  endJunction "2948748864"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -22.028798 -11.092987 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 267.68397 108.579206 0
-  name "中山路一段265巷2弄"
-  id "356796897"
-  endJunction "3622032813"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -28.896582 -14.963051 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation -168.752663 -320.186439 0
-  name "新民街4巷2弄"
-  id "361135239"
-  startJunction "3656522213"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -10.47913 -22.520911 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1841,10 +1623,10 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 228.018139 188.823734 0
-  name "中山路一段265巷7弄"
-  id "444610456"
-  startJunction "2948748867"
+  translation 291.335 307.08 -0.01
+  name "road(24)"
+  id "288160106_2"
+  startJunction "2948748877"
   width 4
   numberOfLanes 1
   speedLimit 27.777778
@@ -1853,7 +1635,49 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -22.238663 67.821744 0
+    2.698881 3.86385 0
+    4.656364 13.633666 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation 226.274607 187.678913 0
+  name "road(25)"
+  id "-5737"
+  startJunction "2948748867"
+  endJunction "2917075370"
+  width 4
+  numberOfLanes 1
+  speedLimit 27.777778
+  lines []
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    -2.869603 2.854516 0
+    -6.34804 6.774073 0
+    -9.914805 11.505948 0
+    -13.165309 16.91272 0
+    -15.694965 22.856969 0
+    -17.099184 29.201277 0
+    -16.973381 35.808222 0
+    -14.912971 42.540385 0
+    -11.930873 48.913201 0
+    -9.349789 54.674628 0
+    -7.229801 60.036038 0
+    -5.63099 65.208801 0
+    -4.613441 70.404288 0
+    -4.237234 75.83387 0
+    -4.562454 81.708915 0
+    -5.64918 88.240796 0
+    -7.557497 95.640879 0
+    -9.097329 100.320916 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1894,7 +1718,132 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 147.246 -219.395 0.03
+  translation -343.444032 -262.581893 0
+  name "road(27)"
+  id "-5341_1"
+  startJunction "1268538923"
+  endJunction "1403752407"
+  width 14
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+    RoadLine {
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    35.281691 -104.012272 0
+    37.518292 -110.761661 0
+    40.082583 -116.405752 0
+    42.84193 -121.037542 0
+    45.663695 -124.750029 0
+    48.415242 -127.636212 0
+    50.963935 -129.789091 0
+    53.177138 -131.301663 0
+    54.922212 -132.266931 0
+    56.066523 -132.777891 0
+    56.477435 -132.927544 0
+    77.120112 -142.32761 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation -253.304905 -410.001017 0
+  name "road(28)"
+  id "-5341_2"
+  startJunction "1403752407"
+  endJunction "13167198010"
+  width 14
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+    RoadLine {
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    109.54422 -36.09308 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation -128.911085 -451.705957 0
+  name "road(29)"
+  id "-5341_3"
+  startJunction "13167198010"
+  endJunction "2314788028"
+  width 14
+  numberOfLanes 4
+  numberOfForwardLanes 2
+  speedLimit 13.888889
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+    RoadLine {
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    28.8661 -12.33936 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation 147.246 -219.395 0
   name "區運路"
   id "128995034_2"
   startJunction "5713208683"
@@ -1982,7 +1931,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -79.619 191.726 0.03
+  translation -79.619 191.726 0
   name "新站路(2)"
   id "-1270_1"
   startJunction "1268539038"
@@ -2023,10 +1972,11 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -239.818073 315.524989 0
+  translation -239.840412 315.496265 0
   name "新站路(3)"
   id "-1270_2"
   startJunction "8512521313"
+  endJunction "1268539183"
   width 16
   numberOfLanes 4
   numberOfForwardLanes 2
@@ -2045,7 +1995,7 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -70.540406 55.067612 0
+    -64.182166 49.729208 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2060,10 +2010,11 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 44.3869 291.166 0.03
-  name "漢生東路"
+  translation 44.969757 290.353734 0
+  name "漢生東路(2)"
   id "338478395_2"
   startJunction "1268538864"
+  endJunction "1268539183"
   width 24
   numberOfLanes 6
   numberOfForwardLanes 3
@@ -2086,13 +2037,27 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -6.24124 8.70208 0
-    -47.87852 63.7663 0
-    -67.9961 91.100906 0
-    -94.7033 122.151046 0
-    -106.43468 132.13196 0
-    -183.70964 189.993282 0
-    -241.48178 234.980174 0
+    -6.824073 9.514714 0
+    -48.461345 64.578921 0
+    -68.578935 91.913533 0
+    -95.28612 122.963673 0
+    -107.017516 132.944587 0
+    -184.292476 190.805908 0
+    -227.566624 225.128458 0
+    -231.100424 228.224147 0
+    -234.464356 230.067601 0
+    -237.610814 230.877016 0
+    -240.492197 230.870588 0
+    -243.060898 230.266511 0
+    -245.269313 229.28298 0
+    -247.069838 228.13819 0
+    -248.414867 227.050337 0
+    -249.256795 226.237614 0
+    -249.548016 225.91822 0
+    -269.913199 199.045983 0
+    -300.032589 159.303337 0
+    -336.778623 110.817534 0
+    -352.439099 90.192171 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2110,9 +2075,10 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -136.251 -448.569 0.03
+  translation -133.598 -442.091 0.03
   name "區運路(1)"
   id "128995034_1"
+  startJunction "13167198010"
   endJunction "2414182038"
   width 16
   numberOfLanes 4
@@ -2132,9 +2098,9 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    25.859249 63.155337 0
-    42.564677 104.160972 0
-    63.01663 120.179532 0
+    23.2068 56.67732 0
+    39.91224 97.68296 0
+    60.36418 113.70152 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2188,38 +2154,6 @@ Road {
   endLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 153.474951 -435.996844 0
-  name "海山路"
-  id "310261353_1"
-  endJunction "1273003326"
-  width 8
-  speedLimit 13.888889
-  lines [
-    RoadLine {
-      color 1 1 0
-      type "double"
-    }
-  ]
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -14.715799 7.233443 0
-    -26.966207 17.363307 0
-    -41.367706 43.457105 0
-    -64.762961 87.375631 0
-    -69.645105 98.454513 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
   ]
   splineSubdivision 0
 }
@@ -2340,6 +2274,7 @@ Road {
   name "新民街(1)"
   id "126672566_2"
   startJunction "1403752408"
+  endJunction "1403752407"
   width 8
   speedLimit 13.888889
   lines [
@@ -2355,7 +2290,7 @@ Road {
     -6.556741 -14.35686 0
     -28.170516 -68.931274 0
     -47.404656 -115.701294 0
-    -50.353195 -122.923213 0
+    -47.566743 -116.098298 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2412,8 +2347,7 @@ Road {
 Road {
   translation -93.685831 -344.407616 0
   name "新民街4巷"
-  id "266756876_1"
-  endJunction "3656522213"
+  id "266756876"
   width 4
   numberOfLanes 1
   speedLimit 27.777778
@@ -2422,7 +2356,8 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -69.639592 26.428546 0
+    -73.379341 27.847798 0
+    -122.47105 45.163491 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2433,45 +2368,27 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -170.837394 -315.229275 0
-  name "新民街4巷(1)"
-  id "266756876_2"
-  startJunction "3656522213"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -45.319487 15.98515 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 94.622245 224.329074 0
+  translation 94.622255 224.329083 0
   name "漢生東路113巷"
   id "288160105_1"
   endJunction "3622032808"
-  width 4
-  numberOfLanes 1
+  width 8
   speedLimit 27.777778
-  lines []
+  lines [
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+  ]
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
     0 0 0
-    24.616438 23.359273 0
-    45.169407 37.31375 0
+    24.61642 23.35926 0
+    45.1694 37.31374 0
   ]
   startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
   ]
   endLine [
@@ -2480,24 +2397,29 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 146.375233 266.187343 0
+  translation 146.375235 266.187343 0
   name "漢生東路113巷(1)"
   id "288160105_2"
   startJunction "3622032808"
   endJunction "2917075370"
-  width 4
-  numberOfLanes 1
+  width 8
   speedLimit 27.777778
-  lines []
+  lines [
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+  ]
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
     0 0 0
-    15.507121 10.88183 0
-    25.561018 14.534251 0
-    65.672987 24.635314 0
+    15.50712 10.88184 0
+    25.56102 14.53426 0
+    65.67298 24.63532 0
   ]
   startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
   ]
   endLine [
@@ -2509,7 +2431,7 @@ Road {
   translation 269.099763 49.831473 0
   name "中山路一段265巷(1)"
   id "291409438_1"
-  endJunction "3622032813"
+  endJunction "13190238293"
   width 4
   numberOfLanes 1
   speedLimit 27.777778
@@ -2518,7 +2440,10 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -31.35172 38.833093 0
+    -33.864415 41.945386 0
+    -48.982924 59.041731 0
+    -53.734648 77.992565 0
+    -57.318376 104.84572 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2529,7 +2454,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -154.846 -150.301 0.03
+  translation -154.846 -150.301 0
   name "新府路(1)"
   id "310261335_1"
   startJunction "1268538985"
@@ -2578,7 +2503,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -305.044 12.597 0.03
+  translation -305.043999 12.597003 0
   name "新府路(2)"
   id "310261335_2"
   startJunction "2414182080"
@@ -2676,10 +2601,11 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -302.754 -7.14898 0.03
+  translation -302.753941 -7.148977 0
   name "縣民大道二段(3)"
   id "326955641_3"
   startJunction "2414182080"
+  endJunction "1268538923"
   width 21
   numberOfLanes 6
   numberOfForwardLanes 3
@@ -2703,7 +2629,18 @@ Road {
   wayPoints [
     0 0 0
     -0.730288 -0.73078 0
-    -140.4321 -159.52036 0
+    -127.363026 -141.0909 0
+    -131.512266 -145.9935 0
+    -133.958212 -150.7925 0
+    -134.999182 -155.39074 0
+    -134.933488 -159.69106 0
+    -134.059444 -163.59634 0
+    -132.675364 -167.00942 0
+    -131.079568 -169.83314 0
+    -129.57037 -171.97038 0
+    -128.446084 -173.32396 0
+    -128.00503 -173.79674 0
+    -48.909734 -244.53464 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2721,34 +2658,10 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 193.819149 205.79395 0
+  translation 193.819155 205.793943 0
   name "漢生東路113巷6弄"
-  id "356796892_1"
+  id "356796892"
   startJunction "3622032804"
-  endJunction "3622032802"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -22.004395 23.009988 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 166.540034 234.809161 0
-  name "漢生東路113巷6弄(1)"
-  id "356796892_2"
-  startJunction "3622032802"
   endJunction "3622032808"
   width 4
   numberOfLanes 1
@@ -2758,109 +2671,8 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -20.928896 25.966199 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 253.487925 195.34061 0
-  name "中山路一段265巷(2)"
-  id "291409438_4"
-  startJunction "3622032799"
-  endJunction "3622032805"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    44.989302 36.368212 0
-    46.272305 38.369733 0
-    45.455224 40.602346 0
-    39.840022 47.664223 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 288.230011 249.16821 0
-  name "中山路一段265巷(3)"
-  id "291409438_5"
-  startJunction "3622032805"
-  endJunction "2948748871"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -6.666606 7.750408 0
-    -16.152878 22.168917 0
-    -14.5596 26.504112 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 232.585562 94.773296 0
-  name "中山路一段265巷(4)"
-  id "291409438_2"
-  startJunction "3622032813"
-  endJunction "2948748864"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -12.468723 14.099908 0
-    -16.247604 29.170849 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 214.835981 131.788886 0
-  name "中山路一段265巷(5)"
-  id "291409438_6"
-  startJunction "2948748864"
-  endJunction "13190238293"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    -3.054593 22.888307 0
+    -24.76896 25.90088 0
+    -48.15168 54.91152 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2887,31 +2699,6 @@ Road {
     -0.00416 2.059186 0
     7.733049 11.486726 0
     15.274009 19.472545 0
-  ]
-  startLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  endLine [
-    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
-  ]
-  splineSubdivision 0
-}
-Road {
-  translation 233.032239 186.365875 0
-  name "中山路一段265巷(7)"
-  id "291409438_7"
-  startJunction "2948748867"
-  endJunction "3622032799"
-  width 4
-  numberOfLanes 1
-  speedLimit 27.777778
-  lines []
-  rightBorder FALSE
-  leftBorder FALSE
-  wayPoints [
-    0 0 0
-    5.96107 2.124815 0
-    13.606852 5.036532 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -2966,7 +2753,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 227.606 30.6855 0.03
+  translation 227.606 30.6855 0
   name "中山路一段(2)"
   id "310849373_4"
   startJunction "1268539000"
@@ -3009,7 +2796,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 328.428 -112.793 0.03
+  translation 328.428 -112.793 0
   name "漢生東路(1)"
   id "338478395_1"
   startJunction "1268539037"
@@ -3149,7 +2936,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation 55.4487 -267.948 0.03
+  translation 55.4487 -267.948 0
   name "區運路(3)"
   id "128995034_4"
   startJunction "4401736616"
@@ -3189,7 +2976,7 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -161.426 -164.352 0.03
+  translation -161.426 -164.352 0
   name "中山路一段(3)"
   id "310849373_3"
   startJunction "1268538985"
@@ -3229,10 +3016,11 @@ Road {
   splineSubdivision 0
 }
 Road {
-  translation -248.305812 -207.9306 0
+  translation -248.305808 -207.930597 0
   name "中山路一段(4)"
   id "310849373_5"
   startJunction "1403019720"
+  endJunction "1268538923"
   width 14
   numberOfLanes 4
   numberOfForwardLanes 2
@@ -3251,7 +3039,7 @@ Road {
   leftBorder FALSE
   wayPoints [
     0 0 0
-    -97.386826 -48.02228 0
+    -89.560033 -44.162825 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -3262,6 +3050,67 @@ Road {
   endLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+  ]
+  splineSubdivision 0
+}
+Road {
+  translation -319.548451 364.605563 0
+  name "漢生東路(3)"
+  id "338478395_4"
+  startJunction "1268539183"
+  endJunction "2414182093"
+  width 24
+  numberOfLanes 6
+  numberOfForwardLanes 3
+  speedLimit 13.888889
+  lines [
+    RoadLine {
+    }
+    RoadLine {
+    }
+    RoadLine {
+      color 1 1 0
+      type "double"
+    }
+    RoadLine {
+    }
+    RoadLine {
+    }
+  ]
+  rightBorder FALSE
+  leftBorder FALSE
+  wayPoints [
+    0 0 0
+    -12.505476 -16.53598 0
+    -53.121868 -70.12628 0
+    -90.9818 -120.07782 0
+    -122.957386 -162.26328 0
+    -145.920692 -192.55528 0
+    -156.743756 -206.8264 0
+    -159.613737 -211.54612 0
+    -160.990166 -215.91288 0
+    -161.153674 -219.89278 0
+    -160.38489 -223.45194 0
+    -158.964443 -226.5565 0
+    -157.172965 -229.17258 0
+    -155.291087 -231.26628 0
+    -153.599439 -232.80372 0
+    -152.378654 -233.75102 0
+    -151.909365 -234.07432 0
+    -88.1824 -278.54684 0
+  ]
+  startLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+  ]
+  endLine [
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid2.png"
+    "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
   ]
   splineSubdivision 0
 }
@@ -4932,7 +4781,7 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 87.740008 267.83022 0
+  translation 87.060615 270.038223 0
   name "building89"
   floorNumber 2
   corners [
@@ -4943,7 +4792,7 @@ SimpleBuilding {
   ]
 }
 SimpleBuilding {
-  translation 113.08 279.67 0
+  translation 111.041835 284.086023 0
   name "building90"
   floorNumber 2
   corners [
@@ -5583,15 +5432,15 @@ Forest {
   ]
 }
 Forest {
-  translation 74.499508 279.30342 0
+  translation 108.427735 231.893963 0
   shape [
     0 0
-    175.17314 230.85558
-    172.54174 231.828
-    169.30436 228.84544
-    48.84504 69.70002
-    27.64786 44.70902
-    -3.55 3.19
+    23.02788 26.7015
+    44.86726 55.5537
+    42.08768 58.04216
+    20.09714 28.15028
+    5.23112 11.13666
+    -2.40904 2.40934
   ]
   density 0.1
   groundTexture [
@@ -5643,14 +5492,13 @@ Forest {
   ]
 }
 Forest {
-  translation -63.732332 -312.712 0
+  translation -63.732325 -312.711997 0
   shape [
     0 0
     70.35528 -32.70302
     108.49278 -52.39378
-    189.66104 -95.27884
-    190.25292 -93.93972
-    189.3499 -90.99438
+    155.45826 -77.49504
+    157.3293 -74.10638
     110.08834 -49.14118
     71.38552 -29.64374
     2.60558 1.80112
@@ -5669,6 +5517,43 @@ Forest {
     167.165614 -85.10058
     171.185994 -86.74428
     173.371714 -82.99798
+  ]
+  density 0.1
+  groundTexture [
+    "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+  ]
+}
+Forest {
+  translation 78.134175 266.493343 0
+  shape [
+    0 0
+    -4.67348 -5.9944
+    1.24756 -13.69506
+    10.13932 -20.7032
+    20.77748 -27.09894
+    31.86984 -32.81004
+    42.7015 -37.38994
+    59.69488 -43.19958
+    117.76664 -58.88936
+    128.90294 -58.97176
+    129.52736 -56.27636
+    71.70658 -41.11962
+    31.65618 -18.99594
+  ]
+  density 0.1
+  groundTexture [
+    "https://raw.githubusercontent.com/cyberbotics/webots/released/projects/default/worlds/textures/grass.jpg"
+  ]
+}
+Forest {
+  translation 168.784335 149.510883 0
+  shape [
+    0 0
+    4.0377 -2.4338
+    25.16692 25.84378
+    77.35592 95.3649
+    74.79004 98.6742
+    71.43798 93.13602
   ]
   density 0.1
   groundTexture [
