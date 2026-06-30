@@ -302,7 +302,7 @@ class SumoSupervisor (Supervisor):
                 x2 = min(max(x2, -threshold), threshold)
                 x3 = math.cos(angle) * x2 - math.sin(angle) * y1
                 y3 = math.sin(angle) * x2 + math.cos(angle) * y1
-                pos = [x3 + vehicle.targetPos[0], y3 + vehicle.targetPos[1], pos[2]]
+                pos = [x3 + vehicle.targetPos[0], y3 + vehicle.targetPos[1], pos[2] - 0.03]
                 diffYaw = yaw - vehicle.targetAngles[2] - artificialAngle
                 # limit angular speed
                 diffYaw = (diffYaw + 2 * math.pi) % (2 * math.pi)
