@@ -39,6 +39,9 @@ static constexpr double IMU_OUT_DT_SEC    = 0.002; // desired IMU step
 static constexpr int    IMU_INTERP_STEPS  = IMU_STEP_DT_SEC / IMU_OUT_DT_SEC;    // sub-samples per Webots step
 
 void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_node, std::unordered_map<std::string, std::string> &parameters) {
+    // ---- Webots Driver Init ----
+    wbu_driver_init();
+
     // ---- ROS node ----
     rclcpp::NodeOptions options;
     options.parameter_overrides({rclcpp::Parameter("use_sim_time", true)});    
@@ -75,6 +78,9 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     imu_sub = node->create_subscription<sensor_msgs::msg::Imu>(
             "/vehicle/imu", 10,
             std::bind(&RobotDriver::imu_callback, this, std::placeholders::_1));
+    ackermann_sub = node->create_subscription<ackermann_msgs::msg::AckermannDrive>(
+            "/cmd_ackermann", 10,
+            std::bind(&RobotDriver::cmd_ackermann_callback, this, std::placeholders::_1));
     lidar_pub    = node->create_publisher<sensor_msgs::msg::PointCloud2>("/points", 10);
     imu_pub      = node->create_publisher<sensor_msgs::msg::Imu>("/vehicle/imu_interpolated", 10);
     
@@ -222,6 +228,30 @@ void autonomous_drive::RobotDriver::publish_lidar() {
         std::memcpy(base + 18, &t_pt,  4);
     }
     lidar_pub->publish(msg);
+}
+
+void autonomous_drive::RobotDriver::cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg) {
+    double target_speed = msg->speed * 3.6; // convert m/s to km/h
+    double target_steering = msg->steering_angle; // radians
+
+    // Range checking
+    if (target_speed > 250.0) target_speed = 250.0;
+    if (target_speed < -250.0) target_speed = -250.0;
+
+    if (target_steering > 0.5) target_steering = 0.5;
+    else if (target_steering < -0.5) target_steering = -0.5;
+
+    // Rate limiting steering to match autonomous_vehicle.cpp
+    double wheel_angle = target_steering;
+    if (wheel_angle - steering_angle > 0.1)
+        wheel_angle = steering_angle + 0.1;
+    if (wheel_angle - steering_angle < -0.1)
+        wheel_angle = steering_angle - 0.1;
+
+    steering_angle = wheel_angle;
+
+    wbu_driver_set_cruising_speed(target_speed);
+    wbu_driver_set_steering_angle(steering_angle);
 }
 
 #include "pluginlib/class_list_macros.hpp"

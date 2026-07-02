@@ -109,6 +109,12 @@ install(TARGETS lane_detection
   DESTINATION lib/${PROJECT_NAME}
 )
 
+install(PROGRAMS
+  scripts/manual_control.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME manual_control
+)
+
 pluginlib_export_plugin_description_file(webots_ros2_driver robot_driver.xml)
 
 ament_export_include_directories(

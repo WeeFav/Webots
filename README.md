@@ -17,4 +17,6 @@ ros2 launch webots_launch webots_launch.py world:=/home/marvin/Webots/src/webots
 ros2 launch autonomous_drive robot_launch.py
 
 ros2 launch lio_sam run.launch.py
+
+ros2 launch autonomous_drive manual_control_launch.py
 ```

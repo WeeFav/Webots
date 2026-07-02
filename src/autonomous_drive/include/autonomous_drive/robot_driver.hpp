@@ -106,6 +106,7 @@ private:
 
     sensor_msgs::msg::Imu imu_prev_;
     bool imu_prev_valid_{false};
+    double steering_angle = 0.0;
 
 };
 } // namespace robot_driver

@@ -11,7 +11,7 @@ def generate_launch_description():
     robot_description_path = os.path.join(package_dir, 'resource', 'robot.urdf')
 
     robot_driver_0 = WebotsController(
-        robot_name='SUMO_VEHICLE0', # SUMO_VEHICLE0, WEBOTS_VEHICLE0
+        robot_name='WEBOTS_VEHICLE0', # SUMO_VEHICLE0, WEBOTS_VEHICLE0
         parameters=[
             {'robot_description': robot_description_path},
             {'use_sim_time': True},
