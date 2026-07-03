@@ -98,7 +98,7 @@ Visualization Manager:
           Value: true
         lidar_link:
           Value: true
-        map:
+        lio_map:
           Value: true
         navsat_link:
           Value: true
@@ -110,7 +110,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        map:
+        lio_map:
           odom:
             {}
       Update Interval: 0
@@ -208,7 +208,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: map
+    Fixed Frame: lio_map
     Frame Rate: 30
   Name: root
   Tools:
@@ -285,5 +285,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1268
-  X: -32
+  X: 795
   Y: -32

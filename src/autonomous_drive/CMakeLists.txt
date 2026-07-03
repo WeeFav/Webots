@@ -27,6 +27,8 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(ZMQ REQUIRED libzmq)
 find_package(nlohmann_json REQUIRED)
 find_package(Torch REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED
   src/robot_driver.cpp
@@ -54,6 +56,8 @@ ament_target_dependencies(${PROJECT_NAME}
   cv_bridge
   webots_ros2_driver
   pluginlib
+  tf2
+  tf2_ros
 )
 
 target_link_libraries(${PROJECT_NAME}

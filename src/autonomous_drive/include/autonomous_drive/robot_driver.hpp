@@ -5,6 +5,10 @@
 #include "webots_ros2_driver/WebotsNode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include <tf2_ros/static_transform_broadcaster.h>
+#include <geometry_msgs/msg/transform_stamped.hpp>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 #include <iostream>
 #include <unordered_map>
@@ -107,6 +111,8 @@ private:
     sensor_msgs::msg::Imu imu_prev_;
     bool imu_prev_valid_{false};
     double steering_angle = 0.0;
+    std::shared_ptr<tf2_ros::StaticTransformBroadcaster> static_broadcaster;
+    bool transform_published = false;
 
 };
 } // namespace robot_driver

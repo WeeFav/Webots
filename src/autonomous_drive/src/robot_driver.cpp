@@ -72,7 +72,10 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     wb_accelerometer_enable(accelerometer,  2);
     wb_gyro_enable(gyro,                    2);
 
-    vehicle_node = wb_supervisor_node_get_from_def("SUMO_VEHICLE0");
+    vehicle_node = wb_supervisor_node_get_from_def("WEBOTS_VEHICLE0");
+
+    // ---- Static Transform Broadcaster ----
+    static_broadcaster = std::make_shared<tf2_ros::StaticTransformBroadcaster>(node);
 
     // ---- Publishers / Subscribers ----
     imu_sub = node->create_subscription<sensor_msgs::msg::Imu>(
@@ -83,6 +86,8 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
             std::bind(&RobotDriver::cmd_ackermann_callback, this, std::placeholders::_1));
     lidar_pub    = node->create_publisher<sensor_msgs::msg::PointCloud2>("/points", 10);
     imu_pub      = node->create_publisher<sensor_msgs::msg::Imu>("/vehicle/imu_interpolated", 10);
+
+    RCLCPP_INFO(node->get_logger(), "c");
     
 }
 
@@ -94,17 +99,59 @@ void autonomous_drive::RobotDriver::step() {
         publish_lidar();
     }
 
+    if (!transform_published && vehicle_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(vehicle_node);
+        const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+        if (pos != nullptr && rot != nullptr) {
+            tf2::Matrix3x3 m(
+                rot[0], rot[1], rot[2],
+                rot[3], rot[4], rot[5],
+                rot[6], rot[7], rot[8]
+            );
+            tf2::Quaternion q;
+            m.getRotation(q);
+
+            // Webots axis convention is offset relative to LIO-SAM's frame definition
+            // We apply -M_PI / 2 rotation offset around Z to align them
+            tf2::Quaternion q_offset;
+            q_offset.setRPY(0.0, 0.0, 0.0);
+            tf2::Quaternion q_final = q * q_offset;
+            q_final.normalize();
+
+            geometry_msgs::msg::TransformStamped tf_msg;
+            tf_msg.header.stamp = node->get_clock()->now();
+            tf_msg.header.frame_id = "map";
+            tf_msg.child_frame_id = "lio_map";
+
+            tf_msg.transform.translation.x = pos[0];
+            tf_msg.transform.translation.y = pos[1];
+            tf_msg.transform.translation.z = pos[2];
+
+            tf_msg.transform.rotation.x = q_final.x();
+            tf_msg.transform.rotation.y = q_final.y();
+            tf_msg.transform.rotation.z = q_final.z();
+            tf_msg.transform.rotation.w = q_final.w();
+
+            static_broadcaster->sendTransform(tf_msg);
+            transform_published = true;
+            RCLCPP_INFO(node->get_logger(), "Published static transform map -> lio_map: Translation (%.2f, %.2f, %.2f)", 
+                        pos[0], pos[1], pos[2]);
+        }
+    }
+
     const unsigned char *image = wb_camera_get_image(camera);
-    
-    // Webots format = BGRA (4 channels)
-    cv::Mat bgra(height, width, CV_8UC4, (void *)image);
+    // if (image != nullptr) {
+    //     // Webots format = BGRA (4 channels)
+    //     cv::Mat bgra(height, width, CV_8UC4, (void *)image);
 
-    // Convert to BGR for normal OpenCV usage
-    cv::Mat bgr;
-    cv::cvtColor(bgra, bgr, cv::COLOR_BGRA2BGR);
+    //     // Convert to BGR for normal OpenCV usage
+    //     cv::Mat bgr;
+    //     cv::cvtColor(bgra, bgr, cv::COLOR_BGRA2BGR);
 
-    // Show image
-    cv::imshow("Camera", bgr);
+    //     // Show image
+    //     cv::imshow("Camera", bgr);
+    //     cv::waitKey(1);
+    // }
 }
 
 void autonomous_drive::RobotDriver::imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)

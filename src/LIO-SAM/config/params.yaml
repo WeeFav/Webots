@@ -11,7 +11,7 @@
     lidarFrame: "lidar_link"
     baselinkFrame: "base_link"
     odometryFrame: "odom"
-    mapFrame: "map"
+    mapFrame: "lio_map"
 
     # GPS Settings
     useImuHeadingInitialization: false           # if using GPS data, set to "true"
