@@ -24,6 +24,7 @@
 #include <webots/gyro.h>
 #include <webots/supervisor.h>   // wb_supervisor_node_get_from_def, wb_supervisor_field_*, etc.
 #include <webots/vehicle/driver.h>
+#include <webots/vehicle/car.h>
 
 #include <vector>
 #include <array>
@@ -87,16 +88,132 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     lidar_pub    = node->create_publisher<sensor_msgs::msg::PointCloud2>("/points", 10);
     imu_pub      = node->create_publisher<sensor_msgs::msg::Imu>("/vehicle/imu_interpolated", 10);
 
-    RCLCPP_INFO(node->get_logger(), "c");
+    // Manual control inputs
+    throttle_sub = node->create_subscription<std_msgs::msg::Float64>(
+        "/vehicle/throttle", 10,
+        [this](const std_msgs::msg::Float64::SharedPtr msg) {
+            if (control_mode_ != "auto") return;
+            double throttle = msg->data;
+            if (throttle < 0.0) throttle = 0.0;
+            if (throttle > 1.0) throttle = 1.0;
+            // wbu_driver_set_cruising_speed(0.0); // disable cruising speed control
+            wbu_driver_set_throttle(throttle);
+        });
+
+    brake_sub = node->create_subscription<std_msgs::msg::Float64>(
+        "/vehicle/brake", 10,
+        [this](const std_msgs::msg::Float64::SharedPtr msg) {
+            if (control_mode_ != "auto") return;
+            double brake = msg->data;
+            if (brake < 0.0) brake = 0.0;
+            if (brake > 1.0) brake = 1.0;
+            // wbu_driver_set_cruising_speed(0.0); // disable cruising speed control
+            wbu_driver_set_brake_intensity(brake);
+        });
+
+    steering_sub = node->create_subscription<std_msgs::msg::Float64>(
+        "/vehicle/steering_angle", 10,
+        [this](const std_msgs::msg::Float64::SharedPtr msg) {
+            if (control_mode_ != "auto") return;
+            double target_steering = msg->data;
+            if (target_steering > 0.5) target_steering = 0.5;
+            else if (target_steering < -0.5) target_steering = -0.5;
+
+            // Rate limit steering
+            double wheel_angle = target_steering;
+            if (wheel_angle - steering_angle > 0.1)
+                wheel_angle = steering_angle + 0.1;
+            if (wheel_angle - steering_angle < -0.1)
+                wheel_angle = steering_angle - 0.1;
+
+            steering_angle = wheel_angle;
+            wbu_driver_set_steering_angle(steering_angle);
+        });
+
+    // Control mode subscription
+    mode_sub = node->create_subscription<std_msgs::msg::String>(
+        "/vehicle/control_mode", 10,
+        [this](const std_msgs::msg::String::SharedPtr msg) {
+            control_mode_ = msg->data;
+            RCLCPP_INFO(node->get_logger(), "Control mode switched to: %s", control_mode_.c_str());
+            if (control_mode_ == "auto") {
+                wbu_driver_set_gear(1);
+                // wbu_driver_set_cruising_speed(100.0); // Set high speed limit so torque control can spin wheels
+            } else {
+                wbu_driver_set_gear(0); // Neutral
+            }
+        });
+
+    // Vehicle state feedback
+    velocity_pub = node->create_publisher<std_msgs::msg::Float64>("/vehicle/current_velocity", 10);
+    pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("/vehicle/world_pose", 10);
+
+    RCLCPP_INFO(node->get_logger(), "RobotDriver initialized.");
+    RCLCPP_INFO(node->get_logger(), "Wheelbase: %f", wbu_car_get_wheelbase());
     
 }
 
-// Called every simulation step
 void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
+
+    RCLCPP_INFO(node->get_logger(), "Current Speed: %f", wbu_driver_get_current_speed());
+    auto mode = wbu_driver_get_control_mode();
+    RCLCPP_INFO(node->get_logger(), "control_mode: %d", static_cast<int>(mode));
+    
+    // Automatic transmission logic in autonomous mode
+    if (control_mode_ == "auto") {
+        int current_gear = wbu_driver_get_gear();
+        double rpm = wbu_driver_get_rpm();
+        int max_gear = wbu_driver_get_gear_number();
+        if (current_gear <= 0) {
+            wbu_driver_set_gear(1);
+        } else {
+            if (rpm > 4500.0 && current_gear < max_gear) {
+                wbu_driver_set_gear(current_gear + 1);
+            } else if (rpm < 1500.0 && current_gear > 1) {
+                wbu_driver_set_gear(current_gear - 1);
+            }
+        }
+    }
+
     if (step_count % 3 == 0) {
         publish_lidar();
+    }
+
+    // Publish current velocity
+    if (velocity_pub != nullptr) {
+        std_msgs::msg::Float64 speed_msg;
+        speed_msg.data = wbu_driver_get_current_speed() / 3.6; // convert km/h to m/s
+        velocity_pub->publish(speed_msg);
+    }
+
+    // Publish world pose
+    if (pose_pub != nullptr && vehicle_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(vehicle_node);
+        const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+        if (pos != nullptr && rot != nullptr) {
+            tf2::Matrix3x3 m(
+                rot[0], rot[1], rot[2],
+                rot[3], rot[4], rot[5],
+                rot[6], rot[7], rot[8]
+            );
+            tf2::Quaternion q;
+            m.getRotation(q);
+
+            geometry_msgs::msg::PoseStamped pose_msg;
+            pose_msg.header.stamp = node->get_clock()->now();
+            pose_msg.header.frame_id = "map";
+            pose_msg.pose.position.x = pos[0];
+            pose_msg.pose.position.y = pos[1];
+            pose_msg.pose.position.z = pos[2];
+            pose_msg.pose.orientation.x = q.x();
+            pose_msg.pose.orientation.y = q.y();
+            pose_msg.pose.orientation.z = q.z();
+            pose_msg.pose.orientation.w = q.w();
+
+            pose_pub->publish(pose_msg);
+        }
     }
 
     if (!transform_published && vehicle_node != nullptr) {
@@ -278,6 +395,7 @@ void autonomous_drive::RobotDriver::publish_lidar() {
 }
 
 void autonomous_drive::RobotDriver::cmd_ackermann_callback(const ackermann_msgs::msg::AckermannDrive::SharedPtr msg) {
+    if (control_mode_ != "manual") return;
     double target_speed = msg->speed * 3.6; // convert m/s to km/h
     double target_steering = msg->steering_angle; // radians
 

@@ -20,3 +20,10 @@ ros2 launch lio_sam run.launch.py
 
 ros2 launch autonomous_drive manual_control_launch.py
 ```
+
+```
+ros2 run autonomous_drive lanelet2_waypoint_publisher
+ros2 run autonomous_drive pid_controller
+ros2 run autonomous_drive pure_pursuit_controller
+2381, 4489, 1225
+```

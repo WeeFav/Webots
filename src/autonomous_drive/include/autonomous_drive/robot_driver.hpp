@@ -4,6 +4,9 @@
 #include "webots_ros2_driver/PluginInterface.hpp"
 #include "webots_ros2_driver/WebotsNode.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "geometry_msgs/msg/pose_stamped.hpp"
+#include "std_msgs/msg/float64.hpp"
+#include "std_msgs/msg/string.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include <tf2_ros/static_transform_broadcaster.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
@@ -83,6 +86,19 @@ private:
     rclcpp::Publisher<visualization_msgs::msg::MarkerArray>::SharedPtr   obj_det_pub;
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr          lidar_pub;
     rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr     imu_pub;
+
+    // Manual control inputs
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr throttle_sub;
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr brake_sub;
+    rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr steering_sub;
+
+    // Vehicle state feedback
+    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_pub;
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_pub;
+
+    // Control mode
+    rclcpp::Subscription<std_msgs::msg::String>::SharedPtr mode_sub;
+    std::string control_mode_{"manual"};
  
     // ---- Camera intrinsics / extrinsics ----
     Eigen::Matrix3d K;

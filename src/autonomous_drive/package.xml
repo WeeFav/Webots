@@ -24,6 +24,12 @@
   <depend>pluginlib</depend>
   <depend>tf2</depend>
   <depend>tf2_ros</depend>
+  <depend>lanelet2_core</depend>
+  <depend>lanelet2_io</depend>
+  <depend>lanelet2_projection</depend>
+  <depend>lanelet2_routing</depend>
+  <depend>lanelet2_traffic_rules</depend>
+  <depend>nav_msgs</depend>
   <export>
     <build_type>ament_cmake</build_type>
     <webots_ros2_driver plugin="${prefix}/robot_driver.xml"/>

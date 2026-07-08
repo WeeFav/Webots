@@ -29,6 +29,18 @@ find_package(nlohmann_json REQUIRED)
 find_package(Torch REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(nav_msgs REQUIRED)
+
+# Lanelet2
+find_package(lanelet2_core REQUIRED)
+find_package(lanelet2_io REQUIRED)
+find_package(lanelet2_projection REQUIRED)
+find_package(lanelet2_routing REQUIRED)
+find_package(lanelet2_traffic_rules REQUIRED)
+
+# PROJ
+pkg_check_modules(PROJ REQUIRED IMPORTED_TARGET proj)
+
 
 add_library(${PROJECT_NAME} SHARED
   src/robot_driver.cpp
@@ -60,11 +72,14 @@ ament_target_dependencies(${PROJECT_NAME}
   tf2_ros
 )
 
+find_library(WEBOTS_CAR_LIB car PATHS "/opt/ros/humble/lib/controller")
+
 target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBS}
   Eigen3::Eigen
   ${ZMQ_LIBRARIES}
   nlohmann_json::nlohmann_json
+  ${WEBOTS_CAR_LIB}
 )
 
 target_link_libraries(lane_detection
@@ -86,6 +101,67 @@ ament_target_dependencies(lane_detection
 )
 
 set_property(TARGET lane_detection PROPERTY CXX_STANDARD 17)
+
+# lanelet2_waypoint_publisher
+add_executable(lanelet2_waypoint_publisher
+  src/lanelet2_waypoint_publisher.cpp
+)
+
+target_link_libraries(lanelet2_waypoint_publisher
+  PkgConfig::PROJ
+  Eigen3::Eigen
+)
+
+target_include_directories(lanelet2_waypoint_publisher PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
+ament_target_dependencies(lanelet2_waypoint_publisher
+  rclcpp
+  std_msgs
+  geometry_msgs
+  visualization_msgs
+  nav_msgs
+  lanelet2_core
+  lanelet2_io
+  lanelet2_projection
+  lanelet2_routing
+  lanelet2_traffic_rules
+)
+
+set_property(TARGET lanelet2_waypoint_publisher PROPERTY CXX_STANDARD 17)
+
+# pid_controller
+add_executable(pid_controller
+  src/pid_controller.cpp
+)
+ament_target_dependencies(pid_controller
+  rclcpp
+  std_msgs
+)
+set_property(TARGET pid_controller PROPERTY CXX_STANDARD 17)
+
+# pure_pursuit_controller
+add_executable(pure_pursuit_controller
+  src/pure_pursuit_controller.cpp
+)
+target_link_libraries(pure_pursuit_controller
+  Eigen3::Eigen
+)
+target_include_directories(pure_pursuit_controller PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+ament_target_dependencies(pure_pursuit_controller
+  rclcpp
+  std_msgs
+  geometry_msgs
+  nav_msgs
+)
+set_property(TARGET pure_pursuit_controller PROPERTY CXX_STANDARD 17)
+
+
  
 install(DIRECTORY include/
   DESTINATION include
@@ -109,7 +185,7 @@ install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-install(TARGETS lane_detection
+install(TARGETS lane_detection lanelet2_waypoint_publisher pid_controller pure_pursuit_controller
   DESTINATION lib/${PROJECT_NAME}
 )
 

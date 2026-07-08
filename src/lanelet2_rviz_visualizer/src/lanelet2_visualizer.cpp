@@ -23,6 +23,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <unordered_set>
 #include <algorithm>
 #include <sstream>
 
@@ -276,11 +277,14 @@ private:
     int id = 0;
     auto stamp = this->now();
 
+    std::unordered_set<lanelet::Id> boundary_ids;
     // ------------------------------------------------------------------
     // 1. Lanelets — left boundary (white), right boundary (yellow),
     //               centre-line (green dashed)
     // ------------------------------------------------------------------
     for (const auto & ll : map_->laneletLayer) {
+      boundary_ids.insert(ll.leftBound().id());
+      boundary_ids.insert(ll.rightBound().id());
 
       // Left boundary
       addLineStripMarker(ll.leftBound(),  id++, stamp,
@@ -288,14 +292,14 @@ private:
 
       // Right boundary
       addLineStripMarker(ll.rightBound(), id++, stamp,
-        "lanelet_right",  makeColor(1,1,0,0.9f), 0.10f);
+        "lanelet_right",  makeColor(1,1,1,0.9f), 0.10f);
 
       // Centre-line (computed as average of left/right)
-      addCentreLineMarker(ll, id++, stamp);
+      // addCentreLineMarker(ll, id++, stamp);
 
       // Lanelet ID text label at the centre
-      addTextMarker(centreOf(ll), std::to_string(ll.id()),
-        id++, stamp, "lanelet_ids", makeColor(0.9f,0.9f,0.9f,1.0f), 0.6f);
+      // addTextMarker(centreOf(ll), std::to_string(ll.id()),
+      //   id++, stamp, "lanelet_ids", makeColor(0.9f,0.9f,0.9f,1.0f), 0.6f);
     }
 
     // ------------------------------------------------------------------
@@ -303,6 +307,9 @@ private:
     // ------------------------------------------------------------------
     for (const auto & ls : map_->lineStringLayer) {
       // Skip linestrings already drawn as lanelet bounds
+      if (boundary_ids.count(ls.id()) > 0) {
+        continue;
+      }
       std::string type = ls.hasAttribute("type")
         ? ls.attribute("type").value()
         : "";
@@ -313,7 +320,7 @@ private:
       if (type == "stop_line")             color = makeColor(1,0,0,1);
       else if (type == "pedestrian_marking") color = makeColor(0,1,1,1);
       else if (type == "road_border")      color = makeColor(0.5f,0.5f,0.5f,0.8f);
-      else                                 color = makeColor(0.4f,0.4f,1.0f,0.5f);
+      else                                 color = makeColor(1.0f,0.0f,0.0f,1.0f);
 
       addLineStripMarker(ls, id++, stamp, "linestrings", color, width);
     }
