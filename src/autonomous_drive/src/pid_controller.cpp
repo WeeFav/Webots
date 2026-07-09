@@ -82,8 +82,15 @@ private:
       brake_msg.data = 0.0;
     } else {
       throttle_msg.data = 0.0;
-      // Proportional braking (negate output and clamp)
-      brake_msg.data = std::min(1.0, -output);
+      // Introduce a deadband for braking: do not brake for minor over-speeding (coasting)
+      // Only apply brake if output is strongly negative (less than -0.2)
+      if (output < -0.2) {
+        // Linearly scale from 0.0 brake at output=-0.2 to 1.0 brake at output=-1.0
+        double brake_val = (-output - 0.2) / 0.8;
+        brake_msg.data = std::min(1.0, std::max(0.0, brake_val));
+      } else {
+        brake_msg.data = 0.0; // Coasting
+      }
     }
 
     throttle_pub_->publish(throttle_msg);

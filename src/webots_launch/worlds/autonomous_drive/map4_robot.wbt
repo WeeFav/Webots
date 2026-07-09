@@ -6174,8 +6174,8 @@ SumoInterface {
 
 DEF WEBOTS_VEHICLE0 TeslaModel3 {
   name "WEBOTS_VEHICLE0"
-  translation 0 0 0.400134
-  rotation 0 0 0 1
+  translation 57.4214 -39.8686 0.400134
+  rotation -2.4194e-06 -0.000792577 1 2.0472
   controller "<extern>"
   supervisor TRUE
   sensorsSlotFront [

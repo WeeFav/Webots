@@ -158,6 +158,7 @@ ament_target_dependencies(pure_pursuit_controller
   std_msgs
   geometry_msgs
   nav_msgs
+  visualization_msgs
 )
 set_property(TARGET pure_pursuit_controller PROPERTY CXX_STANDARD 17)
 

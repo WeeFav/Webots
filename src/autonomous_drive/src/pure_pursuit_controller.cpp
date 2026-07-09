@@ -4,6 +4,7 @@
 #include <nav_msgs/msg/path.hpp>
 #include <Eigen/Dense>
 #include <Eigen/Geometry>
+#include <visualization_msgs/msg/marker.hpp>
 #include <vector>
 #include <cmath>
 #include <algorithm>
@@ -47,6 +48,7 @@ public:
       std::bind(&PurePursuitController::poseCallback, this, std::placeholders::_1));
 
     steering_pub_ = this->create_publisher<std_msgs::msg::Float64>("/vehicle/steering_angle", 10);
+    marker_pub_ = this->create_publisher<visualization_msgs::msg::Marker>("/vehicle/lookahead_marker", 10);
 
     RCLCPP_INFO(this->get_logger(), "Pure Pursuit Node Initialized. Lookahead: %.2f m | Wheelbase: %.2f m",
                 lookahead_distance_, wheelbase_);
@@ -122,19 +124,29 @@ private:
     double qw = msg->pose.orientation.w;
     double vehicle_yaw = std::atan2(2.0 * (qw * qz + qx * qy), 1.0 - 2.0 * (qy * qy + qz * qz));
 
-    // 1. Find lookahead point
+    // 1. Find lookahead point by searching forward from the closest point
+    size_t closest_idx = 0;
+    double min_dist = std::numeric_limits<double>::max();
+    for (size_t i = 0; i < path_->poses.size(); ++i) {
+      double dx = path_->poses[i].pose.position.x - vehicle_x;
+      double dy = path_->poses[i].pose.position.y - vehicle_y;
+      double dist = std::sqrt(dx*dx + dy*dy);
+      if (dist < min_dist) {
+        min_dist = dist;
+        closest_idx = i;
+      }
+    }
+
     geometry_msgs::msg::Point target_pt;
     bool found_target = false;
-    double best_dist_diff = std::numeric_limits<double>::max();
-
-    for (const auto & pose : path_->poses) {
-      double dx = pose.pose.position.x - vehicle_x;
-      double dy = pose.pose.position.y - vehicle_y;
+    for (size_t i = closest_idx; i < path_->poses.size(); ++i) {
+      double dx = path_->poses[i].pose.position.x - vehicle_x;
+      double dy = path_->poses[i].pose.position.y - vehicle_y;
       double dist = std::sqrt(dx*dx + dy*dy);
 
       // We look for the first point whose distance is >= lookahead_distance
       if (dist >= lookahead_distance_) {
-        target_pt = pose.pose.position;
+        target_pt = path_->poses[i].pose.position;
         found_target = true;
         break;
       }
@@ -144,6 +156,25 @@ private:
     if (!found_target) {
       target_pt = path_->poses.back().pose.position;
     }
+
+    // Publish lookahead point marker
+    visualization_msgs::msg::Marker marker;
+    marker.header.stamp = this->now();
+    marker.header.frame_id = "map";
+    marker.ns = "lookahead";
+    marker.id = 0;
+    marker.type = visualization_msgs::msg::Marker::SPHERE;
+    marker.action = visualization_msgs::msg::Marker::ADD;
+    marker.pose.position = target_pt;
+    marker.pose.orientation.w = 1.0;
+    marker.scale.x = 0.6;
+    marker.scale.y = 0.6;
+    marker.scale.z = 0.6;
+    marker.color.a = 1.0;
+    marker.color.r = 1.0;
+    marker.color.g = 0.0;
+    marker.color.b = 0.0;
+    marker_pub_->publish(marker);
 
     // 2. Transform the lookahead point to the vehicle's local coordinate frame
     double dx = target_pt.x - vehicle_x;
@@ -168,7 +199,7 @@ private:
     steer_msg.data = steering_angle;
     steering_pub_->publish(steer_msg);
 
-    RCLCPP_DEBUG(this->get_logger(),
+    RCLCPP_INFO(this->get_logger(),
                  "Pose: (%.2f, %.2f) Yaw: %.2f | Lookahead point: (%.2f, %.2f) | Local: (%.2f, %.2f) | Steer: %.3f rad",
                  vehicle_x, vehicle_y, vehicle_yaw, target_pt.x, target_pt.y, x_local, y_local, steering_angle);
   }
@@ -184,6 +215,7 @@ private:
   rclcpp::Subscription<nav_msgs::msg::Path>::SharedPtr path_sub_;
   rclcpp::Subscription<geometry_msgs::msg::PoseStamped>::SharedPtr pose_sub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr steering_pub_;
+  rclcpp::Publisher<visualization_msgs::msg::Marker>::SharedPtr marker_pub_;
   OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;
 };
 

@@ -9,6 +9,7 @@
 #include "std_msgs/msg/string.hpp"
 #include "rclcpp/rclcpp.hpp"
 #include <tf2_ros/static_transform_broadcaster.h>
+#include <tf2_ros/transform_broadcaster.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
@@ -63,6 +64,7 @@ private:
     void publish_lidar();
     void lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist);
     void object_detection();
+    void publish_pose();
     std::vector<BoxInfo> extract_boxes( WbNodeRef node, const Eigen::Matrix3d& parent_R, const Eigen::Vector3d& parent_t);
     Corners8x3 get_box_corners(const BoxInfo& box);
     Corners8x3 get_bounding_box(const std::vector<BoxInfo>& boxes);
@@ -128,6 +130,7 @@ private:
     bool imu_prev_valid_{false};
     double steering_angle = 0.0;
     std::shared_ptr<tf2_ros::StaticTransformBroadcaster> static_broadcaster;
+    std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster;
     bool transform_published = false;
 
 };
