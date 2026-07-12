@@ -3,3 +3,4 @@ install/
 log/
 __pycache__/
 commonroad-scenario-designer/
+*.wbproj

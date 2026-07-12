@@ -53,11 +53,16 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Manual Control Interface Launch
-    manual_control_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            os.path.join(package_dir, 'launch', 'manual_control_launch.py')
-        )
+    # RViz
+    rviz = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2',
+        output='screen',
+        arguments=[
+            '-d',
+            '/home/marvin/Webots/src/autonomous_drive/resource/rviz.rviz'
+        ],
     )
 
     return LaunchDescription([
@@ -66,7 +71,7 @@ def generate_launch_description():
         pure_pursuit_controller,
         visualize_launch,
         lanelet2_waypoint_publisher,
-        manual_control_launch,
+        rviz,
         launch.actions.RegisterEventHandler(
             event_handler=launch.event_handlers.OnProcessExit(
                 target_action=robot_driver_0,

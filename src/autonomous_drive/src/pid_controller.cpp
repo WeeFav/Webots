@@ -8,13 +8,11 @@ class PIDController : public rclcpp::Node {
 public:
   PIDController() : Node("pid_controller") {
     // Declare parameters
-    this->declare_parameter<double>("target_speed", 5.0); // m/s (approx 18 km/h)
-    this->declare_parameter<double>("Kp", 0.8);
+    this->declare_parameter<double>("Kp", 0.4);
     this->declare_parameter<double>("Ki", 0.05);
     this->declare_parameter<double>("Kd", 0.1);
 
     // Get initial parameter values
-    target_speed_ = this->get_parameter("target_speed").as_double();
     Kp_ = this->get_parameter("Kp").as_double();
     Ki_ = this->get_parameter("Ki").as_double();
     Kd_ = this->get_parameter("Kd").as_double();
@@ -25,10 +23,7 @@ public:
         rcl_interfaces::msg::SetParametersResult result;
         result.successful = true;
         for (const auto &param : parameters) {
-          if (param.get_name() == "target_speed") {
-            target_speed_ = param.as_double();
-            RCLCPP_INFO(this->get_logger(), "Updated target_speed: %.2f m/s", target_speed_);
-          } else if (param.get_name() == "Kp") {
+          if (param.get_name() == "Kp") {
             Kp_ = param.as_double();
           } else if (param.get_name() == "Ki") {
             Ki_ = param.as_double();
@@ -44,11 +39,17 @@ public:
       "/vehicle/current_velocity", 10,
       std::bind(&PIDController::velocityCallback, this, std::placeholders::_1));
 
+    target_speed_sub_ = this->create_subscription<std_msgs::msg::Float64>(
+      "/vehicle/target_speed", 10,
+      [this](const std_msgs::msg::Float64::SharedPtr msg) {
+        target_speed_ = msg->data;
+      });
+
     throttle_pub_ = this->create_publisher<std_msgs::msg::Float64>("/vehicle/throttle", 10);
     brake_pub_ = this->create_publisher<std_msgs::msg::Float64>("/vehicle/brake", 10);
 
     last_time_ = this->now();
-    RCLCPP_INFO(this->get_logger(), "PID Controller Node Initialized. Target Speed: %.2f m/s", target_speed_);
+    RCLCPP_INFO(this->get_logger(), "PID Controller Node Initialized.");
   }
 
 private:
@@ -64,10 +65,14 @@ private:
     last_time_ = now;
 
     double error = target_speed_ - current_speed;
-    
-    // Accumulate integral with anti-windup clamping
+
+    // Error deadbands (m/s)
+    const double accel_deadband = 0.1;   // Don't accelerate if within 0.2 m/s
+    const double brake_deadband = -1.0;  // Don't brake unless 1 m/s over target
+
+    // PID
     integral_ += error * dt;
-    integral_ = std::max(-1.0, std::min(1.0, integral_));
+    integral_ = std::clamp(integral_, -1.0, 1.0);
 
     double derivative = (error - prev_error_) / dt;
     prev_error_ = error;
@@ -77,20 +82,20 @@ private:
     std_msgs::msg::Float64 throttle_msg;
     std_msgs::msg::Float64 brake_msg;
 
-    if (output >= 0.0) {
-      throttle_msg.data = std::min(1.0, output);
-      brake_msg.data = 0.0;
-    } else {
-      throttle_msg.data = 0.0;
-      // Introduce a deadband for braking: do not brake for minor over-speeding (coasting)
-      // Only apply brake if output is strongly negative (less than -0.2)
-      if (output < -0.2) {
-        // Linearly scale from 0.0 brake at output=-0.2 to 1.0 brake at output=-1.0
-        double brake_val = (-output - 0.2) / 0.8;
-        brake_msg.data = std::min(1.0, std::max(0.0, brake_val));
-      } else {
-        brake_msg.data = 0.0; // Coasting
-      }
+    if (error > accel_deadband) {
+        // Below target -> accelerate
+        throttle_msg.data = std::clamp(output, 0.0, 1.0);
+        brake_msg.data = 0.0;
+    }
+    else if (error < brake_deadband) {
+        // Well above target -> brake
+        throttle_msg.data = 0.0;
+        brake_msg.data = std::clamp(-output, 0.0, 1.0);
+    }
+    else {
+        // Close enough -> coast
+        throttle_msg.data = 0.0;
+        brake_msg.data = 0.0;
     }
 
     throttle_pub_->publish(throttle_msg);
@@ -102,7 +107,7 @@ private:
   }
 
   // Parameters
-  double target_speed_;
+  double target_speed_{5.0};
   double Kp_;
   double Ki_;
   double Kd_;
@@ -114,6 +119,7 @@ private:
 
   // ROS 2 interfaces
   rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr velocity_sub_;
+  rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr target_speed_sub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr throttle_pub_;
   rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr brake_pub_;
   OnSetParametersCallbackHandle::SharedPtr param_callback_handle_;

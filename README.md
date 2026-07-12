@@ -1,5 +1,5 @@
 ```
-colcon build --symlink-install --packages-select webots_launch autonomous_drive
+colcon build --symlink-install --packages-select autonomous_drive
 source install/setup.bash
 ```
 
@@ -18,7 +18,7 @@ ros2 launch autonomous_drive robot_launch.py
 
 ros2 launch lio_sam run.launch.py
 
-ros2 launch autonomous_drive manual_control_launch.py
+ros2 run autonomous_drive manual_control
 ```
 
 ```

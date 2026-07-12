@@ -27,6 +27,7 @@
 #include <webots/inertial_unit.h>
 #include <webots/accelerometer.h>
 #include <webots/gyro.h>
+#include <webots/gps.h>
 #include <webots/supervisor.h>   // WbNodeRef, WbFieldRef, wb_supervisor_*
 
 #include <zmq.hpp>
@@ -78,6 +79,7 @@ private:
     WbDeviceTag inertial_unit;
     WbDeviceTag accelerometer;
     WbDeviceTag gyro;
+    WbDeviceTag gps;
     WbNodeRef camera_node;
     WbNodeRef lidar_node;
     WbNodeRef vehicle_node;
@@ -97,6 +99,7 @@ private:
     // Vehicle state feedback
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_pub;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_pub;
+    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr target_speed_pub;
 
     // Control mode
     rclcpp::Subscription<std_msgs::msg::String>::SharedPtr mode_sub;

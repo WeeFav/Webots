@@ -7,10 +7,11 @@ from rclpy.node import Node
 from ackermann_msgs.msg import AckermannDrive
 from std_msgs.msg import String, Int64MultiArray, Float64
 import re
+import threading
 
 # UI Constants
 WINDOW_WIDTH = 500
-WINDOW_HEIGHT = 580
+WINDOW_HEIGHT = 500
 COLOR_BG = (13, 17, 23)
 COLOR_PANEL = (22, 27, 34)
 COLOR_TEXT_PRIMARY = (240, 246, 252)
@@ -46,16 +47,20 @@ class ManualControlNode(Node):
         self.throttle_sub = self.create_subscription(Float64, '/vehicle/throttle', self.throttle_callback, 10)
         self.brake_sub = self.create_subscription(Float64, '/vehicle/brake', self.brake_callback, 10)
         self.steering_sub = self.create_subscription(Float64, '/vehicle/steering_angle', self.steering_callback, 10)
+        self.target_speed_sub = self.create_subscription(Float64, '/vehicle/target_speed', self.target_speed_callback, 10)
         
         # Internal State Variables
         self.speed_kmh = 0.0
         self.steering_rad = 0.0
         self.autonomous_mode = False
-        self.input_active = False
-        self.input_text = ""
         self.status_msg = "Control mode: MANUAL"
         
+        # Start terminal input thread for entering lanelet IDs
+        self.input_thread = threading.Thread(target=self.terminal_input_loop, daemon=True)
+        self.input_thread.start()
+        
         self.actual_speed_kmh = 0.0
+        self.target_speed_kmh = 0.0
         self.auto_throttle = 0.0
         self.auto_brake = 0.0
         self.auto_steering = 0.0
@@ -83,15 +88,63 @@ class ManualControlNode(Node):
     def steering_callback(self, msg):
         self.auto_steering = msg.data
 
+    def target_speed_callback(self, msg):
+        self.target_speed_kmh = msg.data * 3.6
+
     def publish_mode(self):
         msg = String()
         msg.data = "auto" if self.autonomous_mode else "manual"
         self.mode_pub.publish(msg)
 
+    def terminal_input_loop(self):
+        """Loop to read lanelet IDs from terminal input asynchronously."""
+        try:
+            tty_in = open('/dev/tty', 'r')
+            tty_out = open('/dev/tty', 'w')
+        except Exception:
+            tty_in = sys.stdin
+            tty_out = sys.stdout
+
+        while rclpy.ok():
+            try:
+                # Print prompt directly to controlling tty
+                tty_out.write("\nEnter lanelet IDs (comma or space separated) then press Enter: ")
+                tty_out.flush()
+                # Read line from terminal
+                line = tty_in.readline()
+                if not line:
+                    break # EOF
+                
+                line = line.strip()
+                if not line:
+                    continue
+                
+                # Parse sequence of integers
+                tokens = re.split(r'[\s,]+', line)
+                ids = []
+                for tok in tokens:
+                    if tok.strip().isdigit():
+                        ids.append(int(tok.strip()))
+                
+                if ids:
+                    route_msg = Int64MultiArray()
+                    route_msg.data = ids
+                    self.route_pub.publish(route_msg)
+                    status = f"Published route of {len(ids)} lanelets: {ids}"
+                    self.get_logger().info(status)
+                    self.status_msg = status
+                else:
+                    status = "No valid lanelet IDs entered."
+                    self.get_logger().warn(status)
+                    self.status_msg = status
+            except Exception as e:
+                self.get_logger().error(f"Error in terminal input loop: {e}")
+                break
+
     def update_dynamics(self, keys, dt):
         """Update speed and steering based on keyboard state and delta time."""
-        # If text input is active or autonomous mode is enabled, ignore keyboard controls
-        if self.autonomous_mode or self.input_active:
+        # If autonomous mode is enabled, ignore keyboard controls
+        if self.autonomous_mode:
             # Decay to 0
             if self.speed_kmh > 0:
                 self.speed_kmh = max(0.0, self.speed_kmh - self.accel_rate * dt)
@@ -180,8 +233,7 @@ def main(args=None):
     font_key = pygame.font.Font(None, 24)
     
     # UI Elements Rectangles
-    mode_btn_rect = pygame.Rect(40, 420, 420, 36)
-    input_box_rect = pygame.Rect(40, 485, 420, 36)
+    mode_btn_rect = pygame.Rect(40, 390, 420, 36)
 
     running = True
     while running:
@@ -197,39 +249,6 @@ def main(args=None):
                     node.autonomous_mode = not node.autonomous_mode
                     node.publish_mode()
                     node.status_msg = "Control mode: " + ("AUTONOMOUS" if node.autonomous_mode else "MANUAL")
-                    node.input_active = False
-                elif input_box_rect.collidepoint(event.pos):
-                    node.input_active = True
-                    node.status_msg = "Input active. Type lanelet IDs..."
-                else:
-                    node.input_active = False
-            elif event.type == pygame.KEYDOWN:
-                if node.input_active:
-                    if event.key == pygame.K_RETURN:
-                        # Parse sequence of integers
-                        tokens = re.split(r'[\s,]+', node.input_text)
-                        ids = []
-                        for tok in tokens:
-                            if tok.strip().isdigit():
-                                ids.append(int(tok.strip()))
-                        
-                        if ids:
-                            route_msg = Int64MultiArray()
-                            route_msg.data = ids
-                            node.route_pub.publish(route_msg)
-                            node.status_msg = f"Published route of {len(ids)} lanelets: {ids}"
-                        else:
-                            node.status_msg = "No valid lanelet IDs entered."
-                        node.input_active = False
-                    elif event.key == pygame.K_BACKSPACE:
-                        node.input_text = node.input_text[:-1]
-                    else:
-                        # Allow digits, spaces, and commas
-                        if event.unicode in "0123456789, ":
-                            node.input_text += event.unicode
-                else:
-                    # Keypress event when not inputting text, e.g. spacebar reset
-                    pass
                 
         # Get active keys
         keys = pygame.key.get_pressed()
@@ -266,14 +285,14 @@ def main(args=None):
             screen.blit(val_speed, (40, 105))
             screen.blit(val_speed_mps, (200, 118))
             
-            # Speed Progress Bar Gauge
-            pygame.draw.rect(screen, COLOR_KEY_INACTIVE, pygame.Rect(40, 140, 420, 14), border_radius=3)
-            speed_ratio = abs(node.actual_speed_kmh) / max(1.0, node.top_speed)
-            fill_width = int(420 * speed_ratio)
-            fill_color = COLOR_ACCENT_GREEN if node.actual_speed_kmh >= 0 else COLOR_ACCENT_RED
-            if fill_width > 0:
-                pygame.draw.rect(screen, fill_color, pygame.Rect(40, 140, fill_width, 14), border_radius=3)
-                
+            # Commanded Speed Display
+            cmd_speed_text = f"{node.speed_kmh:.1f} km/h"
+            lbl_cmd_speed = font_small.render("COMMANDED SPEED", True, COLOR_TEXT_MUTED)
+            val_cmd_speed = font_value.render(cmd_speed_text, True, COLOR_TEXT_PRIMARY)
+            
+            screen.blit(lbl_cmd_speed, (260, 85))
+            screen.blit(val_cmd_speed, (260, 105))
+            
             # Steering Value Display
             steering_deg = node.steering_rad * 180.0 / math.pi
             steer_text = f"{abs(steering_deg):.1f}° {'Right' if steering_deg > 0 else 'Left' if steering_deg < 0 else 'Center'}"
@@ -305,40 +324,31 @@ def main(args=None):
             screen.blit(val_speed, (40, 105))
             screen.blit(val_speed_mps, (200, 118))
             
-            # Throttle Progress Bar
+            # Throttle and Brake text displayed on the right
             lbl_throttle = font_small.render(f"THROTTLE: {node.auto_throttle*100.0:.0f}%", True, COLOR_TEXT_MUTED)
-            screen.blit(lbl_throttle, (40, 150))
-            pygame.draw.rect(screen, COLOR_KEY_INACTIVE, pygame.Rect(40, 170, 180, 10), border_radius=2)
-            throttle_fill_w = int(180 * node.auto_throttle)
-            if throttle_fill_w > 0:
-                pygame.draw.rect(screen, COLOR_ACCENT_GREEN, pygame.Rect(40, 170, throttle_fill_w, 10), border_radius=2)
-                
-            # Brake Progress Bar
+            screen.blit(lbl_throttle, (260, 85))
+            
             lbl_brake = font_small.render(f"BRAKE: {node.auto_brake*100.0:.0f}%", True, COLOR_TEXT_MUTED)
-            screen.blit(lbl_brake, (40, 188))
-            pygame.draw.rect(screen, COLOR_KEY_INACTIVE, pygame.Rect(40, 206, 180, 10), border_radius=2)
-            brake_fill_w = int(180 * node.auto_brake)
-            if brake_fill_w > 0:
-                pygame.draw.rect(screen, COLOR_ACCENT_RED, pygame.Rect(40, 206, brake_fill_w, 10), border_radius=2)
-                
-            # Steering Value Display
+            screen.blit(lbl_brake, (260, 115))
+            
+            # Steering Value Display (same position as manual mode)
             steering_deg = node.auto_steering * 180.0 / math.pi
             steer_text = f"{abs(steering_deg):.1f}° {'Right' if steering_deg > 0 else 'Left' if steering_deg < 0 else 'Center'}"
             lbl_steer = font_small.render("AUTONOMOUS STEERING", True, COLOR_TEXT_MUTED)
             val_steer = font_value.render(steer_text, True, COLOR_TEXT_PRIMARY)
             
-            screen.blit(lbl_steer, (260, 85))
-            screen.blit(val_steer, (260, 105))
+            screen.blit(lbl_steer, (40, 170))
+            screen.blit(val_steer, (40, 190))
             
-            # Steering Center Bar Gauge
-            pygame.draw.rect(screen, COLOR_KEY_INACTIVE, pygame.Rect(260, 155, 180, 14), border_radius=3)
-            pygame.draw.line(screen, COLOR_TEXT_MUTED, (350, 153), (350, 171), 2)
+            # Steering Center Bar Gauge (same position as manual mode)
+            pygame.draw.rect(screen, COLOR_KEY_INACTIVE, pygame.Rect(260, 192, 180, 14), border_radius=3)
+            pygame.draw.line(screen, COLOR_TEXT_MUTED, (350, 190), (350, 208), 2)
             steer_ratio = node.auto_steering / max(0.01, node.max_steering)
             steer_fill_w = int(90 * steer_ratio)
             if steer_fill_w > 0:
-                pygame.draw.rect(screen, COLOR_ACCENT_ACTIVE, pygame.Rect(350, 155, steer_fill_w, 14), border_radius=3)
+                pygame.draw.rect(screen, COLOR_ACCENT_ACTIVE, pygame.Rect(350, 192, steer_fill_w, 14), border_radius=3)
             elif steer_fill_w < 0:
-                pygame.draw.rect(screen, COLOR_ACCENT_ACTIVE, pygame.Rect(350 + steer_fill_w, 155, -steer_fill_w, 14), border_radius=3)
+                pygame.draw.rect(screen, COLOR_ACCENT_ACTIVE, pygame.Rect(350 + steer_fill_w, 192, -steer_fill_w, 14), border_radius=3)
         
         # 3. Draw Keyboard Visualizer
         up_active = keys[pygame.K_UP] or keys[pygame.K_w]
@@ -354,7 +364,7 @@ def main(args=None):
         draw_key(screen, pygame.Rect(220, 295, 240, 40), "SPACEBAR  (BRAKE)", space_active, COLOR_ACCENT_RED, font_key)
         
         # 4. Autonomy & Routing Panel
-        pygame.draw.rect(screen, COLOR_PANEL, pygame.Rect(20, 350, 460, 185), border_radius=8)
+        pygame.draw.rect(screen, COLOR_PANEL, pygame.Rect(20, 350, 460, 115), border_radius=8)
         
         lbl_autonomy = font_small.render("AUTONOMY & ROUTING PANEL", True, COLOR_TEXT_MUTED)
         screen.blit(lbl_autonomy, (40, 360))
@@ -368,34 +378,18 @@ def main(args=None):
         mode_rect = mode_surf.get_rect(center=mode_btn_rect.center)
         screen.blit(mode_surf, mode_rect)
         
-        # Text input label
-        lbl_input = font_small.render("ROUTE LANELET IDS", True, COLOR_TEXT_MUTED)
-        screen.blit(lbl_input, (40, 465))
-        
-        # Input box
-        input_border_color = COLOR_ACCENT_ACTIVE if node.input_active else COLOR_KEY_INACTIVE
-        pygame.draw.rect(screen, COLOR_BG, input_box_rect, border_radius=5)
-        pygame.draw.rect(screen, input_border_color, input_box_rect, width=2, border_radius=5)
-        
-        if node.input_text:
-            display_text = node.input_text
-            input_text_color = COLOR_TEXT_PRIMARY
-        else:
-            display_text = "Click to enter lanelet IDs (e.g. 3084, 3072)..."
-            input_text_color = COLOR_TEXT_MUTED
-            
-        txt_surf = font_key.render(display_text, True, input_text_color)
-        screen.blit(txt_surf, (input_box_rect.x + 10, input_box_rect.y + 8))
-        
         # Feedback / status
         if node.status_msg:
             status_surf = font_small.render(node.status_msg, True, COLOR_ACCENT_ACTIVE)
-            screen.blit(status_surf, (40, 523))
+            screen.blit(status_surf, (40, 440))
 
         # 5. Info Footer
-        info_text = f"Top Speed: {node.top_speed} km/h ({node.time_to_top_speed}s)  |  Max Turn: {node.max_steering:.2f} rad ({node.time_to_max_steering}s)"
+        if node.autonomous_mode:
+            info_text = f"Target Speed: {node.target_speed_kmh:.1f} km/h"
+        else:
+            info_text = f"Top Speed: {node.top_speed} km/h ({node.time_to_top_speed}s)  |  Max Turn: {node.max_steering:.2f} rad ({node.time_to_max_steering}s)"
         info_surf = font_small.render(info_text, True, COLOR_TEXT_MUTED)
-        screen.blit(info_surf, (20, 560))
+        screen.blit(info_surf, (20, 480))
         
         pygame.display.flip()
         

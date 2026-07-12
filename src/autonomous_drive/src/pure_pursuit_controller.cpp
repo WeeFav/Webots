@@ -196,12 +196,12 @@ private:
 
     // 4. Publish steering angle
     std_msgs::msg::Float64 steer_msg;
-    steer_msg.data = steering_angle;
+    steer_msg.data = -steering_angle;
     steering_pub_->publish(steer_msg);
 
-    RCLCPP_INFO(this->get_logger(),
-                 "Pose: (%.2f, %.2f) Yaw: %.2f | Lookahead point: (%.2f, %.2f) | Local: (%.2f, %.2f) | Steer: %.3f rad",
-                 vehicle_x, vehicle_y, vehicle_yaw, target_pt.x, target_pt.y, x_local, y_local, steering_angle);
+    // RCLCPP_INFO(this->get_logger(),
+    //              "Pose: (%.2f, %.2f) Yaw: %.2f | Lookahead point: (%.2f, %.2f) | Local: (%.2f, %.2f) | Steer: %.3f rad",
+    //              vehicle_x, vehicle_y, vehicle_yaw, target_pt.x, target_pt.y, x_local, y_local, steering_angle);
   }
 
   // Parameters

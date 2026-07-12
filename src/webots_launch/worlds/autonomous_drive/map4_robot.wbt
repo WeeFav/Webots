@@ -6315,5 +6315,6 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
       zAxis TRUE
       resolution 0.0001   # ~0.005 deg/s
     }
+    GPS {}
   ] 
 }

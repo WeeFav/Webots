@@ -73,6 +73,12 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     wb_accelerometer_enable(accelerometer,  2);
     wb_gyro_enable(gyro,                    2);
 
+    // gps
+    gps = wb_robot_get_device("gps");
+    if (gps != 0) {
+        wb_gps_enable(gps, (int)wb_robot_get_basic_time_step());
+    }
+
     vehicle_node = wb_supervisor_node_get_from_def("WEBOTS_VEHICLE0");
 
     // ---- Static and Dynamic Transform Broadcasters ----
@@ -107,7 +113,6 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
             double brake = msg->data;
             if (brake < 0.0) brake = 0.0;
             if (brake > 1.0) brake = 1.0;
-            // wbu_driver_set_cruising_speed(0.0); // disable cruising speed control
             wbu_driver_set_brake_intensity(brake);
         });
 
@@ -127,7 +132,7 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
                 wheel_angle = steering_angle - 0.1;
 
             steering_angle = wheel_angle;
-            wbu_driver_set_steering_angle(-steering_angle);
+            wbu_driver_set_steering_angle(steering_angle);
         });
 
     // Control mode subscription
@@ -147,6 +152,11 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     // Vehicle state feedback
     velocity_pub = node->create_publisher<std_msgs::msg::Float64>("/vehicle/current_velocity", 10);
     pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("/vehicle/world_pose", 10);
+    target_speed_pub = node->create_publisher<std_msgs::msg::Float64>("/vehicle/target_speed", 10);
+
+    if (!node->has_parameter("target_speed")) {
+        node->declare_parameter<double>("target_speed", 5.0);
+    }
 
     RCLCPP_INFO(node->get_logger(), "RobotDriver initialized.");
     RCLCPP_INFO(node->get_logger(), "Wheelbase: %f", wbu_car_get_wheelbase());
@@ -158,7 +168,6 @@ void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
-    // RCLCPP_INFO(node->get_logger(), "Current Speed: %f", wbu_driver_get_current_speed());
     // auto mode = wbu_driver_get_control_mode();
     // RCLCPP_INFO(node->get_logger(), "control_mode: %d", static_cast<int>(mode));
     // RCLCPP_INFO(node->get_logger(), "Gear: %d | Throttle: %f | Brake: %f",
@@ -182,61 +191,74 @@ void autonomous_drive::RobotDriver::step() {
         }
     }
 
-    if (step_count % 3 == 0) {
-        publish_lidar();
-    }
+    // if (step_count % 3 == 0) {
+    //     publish_lidar();
+    // }
 
     // Publish current velocity
     if (velocity_pub != nullptr) {
         std_msgs::msg::Float64 speed_msg;
-        speed_msg.data = wbu_driver_get_current_speed() / 3.6; // convert km/h to m/s
+        if (gps != 0) {
+            speed_msg.data = wb_gps_get_speed(gps); // wb_gps_get_speed already returns m/s
+        } else {
+            speed_msg.data = wbu_driver_get_current_speed() / 3.6; // fallback if no gps
+        }
         velocity_pub->publish(speed_msg);
     }
 
-    // Publish world pose and TF
-    publish_pose();
-
-    if (!transform_published && vehicle_node != nullptr) {
-        const double* pos = wb_supervisor_node_get_position(vehicle_node);
-        const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
-        if (pos != nullptr && rot != nullptr) {
-            tf2::Matrix3x3 m(
-                rot[0], rot[1], rot[2],
-                rot[3], rot[4], rot[5],
-                rot[6], rot[7], rot[8]
-            );
-            tf2::Quaternion q;
-            m.getRotation(q);
-
-            // Webots axis convention is offset relative to LIO-SAM's frame definition
-            // We apply -M_PI / 2 rotation offset around Z to align them
-            tf2::Quaternion q_offset;
-            q_offset.setRPY(0.0, 0.0, 0.0);
-            tf2::Quaternion q_final = q * q_offset;
-            q_final.normalize();
-
-            geometry_msgs::msg::TransformStamped tf_msg;
-            tf_msg.header.stamp = node->get_clock()->now();
-            tf_msg.header.frame_id = "map";
-            tf_msg.child_frame_id = "lio_map";
-
-            tf_msg.transform.translation.x = pos[0];
-            tf_msg.transform.translation.y = pos[1];
-            tf_msg.transform.translation.z = pos[2];
-
-            tf_msg.transform.rotation.x = q_final.x();
-            tf_msg.transform.rotation.y = q_final.y();
-            tf_msg.transform.rotation.z = q_final.z();
-            tf_msg.transform.rotation.w = q_final.w();
-
-            static_broadcaster->sendTransform(tf_msg);
-            transform_published = true;
-            RCLCPP_INFO(node->get_logger(), "Published static transform map -> lio_map: Translation (%.2f, %.2f, %.2f)", 
-                        pos[0], pos[1], pos[2]);
-        }
+    // Publish target speed
+    if (target_speed_pub != nullptr) {
+        std_msgs::msg::Float64 target_msg;
+        double target_speed = 20.0 / 3.6;
+        // node->get_parameter("target_speed", target_speed);
+        target_msg.data = target_speed;
+        target_speed_pub->publish(target_msg);
     }
 
-    const unsigned char *image = wb_camera_get_image(camera);
+    // // Publish world pose and TF
+    publish_pose();
+
+    // if (!transform_published && vehicle_node != nullptr) {
+    //     const double* pos = wb_supervisor_node_get_position(vehicle_node);
+    //     const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+    //     if (pos != nullptr && rot != nullptr) {
+    //         tf2::Matrix3x3 m(
+    //             rot[0], rot[1], rot[2],
+    //             rot[3], rot[4], rot[5],
+    //             rot[6], rot[7], rot[8]
+    //         );
+    //         tf2::Quaternion q;
+    //         m.getRotation(q);
+
+    //         // Webots axis convention is offset relative to LIO-SAM's frame definition
+    //         // We apply -M_PI / 2 rotation offset around Z to align them
+    //         tf2::Quaternion q_offset;
+    //         q_offset.setRPY(0.0, 0.0, 0.0);
+    //         tf2::Quaternion q_final = q * q_offset;
+    //         q_final.normalize();
+
+    //         geometry_msgs::msg::TransformStamped tf_msg;
+    //         tf_msg.header.stamp = node->get_clock()->now();
+    //         tf_msg.header.frame_id = "map";
+    //         tf_msg.child_frame_id = "lio_map";
+
+    //         tf_msg.transform.translation.x = pos[0];
+    //         tf_msg.transform.translation.y = pos[1];
+    //         tf_msg.transform.translation.z = pos[2];
+
+    //         tf_msg.transform.rotation.x = q_final.x();
+    //         tf_msg.transform.rotation.y = q_final.y();
+    //         tf_msg.transform.rotation.z = q_final.z();
+    //         tf_msg.transform.rotation.w = q_final.w();
+
+    //         static_broadcaster->sendTransform(tf_msg);
+    //         transform_published = true;
+    //         RCLCPP_INFO(node->get_logger(), "Published static transform map -> lio_map: Translation (%.2f, %.2f, %.2f)", 
+    //                     pos[0], pos[1], pos[2]);
+    //     }
+    // }
+
+    // const unsigned char *image = wb_camera_get_image(camera);
     // if (image != nullptr) {
     //     // Webots format = BGRA (4 channels)
     //     cv::Mat bgra(height, width, CV_8UC4, (void *)image);
@@ -427,6 +449,8 @@ void autonomous_drive::RobotDriver::cmd_ackermann_callback(const ackermann_msgs:
     if (control_mode_ != "manual") return;
     double target_speed = msg->speed * 3.6; // convert m/s to km/h
     double target_steering = msg->steering_angle; // radians
+    
+    // RCLCPP_INFO(node->get_logger(), "cmd_ackermann callback: speed_msg = %.3f m/s, target_speed = %.3f km/h, current_speed = %.3f", msg->speed, target_speed, wbu_driver_get_current_speed());
 
     // Range checking
     if (target_speed > 250.0) target_speed = 250.0;
@@ -444,8 +468,18 @@ void autonomous_drive::RobotDriver::cmd_ackermann_callback(const ackermann_msgs:
 
     steering_angle = wheel_angle;
 
-    // wbu_driver_set_cruising_speed(target_speed);
-    wbu_driver_set_steering_angle(-steering_angle);
+    // Set gear and cruising speed for manual control
+    if (target_speed > 0.0) {
+        wbu_driver_set_gear(1);
+        wbu_driver_set_cruising_speed(target_speed);
+    } else if (target_speed < 0.0) {
+        wbu_driver_set_gear(-1);
+        wbu_driver_set_cruising_speed(-target_speed);
+    } else {
+        wbu_driver_set_cruising_speed(0.0);
+    }
+    wbu_driver_set_cruising_speed(target_speed);
+    wbu_driver_set_steering_angle(steering_angle);
 }
 
 #include "pluginlib/class_list_macros.hpp"

@@ -85,8 +85,6 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        lio_map:
-          Value: true
         map:
           Value: true
         vehicle:
@@ -98,8 +96,6 @@ Visualization Manager:
       Show Names: false
       Tree:
         map:
-          lio_map:
-            {}
           vehicle:
             {}
       Update Interval: 0
@@ -163,25 +159,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 131.17112731933594
+      Distance: 136.80685424804688
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.4561919569969177
-        Y: 75.61418151855469
-        Z: 0.06512439250946045
+        X: 8.770393371582031
+        Y: 7.224483489990234
+        Z: -3.250704050064087
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
       Pitch: 1.5697963237762451
-      Target Frame: <Fixed Frame>
+      Target Frame: vehicle
       Value: Orbit (rviz)
-      Yaw: 5.148581504821777
+      Yaw: 5.218581199645996
     Saved: ~
 Window Geometry:
   Displays:
