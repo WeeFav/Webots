@@ -10,7 +10,6 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/appearances/protos/CementTiles.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/buildings/protos/SimpleBuilding.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/trees/protos/Forest.proto"
-
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/default/protos/SumoInterface.proto"
 IMPORTABLE EXTERNPROTO "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/resource/protos/TeslaModel3Simple.proto"
 IMPORTABLE EXTERNPROTO "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/resource/protos/TeslaModel3.proto"
@@ -28,21 +27,22 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/ScooterDriver.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/MotorbikeSimple.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/vehicles/protos/generic/MotorbikeDriver.proto"
+EXTERNPROTO "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/resource/protos/CustomBuilding.proto"
 
 WorldInfo {
   info [
     "World generated using the Open Street Map to Webots importer"
     "Author: David Mansolino <david.mansolino@epfl.ch>"
   ]
-  gpsCoordinateSystem "WGS84"
-  gpsReference 25.012909999999998 121.46627050000001 0
-  lineScale 3
   title "ROS2 simulation"
   ERP 0.6
   basicTimeStep 33
   FPS 15
-  physicsDisableTime 0
   optimalThreadCount 2
+  physicsDisableTime 0
+  gpsCoordinateSystem "WGS84"
+  gpsReference 25.012909999999998 121.46627050000001 0
+  lineScale 3
   contactProperties [
     ContactProperties {
       coulombFriction [
@@ -106,8 +106,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.690949658518304 0.2356877705498287 0.683403134472392 2.7453274317756393
-  position 0.05857381827835814 -240.5134950389086 595.3134952271117
+  orientation -0.274953557469775 0.4455904189021445 0.851968144837192 1.396379017551202
+  position -2.2174973667177977 -7.987342246594948 17.407564371410842
   near 3
 }
 TexturedBackground {
@@ -6164,24 +6164,21 @@ Pose {
     }
   ]
 }
-
 SumoInterface {
-  useNetconvert FALSE
-  networkFiles "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/worlds/map4_net"
   gui FALSE
   step 160
+  networkFiles "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/worlds/map4_net"
 }
-
 DEF WEBOTS_VEHICLE0 TeslaModel3 {
-  name "WEBOTS_VEHICLE0"
   translation 57.4214 -39.8686 0.400134
-  rotation -2.4194e-06 -0.000792577 1 2.0472
+  rotation -2.4193992400859864e-06 -0.0007925767510579611 0.9999996859080708 2.0472
+  name "WEBOTS_VEHICLE0"
   controller "<extern>"
   supervisor TRUE
   sensorsSlotFront [
     DEF CAMERA Camera {
-      name "cam0"
       translation -2.12 0 0.93
+      name "cam0"
       fieldOfView 1
       width 800
       height 450
@@ -6217,8 +6214,8 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
           children [
             Shape {
               appearance PBRAppearance {
-                metalness 0
                 roughness 0.6
+                metalness 0
                 textureTransform TextureTransform {
                   scale 4 1.5
                   translation -0.38 -0.09
@@ -6226,9 +6223,9 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
               }
               geometry Cylinder {
                 bottom FALSE
-                top FALSE
                 height 0.0188
                 radius 0.052
+                top FALSE
                 subdivision 24
               }
             }
@@ -6240,8 +6237,8 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
             Shape {
               appearance PBRAppearance {
                 baseColor 0.0470588 0.0470588 0.0470588
-                metalness 0
                 roughness 0.1
+                metalness 0
               }
               geometry Cylinder {
                 height 0.0392
@@ -6263,9 +6260,8 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
               }
             }
           ]
-        }        
+        }
       ]
-      name "lidar"
       model "Velodyne Puck"
       boundingObject Pose {
         translation 0 -0.00165 0
@@ -6278,43 +6274,34 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
       }
       physics Physics {
         density -1
-        mass 0.830
+        mass 0.83
       }
       horizontalResolution 1800
       fieldOfView 6.28318
-      verticalFieldOfView 0.5236 # 30deg
+      verticalFieldOfView 0.5236
       numberOfLayers 16
       minRange 1
       maxRange 100
-      projection "cylindrical"
-      type "fixed"
-      noise 0.003 # 0.03 / 100
+      noise 0.003
       defaultFrequency 5
       minFrequency 5
       maxFrequency 20
     }
     InertialUnit {
       name "inertial_unit"
-      xAxis TRUE
-      yAxis TRUE
-      zAxis TRUE
-      resolution 0.0001   # ~0.005 deg
-      noise 0.0005        # small orientation noise
+      noise 0.0005
+      resolution 0.0001
     }
     Accelerometer {
-      name "accelerometer"
-      xAxis TRUE
-      yAxis TRUE
-      zAxis TRUE
-      resolution 0.001      # ~1 mg
+      resolution 0.001
     }
     Gyro {
-      name "gyro"
-      xAxis TRUE
-      yAxis TRUE
-      zAxis TRUE
-      resolution 0.0001   # ~0.005 deg/s
+      resolution 0.0001
     }
-    GPS {}
-  ] 
+    GPS {
+    }
+  ]
+}
+CustomBuilding {
+  translation 0 0 11.17
 }

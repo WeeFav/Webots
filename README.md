@@ -25,5 +25,7 @@ ros2 run autonomous_drive manual_control
 ros2 run autonomous_drive lanelet2_waypoint_publisher
 ros2 run autonomous_drive pid_controller
 ros2 run autonomous_drive pure_pursuit_controller
-2381, 4489, 1225
+2381, 4489, 1225, 3971, 1843, 4339, 3152, 4607
+2381, 2366, 2351, 4517, 3210, 6292, 3243, 5197, 3300, 3319, 4083, 2035
+
 ```

@@ -52,8 +52,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 24.941421508789062
-        Min Value: -2.987842559814453
+        Max Value: 29.641361236572266
+        Min Value: -0.5848977565765381
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -100,18 +100,33 @@ Visualization Manager:
           Value: true
         lio_map:
           Value: true
+        map:
+          Value: true
         navsat_link:
           Value: true
         odom:
           Value: true
-      Marker Scale: 1
+        vehicle:
+          Value: true
+      Marker Scale: 10
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: false
       Tree:
-        lio_map:
-          odom:
+        map:
+          lio_map:
+            odom:
+              base_link:
+                chassis_link:
+                  imu_link:
+                    laser_sensor_frame:
+                      {}
+                  navsat_link:
+                    {}
+              lidar_link:
+                {}
+          vehicle:
             {}
       Update Interval: 0
       Value: true
@@ -193,11 +208,8 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
-        lanelet_centre: true
-        lanelet_ids: true
         lanelet_left: true
         lanelet_right: true
-        linestrings: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -285,5 +297,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1268
-  X: 795
-  Y: -32
+  X: -15
+  Y: -25
