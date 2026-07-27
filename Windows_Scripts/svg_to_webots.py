@@ -5,6 +5,8 @@ import shutil
 from pathlib import Path
 import re
 import argparse
+import random
+import math
 
 from webots_to_svg import extract_proto, compute_bounds
 
@@ -117,13 +119,15 @@ def parse_path(d):
     Supports:
         M/m
         L/l
+        H/h
+        V/v
         Z/z
         implicit line commands
 
     Returns absolute SVG coordinates.
     """
 
-    tokens = re.findall(r'[MmLlZz]|-?\d*\.?\d+(?:[eE][-+]?\d+)?', d)
+    tokens = re.findall(r'[MmLlHhVvZz]|-?\d*\.?\d+(?:[eE][-+]?\d+)?', d)
 
     points = []
     i = 0
@@ -134,7 +138,7 @@ def parse_path(d):
         token = tokens[i]
 
         # command token
-        if re.match(r'[MmLlZz]', token):
+        if re.match(r'[MmLlHhVvZz]', token):
             command = token
             i += 1
 
@@ -143,33 +147,48 @@ def parse_path(d):
 
             continue
 
-        # coordinate pair
-        x = float(tokens[i])
-        y = float(tokens[i + 1])
+        if command in ['H', 'h', 'V', 'v']:
+            val = float(tokens[i])
+            if command == 'H':
+                current[0] = val
+            elif command == 'h':
+                current[0] += val
+            elif command == 'V':
+                current[1] = val
+            elif command == 'v':
+                current[1] += val
 
-        pt = np.array([x, y])
+            points.append(tuple(current.copy()))
+            i += 1
+        else:
+            # coordinate pair
+            x = float(tokens[i])
+            y = float(tokens[i + 1])
 
-        # absolute
-        if command in ['M', 'L']:
-            current = pt
+            pt = np.array([x, y])
 
-        # relative
-        elif command in ['m', 'l']:
-            current = current + pt
+            # absolute
+            if command in ['M', 'L']:
+                current = pt
 
-        points.append(tuple(current))
+            # relative
+            elif command in ['m', 'l']:
+                current = current + pt
 
-        i += 2
+            points.append(tuple(current.copy()))
 
-        # SVG rule:
-        # after initial M/m,
-        # remaining pairs are treated as L/l
-        if command == 'M':
-            command = 'L'
-        elif command == 'm':
-            command = 'l'
+            i += 2
+
+            # SVG rule:
+            # after initial M/m,
+            # remaining pairs are treated as L/l
+            if command == 'M':
+                command = 'L'
+            elif command == 'm':
+                command = 'l'
 
     return points
+
 
 # ----------------------------
 # Main conversion
@@ -189,99 +208,121 @@ def svg_to_webots(svg_file, wbt_file, scale=5.0, margin=50):
     # namespace-safe tag check
     def is_path(elem):
         return elem.tag.endswith("path")
+
+    def is_circle(elem):
+        return elem.tag.endswith("circle")
     
     node_updates = {}
 
     for elem in root.iter():
-        if not is_path(elem):
-            continue
+        if is_path(elem):
+            path_id = elem.attrib.get("id", None)
+            if path_id is None:
+                continue
 
-        path_id = elem.attrib.get("id", None)
-        if path_id is None:
-            continue
+            d = elem.attrib.get("d", "")
+            svg_points = parse_path(d)
 
-        d = elem.attrib.get("d", "")
-        svg_points = parse_path(d)
+            # ----------------------------
+            # ROAD UPDATE
+            # ----------------------------
+            road = next((r for r in roads if str(r.id) == str(path_id)), None)
+            if road is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, road.translation, road.rotation)
+                shifted, new_translation = reanchor_to_origin(local_pts, road.translation, road.rotation)
+                road.wayPoints = shifted.tolist()
+                node_updates[str(road.id)] = (road.wayPoints, 'r', new_translation)
+                continue
 
-        # ----------------------------
-        # ROAD UPDATE
-        # ----------------------------
-        road = next((r for r in roads if str(r.id) == str(path_id)), None)
-        if road is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, road.translation, road.rotation)
-            shifted, new_translation = reanchor_to_origin(local_pts, road.translation, road.rotation)
-            road.wayPoints = shifted.tolist()
-            node_updates[str(road.id)] = (road.wayPoints, 'r', new_translation)
-            continue
+            # ----------------------------
+            # CROSSROAD UPDATE
+            # ----------------------------
+            cross = next((c for c in crossroads if str(c.id) == str(path_id)), None)
+            if cross is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, cross.translation, cross.rotation, extra_rot=POSE_ROT)
+                shifted, new_translation = reanchor_to_origin(local_pts, cross.translation, cross.rotation, extra_rot=POSE_ROT)
+                cross.shape = shifted.tolist()
+                node_updates[str(cross.id)] = (cross.shape, 'c', new_translation)
+                continue
+            
+            # ----------------------------
+            # FOREST UPDATE
+            # ----------------------------
+            forest = next((f for f in forests if str(f.id) == str(path_id)), None)
+            if forest is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, forest.translation, forest.rotation)
+                # Reanchor in real (pre-flip) local space so the translation is correct,
+                # then apply the Y flip only to the stored shape coordinates.
+                shifted, new_translation = reanchor_to_origin(local_pts, forest.translation, forest.rotation)
+                forest.shape = [[p[0], -p[1]] for p in shifted]
+                node_updates[str(forest.id)] = (forest.shape, 'f', new_translation)
+                continue
+            
+            # ----------------------------
+            # BUILDING UPDATE
+            # ----------------------------
+            building = next((f for f in buildings if str(f.id) == str(path_id)), None)
+            if building is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, building.translation, building.rotation)
+                shifted, new_translation = reanchor_to_origin(local_pts, building.translation, building.rotation)
+                building.corners = [[p[0], p[1]] for p in shifted]
+                node_updates[str(building.id)] = (building.corners, 'b', new_translation)
+                continue
 
-        # ----------------------------
-        # CROSSROAD UPDATE
-        # ----------------------------
-        cross = next((c for c in crossroads if str(c.id) == str(path_id)), None)
-        if cross is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, cross.translation, cross.rotation, extra_rot=POSE_ROT)
-            shifted, new_translation = reanchor_to_origin(local_pts, cross.translation, cross.rotation, extra_rot=POSE_ROT)
-            cross.shape = shifted.tolist()
-            node_updates[str(cross.id)] = (cross.shape, 'c', new_translation)
-            continue
-        
-        # ----------------------------
-        # FOREST UPDATE
-        # ----------------------------
-        forest = next((f for f in forests if str(f.id) == str(path_id)), None)
-        if forest is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, forest.translation, forest.rotation)
-            # Reanchor in real (pre-flip) local space so the translation is correct,
-            # then apply the Y flip only to the stored shape coordinates.
-            shifted, new_translation = reanchor_to_origin(local_pts, forest.translation, forest.rotation)
-            forest.shape = [[p[0], -p[1]] for p in shifted]
-            node_updates[str(forest.id)] = (forest.shape, 'f', new_translation)
-            continue
-        
-        # ----------------------------
-        # BUILDING UPDATE
-        # ----------------------------
-        building = next((f for f in buildings if str(f.id) == str(path_id)), None)
-        if building is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, building.translation, building.rotation)
-            shifted, new_translation = reanchor_to_origin(local_pts, building.translation, building.rotation)
-            building.corners = [[p[0], p[1]] for p in shifted]
-            node_updates[str(building.id)] = (building.corners, 'b', new_translation)
-            continue
+            # ----------------------------
+            # PARKING UPDATE
+            # ----------------------------
+            parking = next((c for c in parkings if str(c.id) == str(path_id)), None)
+            if parking is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, parking.translation, parking.rotation)
+                shifted, new_translation = reanchor_to_origin(local_pts, parking.translation, parking.rotation)
+                parking.point = shifted.tolist()
+                parking.point.append(parking.point[0])
+                node_updates[str(parking.id)] = (parking.point, 't', new_translation)
+                continue
+            
+            # ----------------------------
+            # WATER UPDATE
+            # ----------------------------
+            water = next((c for c in waters if str(c.id) == str(path_id)), None)
+            if water is not None:
+                world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
+                local_pts = inverse_transform(world_pts, water.translation, water.rotation)
+                shifted, new_translation = reanchor_to_origin(local_pts, water.translation, water.rotation)
+                water.point = shifted.tolist()
+                water.point.append(water.point[0])
+                node_updates[str(water.id)] = (water.point, 't', new_translation)
+                continue
 
-        # ----------------------------
-        # PARKING UPDATE
-        # ----------------------------
-        parking = next((c for c in parkings if str(c.id) == str(path_id)), None)
-        if parking is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, parking.translation, parking.rotation)
-            shifted, new_translation = reanchor_to_origin(local_pts, parking.translation, parking.rotation)
-            parking.point = shifted.tolist()
-            parking.point.append(parking.point[0])
-            node_updates[str(parking.id)] = (parking.point, 't', new_translation)
-            continue
-        
-        # ----------------------------
-        # WATER UPDATE
-        # ----------------------------
-        water = next((c for c in waters if str(c.id) == str(path_id)), None)
-        if water is not None:
-            world_pts = [svg_to_world(p, min_xy, max_xy, scale, margin, height) for p in svg_points]
-            local_pts = inverse_transform(world_pts, water.translation, water.rotation)
-            shifted, new_translation = reanchor_to_origin(local_pts, water.translation, water.rotation)
-            water.point = shifted.tolist()
-            water.point.append(water.point[0])
-            node_updates[str(water.id)] = (water.point, 't', new_translation)
-            continue
+            print(f"[WARN] No match for SVG id: {path_id}")
 
-        print(f"[WARN] No match for SVG id: {path_id}")
+        elif is_circle(elem):
+            circle_id = elem.attrib.get("id", None)
+            if circle_id is None:
+                continue
 
-    print("SVG → Webots conversion complete.")
+            cx = float(elem.attrib.get("cx", 0))
+            cy = float(elem.attrib.get("cy", 0))
+
+            tx, ty = 0.0, 0.0
+            transform = elem.attrib.get("transform", "")
+            if transform:
+                match = re.search(r'translate\(\s*(-?\d*\.?\d+)\s*,?\s*(-?\d*\.?\d+)?\s*\)', transform)
+                if match:
+                    tx = float(match.group(1))
+                    if match.group(2) is not None:
+                        ty = float(match.group(2))
+
+            svg_center = [cx + tx, cy + ty]
+            world_pos = svg_to_world(svg_center, min_xy, max_xy, scale, margin, height)
+            node_updates[str(circle_id)] = (None, 'tree', world_pos)
+
+    print("SVG -> Webots conversion complete.")
     return node_updates
 
 def format_3d_points(points):
@@ -370,9 +411,10 @@ def write_wbt(node_updates, wbt_file, output_file):
 
     pos = 0
     output = []
+    updated_ids = set()
 
     while True:
-        pattern = re.compile(r"^\s*(Road|Crossroad|Forest|SimpleBuilding|Transform)\s*\{", re.MULTILINE)        
+        pattern = re.compile(r"^\s*(Road|Crossroad|Forest|SimpleBuilding|Transform|CustomTree)\s*\{", re.MULTILINE)        
         
         match = pattern.search(text, pos)
         if not match:
@@ -412,6 +454,7 @@ def write_wbt(node_updates, wbt_file, output_file):
             node_id = node_block[id_start:id_end]
 
             if node_id in node_updates:
+                updated_ids.add(node_id)
                 points, geom_type, new_translation = node_updates[node_id]
 
                 if geom_type == 'r':
@@ -434,11 +477,43 @@ def write_wbt(node_updates, wbt_file, output_file):
                     node_block = replace_field_block(node_block, "point", points, geom_type)
                     node_block = replace_translation_field(node_block, new_translation)
                     print(f"Updated Transform {node_id}")
+                elif geom_type == 'tree':
+                    node_block = replace_translation_field(node_block, new_translation)
+                    print(f"Updated CustomTree {node_id}")
 
         output.append(node_block)
         pos = node_end + 1
 
     updated_text = "".join(output)
+
+    # Append any new CustomTree nodes at the end
+    TREE_TYPES = ["LowPolyTree", "LowPolyTree2", "LowPolyTree3"]
+    new_nodes = []
+    for node_id, (points, geom_type, translation) in node_updates.items():
+        if geom_type == 'tree' and node_id not in updated_ids:
+            x, y, z = translation
+            tree_type = random.choice(TREE_TYPES)
+            rot_deg = random.uniform(0, 360)
+            rot_rad = math.radians(rot_deg)
+            y_scale = random.uniform(1.0, 1.5)
+            # The OBJ is exported from Blender with Z-up. The proto's default
+            # rotation already makes the tree upright in Webots (Y-up world),
+            # so we only need a random spin around the Z-axis.
+            new_node_block = (
+                f"{tree_type} {{\n"
+                f"  id \"{node_id}\"\n"
+                f"  translation {x:.6f} {y:.6f} {z:.6f}\n"
+                f"  rotation 0 0 1 {rot_rad:.6f}\n"
+                f"  scale 1 1 {y_scale:.6f}\n"
+                f"}}\n"
+            )
+            new_nodes.append(new_node_block)
+
+    if new_nodes:
+        if not updated_text.endswith('\n'):
+            updated_text += '\n'
+        updated_text += "".join(new_nodes)
+        print(f"Appended {len(new_nodes)} new tree nodes.")
 
     Path(output_file).write_text(updated_text, encoding="utf-8")
 

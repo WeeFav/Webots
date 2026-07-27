@@ -1,0 +1,53 @@
+#VRML_SIM R2025a utf8
+
+PROTO LowPolyTree [
+  field SFVec3f    translation 0 0 0
+  field SFRotation rotation 1 0 0 0
+  field SFVec3f    scale 1 1 1
+]
+{
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    name "LowPolyTree"
+    
+    children [
+      # Wrap the visual geometry in a Transform to handle the scale
+      Transform {
+        scale IS scale
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url ["models/Nature_BaseColor.png"]
+              }
+              roughness 1.0  # Makes the surface completely matte
+              metalness 0.0  # Prevents metallic reflections
+            }
+            geometry Mesh {
+              url [
+                "models/low_poly_tree.obj"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+
+    # Wrap the bounding object in a Transform to scale the collision/selection box
+    boundingObject Transform {
+      scale IS scale
+      children [
+        Shape {
+          geometry Mesh {
+            url [
+              "models/low_poly_tree.obj"
+            ]
+          }
+        }
+      ]
+    }
+
+    physics NULL
+  }
+}

@@ -47,8 +47,8 @@ def parse_node(block_text):
     }
 
 def main():
-    target_path = r"d:\Webots\map4_backup.wbt"
-    backup_path = r"d:\Webots\map4_backup_fill.wbt"
+    target_path = r"D:\Webots\map4_robot.wbt"
+    backup_path = r"D:\Webots\map4_robot_fill.wbt"
     
     if not os.path.exists(target_path):
         print(f"Target file {target_path} not found.")
