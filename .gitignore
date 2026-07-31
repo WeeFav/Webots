@@ -6,3 +6,4 @@ commonroad-scenario-designer/
 *.wbproj
 *.obj
 src/webots_launch/resource/protos/models/
+session*/

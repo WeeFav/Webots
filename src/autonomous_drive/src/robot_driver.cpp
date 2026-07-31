@@ -168,12 +168,8 @@ void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
-    // auto mode = wbu_driver_get_control_mode();
-    // RCLCPP_INFO(node->get_logger(), "control_mode: %d", static_cast<int>(mode));
-    // RCLCPP_INFO(node->get_logger(), "Gear: %d | Throttle: %f | Brake: %f",
-    //             wbu_driver_get_gear(),
-    //             wbu_driver_get_throttle(),
-    //             wbu_driver_get_brake_intensity());
+    const double* gps_coords = wb_gps_get_values(gps);
+    RCLCPP_INFO(node->get_logger(), "gps_coords: %f, %f, %f", gps_coords[0], gps_coords[1], gps_coords[2]);
 
     // Automatic transmission logic in autonomous mode
     if (control_mode_ == "auto") {

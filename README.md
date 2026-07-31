@@ -19,6 +19,8 @@ ros2 launch autonomous_drive robot_launch.py
 ros2 launch lio_sam run.launch.py
 
 ros2 run autonomous_drive manual_control
+
+ros2 service call /lio_sam/save_map lio_sam/srv/SaveMap "{destination: /Webots/session2_map}"
 ```
 
 ```

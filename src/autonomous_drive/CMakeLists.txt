@@ -41,6 +41,9 @@ find_package(lanelet2_traffic_rules REQUIRED)
 # PROJ
 pkg_check_modules(PROJ REQUIRED IMPORTED_TARGET proj)
 
+# PCL
+find_package(PCL REQUIRED components common io)
+
 
 add_library(${PROJECT_NAME} SHARED
   src/robot_driver.cpp
@@ -162,8 +165,19 @@ ament_target_dependencies(pure_pursuit_controller
 )
 set_property(TARGET pure_pursuit_controller PROPERTY CXX_STANDARD 17)
 
+# align_pcd_maps
+add_executable(align_pcd_maps
+  src/align_pcd_maps.cpp
+)
+target_include_directories(align_pcd_maps PUBLIC
+  ${PCL_INCLUDE_DIRS}
+)
+target_link_libraries(align_pcd_maps
+  ${PCL_LIBRARIES}
+)
+set_property(TARGET align_pcd_maps PROPERTY CXX_STANDARD 17)
 
- 
+
 install(DIRECTORY include/
   DESTINATION include
 )
@@ -186,7 +200,7 @@ install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-install(TARGETS lane_detection lanelet2_waypoint_publisher pid_controller pure_pursuit_controller
+install(TARGETS lane_detection lanelet2_waypoint_publisher pid_controller pure_pursuit_controller align_pcd_maps
   DESTINATION lib/${PROJECT_NAME}
 )
 
