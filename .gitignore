@@ -7,3 +7,4 @@ commonroad-scenario-designer/
 *.obj
 src/webots_launch/resource/protos/models/
 session*/
+*.pcd

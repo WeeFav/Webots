@@ -168,8 +168,8 @@ void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
-    const double* gps_coords = wb_gps_get_values(gps);
-    RCLCPP_INFO(node->get_logger(), "gps_coords: %f, %f, %f", gps_coords[0], gps_coords[1], gps_coords[2]);
+    // const double* gps_coords = wb_gps_get_values(gps);
+    // RCLCPP_INFO(node->get_logger(), "gps_coords: %f, %f, %f", gps_coords[0], gps_coords[1], gps_coords[2]);
 
     // Automatic transmission logic in autonomous mode
     if (control_mode_ == "auto") {
@@ -226,8 +226,6 @@ void autonomous_drive::RobotDriver::step() {
             tf2::Quaternion q;
             m.getRotation(q);
 
-            // Webots axis convention is offset relative to LIO-SAM's frame definition
-            // We apply -M_PI / 2 rotation offset around Z to align them
             tf2::Quaternion q_offset;
             q_offset.setRPY(0.0, 0.0, 0.0);
             tf2::Quaternion q_final = q * q_offset;

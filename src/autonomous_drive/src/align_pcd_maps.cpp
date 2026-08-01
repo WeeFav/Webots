@@ -97,31 +97,51 @@ Eigen::Matrix3f rpyToRotationMatrix(double roll_deg, double pitch_deg, double ya
     return q.toRotationMatrix();
 }
 
+// Convert Webots VRML Axis-Angle (ax, ay, az, angle_rad) to a 3x3 Rotation Matrix
+Eigen::Matrix3f axisAngleToRotationMatrix(float ax, float ay, float az, float angle_rad) {
+    Eigen::Vector3f axis(ax, ay, az);
+    if (axis.norm() < 1e-6f) {
+        return Eigen::Matrix3f::Identity();
+    }
+    axis.normalize();
+    Eigen::AngleAxisf aa(angle_rad, axis);
+    return aa.toRotationMatrix();
+}
+
 void printUsage(const char* prog_name) {
     std::cout << "Usage: " << prog_name << " [options]\n\n"
-              << "Options:\n"
-              << "  --map1 <file.pcd>           Path to Map 1 PCD (Reference Map)\n"
-              << "  --gps1 <v0> <v1> [v2]       GPS coordinate for Map 1 initial position (0,0)\n"
-              << "  --map2 <file.pcd>           Path to Map 2 PCD\n"
-              << "  --gps2 <v0> <v1> [v2]       GPS coordinate for Map 2 initial position (0,0)\n"
-              << "  --quat1 <x> <y> <z> <w>     IMU Orientation Quaternion for Map 1 (x y z w)\n"
-              << "  --quat2 <x> <y> <z> <w>     IMU Orientation Quaternion for Map 2 (x y z w)\n"
-              << "  --yaw1 <deg>                Initial vehicle yaw/heading angle for Map 1 (deg)\n"
-              << "  --yaw2 <deg>                Initial vehicle yaw/heading angle for Map 2 (deg)\n"
-              << "  --rpy1 <r> <p> <y>          Initial Roll, Pitch, Yaw angles for Map 1 (deg)\n"
-              << "  --rpy2 <r> <p> <y>          Initial Roll, Pitch, Yaw angles for Map 2 (deg)\n"
-              << "  --out2 <file.pcd>           Output path for aligned Map 2 (default: map2_aligned.pcd)\n"
-              << "  --merged <file.pcd>         Output path for merged map (default: merged_map.pcd)\n"
+              << "Map Inputs:\n"
+              << "  --map1 <file.pcd>               Path to Map 1 PCD (Reference Map)\n"
+              << "  --map2 <file.pcd>               Path to Map 2 PCD\n\n"
+              << "Mode A: GPS & Orientation (WGS84 & IMU/RPY/Yaw)\n"
+              << "  --gps1 <v0> <v1> [v2]           GPS coordinate for Map 1 initial position\n"
+              << "  --gps2 <v0> <v1> [v2]           GPS coordinate for Map 2 initial position\n"
+              << "  --quat1 <x> <y> <z> <w>         IMU Quaternion for Map 1\n"
+              << "  --quat2 <x> <y> <z> <w>         IMU Quaternion for Map 2\n"
+              << "  --yaw1 <deg>                    Initial vehicle yaw angle for Map 1 (deg)\n"
+              << "  --yaw2 <deg>                    Initial vehicle yaw angle for Map 2 (deg)\n"
+              << "  --rpy1 <r> <p> <y>              Initial Roll, Pitch, Yaw for Map 1 (deg)\n"
+              << "  --rpy2 <r> <p> <y>              Initial Roll, Pitch, Yaw for Map 2 (deg)\n\n"
+              << "Mode B: Webots Ground-Truth (Translation & VRML Rotation)\n"
+              << "  --trans1 <x> <y> <z>            Webots translation for Map 1\n"
+              << "  --trans2 <x> <y> <z>            Webots translation for Map 2\n"
+              << "  --rot1 <ax> <ay> <az> <rad>     Webots VRML Axis-Angle rotation for Map 1\n"
+              << "  --rot2 <ax> <ay> <az> <rad>     Webots VRML Axis-Angle rotation for Map 2\n\n"
+              << "Outputs & Formatting:\n"
+              << "  --out2 <file.pcd>               Output path for aligned Map 2 (default: map2_aligned.pcd)\n"
+              << "  --merged <file.pcd>             Output path for merged map (default: merged_map.pcd)\n"
               << "  --order <lat_lon_alt|lat_alt_lon>\n"
-              << "                              GPS array order (default: lat_lon_alt)\n"
-              << "                              Use 'lat_alt_lon' if passing raw Webots wb_gps_get_values array\n"
-              << "  --help                      Show this help message\n\n"
-              << "Example (Quaternion from ROS IMU):\n"
+              << "                                  GPS array order (default: lat_lon_alt)\n"
+              << "  --help                          Show this help message\n\n"
+              << "Examples:\n"
+              << "  # Using Webots Ground-Truth translation & rotation:\n"
               << "  " << prog_name << " \\\n"
-              << "    --map1 session1_map/GlobalMap.pcd --gps1 25.012562 121.466838 1.557820 \\\n"
-              << "    --quat1 -0.0007625 -0.0003750 -0.5190791 0.8546692 \\\n"
-              << "    --map2 session2_map/GlobalMap.pcd --gps2 25.012910 121.466271 0.000000 \\\n"
-              << "    --quat2 0.0005000 -0.0009000 -0.5203921 0.8538531 \\\n"
+              << "    --map1 session1_map/GlobalMap.pcd \\\n"
+              << "    --trans1 56.8755 -65.2634 0.400134 \\\n"
+              << "    --rot1 -0.0013009 3.97107e-06 0.999999 -1.0944 \\\n"
+              << "    --map2 session2_map/GlobalMap.pcd \\\n"
+              << "    --trans2 57.4214 -39.8686 0.400134 \\\n"
+              << "    --rot2 -2.41939e-06 -0.00079257 0.999999 2.0472 \\\n"
               << "    --out2 map2_aligned.pcd --merged map_merged.pcd\n";
 }
 
@@ -146,20 +166,23 @@ int main(int argc, char** argv) {
     std::string merged_path = "merged_map.pcd";
     std::string order = "lat_lon_alt";
 
-    GPSCoord gps1;
-    GPSCoord gps2;
-    bool has_gps1 = false;
-    bool has_gps2 = false;
+    GPSCoord gps1, gps2;
+    bool has_gps1 = false, has_gps2 = false;
 
-    RPYCoord rpy1{0.0, 0.0, 0.0};
-    RPYCoord rpy2{0.0, 0.0, 0.0};
-    bool has_rpy1 = false;
-    bool has_rpy2 = false;
+    Eigen::Vector3f trans1 = Eigen::Vector3f::Zero();
+    Eigen::Vector3f trans2 = Eigen::Vector3f::Zero();
+    bool has_trans1 = false, has_trans2 = false;
+
+    RPYCoord rpy1{0.0, 0.0, 0.0}, rpy2{0.0, 0.0, 0.0};
+    bool has_rpy1 = false, has_rpy2 = false;
 
     Eigen::Quaternionf quat1 = Eigen::Quaternionf::Identity();
     Eigen::Quaternionf quat2 = Eigen::Quaternionf::Identity();
-    bool has_quat1 = false;
-    bool has_quat2 = false;
+    bool has_quat1 = false, has_quat2 = false;
+
+    Eigen::Vector4f vrml_rot1 = Eigen::Vector4f::Zero();
+    Eigen::Vector4f vrml_rot2 = Eigen::Vector4f::Zero();
+    bool has_rot1 = false, has_rot2 = false;
 
     for (int i = 1; i < argc; ++i) {
         std::string arg = argv[i];
@@ -176,6 +199,28 @@ int main(int argc, char** argv) {
             merged_path = argv[++i];
         } else if (arg == "--order" && i + 1 < argc) {
             order = argv[++i];
+        } else if (arg == "--trans1" && i + 3 < argc) {
+            trans1.x() = std::stof(argv[++i]);
+            trans1.y() = std::stof(argv[++i]);
+            trans1.z() = std::stof(argv[++i]);
+            has_trans1 = true;
+        } else if (arg == "--trans2" && i + 3 < argc) {
+            trans2.x() = std::stof(argv[++i]);
+            trans2.y() = std::stof(argv[++i]);
+            trans2.z() = std::stof(argv[++i]);
+            has_trans2 = true;
+        } else if (arg == "--rot1" && i + 4 < argc) {
+            vrml_rot1[0] = std::stof(argv[++i]);
+            vrml_rot1[1] = std::stof(argv[++i]);
+            vrml_rot1[2] = std::stof(argv[++i]);
+            vrml_rot1[3] = std::stof(argv[++i]);
+            has_rot1 = true;
+        } else if (arg == "--rot2" && i + 4 < argc) {
+            vrml_rot2[0] = std::stof(argv[++i]);
+            vrml_rot2[1] = std::stof(argv[++i]);
+            vrml_rot2[2] = std::stof(argv[++i]);
+            vrml_rot2[3] = std::stof(argv[++i]);
+            has_rot2 = true;
         } else if (arg == "--yaw1" && i + 1 < argc) {
             rpy1.yaw = std::stod(argv[++i]);
             has_rpy1 = true;
@@ -227,50 +272,78 @@ int main(int argc, char** argv) {
         }
     }
 
-    if (map1_path.empty() || map2_path.empty() || !has_gps1 || !has_gps2) {
-        std::cerr << "Error: Missing required arguments.\n\n";
+    bool has_gps_mode = has_gps1 && has_gps2;
+    bool has_trans_mode = has_trans1 && has_trans2;
+
+    if (map1_path.empty() || map2_path.empty() || (!has_gps_mode && !has_trans_mode)) {
+        std::cerr << "Error: Missing required map inputs. Provide either (--gps1 & --gps2) OR (--trans1 & --trans2).\n\n";
         printUsage(argv[0]);
         return 1;
     }
 
-    std::cout << std::fixed << std::setprecision(8);
+    std::cout << std::fixed << std::setprecision(6);
     std::cout << "==================================================\n";
-    std::cout << "PCD Map Alignment Tool (GPS WGS84 & IMU Orientation)\n";
+    std::cout << "PCD Map Alignment Tool (GPS/IMU & Webots Ground-Truth)\n";
     std::cout << "==================================================\n";
     std::cout << "Map 1 PCD : " << map1_path << "\n";
-    std::cout << "Map 1 GPS : Lat = " << gps1.lat << ", Lon = " << gps1.lon << ", Alt = " << gps1.alt << " m\n";
     std::cout << "Map 2 PCD : " << map2_path << "\n";
-    std::cout << "Map 2 GPS : Lat = " << gps2.lat << ", Lon = " << gps2.lon << ", Alt = " << gps2.alt << " m\n";
-    std::cout << "GPS Order : " << order << "\n";
 
+    Eigen::Vector3f translation_offset = Eigen::Vector3f::Zero();
     Eigen::Matrix3f R1 = Eigen::Matrix3f::Identity();
     Eigen::Matrix3f R2 = Eigen::Matrix3f::Identity();
 
-    if (has_quat1) {
-        R1 = quat1.toRotationMatrix();
-        std::cout << "Map 1 Quat: x=" << quat1.x() << ", y=" << quat1.y() << ", z=" << quat1.z() << ", w=" << quat1.w() << "\n";
-    } else if (has_rpy1) {
-        R1 = rpyToRotationMatrix(rpy1.roll, rpy1.pitch, rpy1.yaw);
-        std::cout << "Map 1 RPY : Roll=" << rpy1.roll << " deg, Pitch=" << rpy1.pitch << " deg, Yaw=" << rpy1.yaw << " deg\n";
-    }
+    if (has_trans_mode) {
+        std::cout << "Mode      : Webots Ground-Truth Translation & Rotation\n";
+        std::cout << "Map 1 Trans: [" << trans1.x() << ", " << trans1.y() << ", " << trans1.z() << "]\n";
+        std::cout << "Map 2 Trans: [" << trans2.x() << ", " << trans2.y() << ", " << trans2.z() << "]\n";
 
-    if (has_quat2) {
-        R2 = quat2.toRotationMatrix();
-        std::cout << "Map 2 Quat: x=" << quat2.x() << ", y=" << quat2.y() << ", z=" << quat2.z() << ", w=" << quat2.w() << "\n";
-    } else if (has_rpy2) {
-        R2 = rpyToRotationMatrix(rpy2.roll, rpy2.pitch, rpy2.yaw);
-        std::cout << "Map 2 RPY : Roll=" << rpy2.roll << " deg, Pitch=" << rpy2.pitch << " deg, Yaw=" << rpy2.yaw << " deg\n";
+        if (has_rot1) {
+            R1 = axisAngleToRotationMatrix(vrml_rot1[0], vrml_rot1[1], vrml_rot1[2], vrml_rot1[3]);
+            std::cout << "Map 1 VRML Rot: axis=[" << vrml_rot1[0] << ", " << vrml_rot1[1] << ", " << vrml_rot1[2] << "], angle=" << vrml_rot1[3] << " rad\n";
+        }
+        if (has_rot2) {
+            R2 = axisAngleToRotationMatrix(vrml_rot2[0], vrml_rot2[1], vrml_rot2[2], vrml_rot2[3]);
+            std::cout << "Map 2 VRML Rot: axis=[" << vrml_rot2[0] << ", " << vrml_rot2[1] << ", " << vrml_rot2[2] << "], angle=" << vrml_rot2[3] << " rad\n";
+        }
+
+        // Relative translation in world coordinates rotated into Map 1 local frame:
+        // T_rel = R1^T * (Trans2 - Trans1)
+        Eigen::Vector3f trans_diff = trans2 - trans1;
+        translation_offset = R1.transpose() * trans_diff;
+
+    } else if (has_gps_mode) {
+        std::cout << "Mode      : WGS84 GPS -> Local ENU\n";
+        std::cout << "Map 1 GPS : Lat = " << gps1.lat << ", Lon = " << gps1.lon << ", Alt = " << gps1.alt << " m\n";
+        std::cout << "Map 2 GPS : Lat = " << gps2.lat << ", Lon = " << gps2.lon << ", Alt = " << gps2.alt << " m\n";
+
+        if (has_quat1) {
+            R1 = quat1.toRotationMatrix();
+            std::cout << "Map 1 Quat: x=" << quat1.x() << ", y=" << quat1.y() << ", z=" << quat1.z() << ", w=" << quat1.w() << "\n";
+        } else if (has_rpy1) {
+            R1 = rpyToRotationMatrix(rpy1.roll, rpy1.pitch, rpy1.yaw);
+            std::cout << "Map 1 RPY : Roll=" << rpy1.roll << " deg, Pitch=" << rpy1.pitch << " deg, Yaw=" << rpy1.yaw << " deg\n";
+        }
+
+        if (has_quat2) {
+            R2 = quat2.toRotationMatrix();
+            std::cout << "Map 2 Quat: x=" << quat2.x() << ", y=" << quat2.y() << ", z=" << quat2.z() << ", w=" << quat2.w() << "\n";
+        } else if (has_rpy2) {
+            R2 = rpyToRotationMatrix(rpy2.roll, rpy2.pitch, rpy2.yaw);
+            std::cout << "Map 2 RPY : Roll=" << rpy2.roll << " deg, Pitch=" << rpy2.pitch << " deg, Yaw=" << rpy2.yaw << " deg\n";
+        }
+
+        // Compute relative ENU displacement of Map 2 origin relative to Map 1 origin
+        ENUCoord enu = gpsToENU(gps2, gps1);
+        translation_offset << static_cast<float>(enu.east),
+                              static_cast<float>(enu.north),
+                              static_cast<float>(enu.up);
     }
 
     std::cout << "--------------------------------------------------\n";
-
-    // Compute relative ENU displacement of Map 2 origin relative to Map 1 origin
-    ENUCoord enu = gpsToENU(gps2, gps1);
-
-    std::cout << "[ENU Translation Offset (Map 2 origin relative to Map 1 origin)]\n";
-    std::cout << "  East  (X): " << std::setprecision(4) << enu.east << " m\n";
-    std::cout << "  North (Y): " << enu.north << " m\n";
-    std::cout << "  Up    (Z): " << enu.up << " m\n";
+    std::cout << "[Relative Translation Offset (Map 2 origin relative to Map 1 origin)]\n";
+    std::cout << "  X Offset: " << std::setprecision(4) << translation_offset.x() << " m\n";
+    std::cout << "  Y Offset: " << translation_offset.y() << " m\n";
+    std::cout << "  Z Offset: " << translation_offset.z() << " m\n";
     std::cout << "--------------------------------------------------\n";
 
     // Relative Rotation Matrix to transform Map 2 points into Map 1's orientation frame:
@@ -298,9 +371,7 @@ int main(int argc, char** argv) {
     // Build 4x4 Rigid Transformation Matrix (Rotation + Translation)
     Eigen::Affine3f transform = Eigen::Affine3f::Identity();
     transform.linear() = R_rel;
-    transform.translation() << static_cast<float>(enu.east),
-                               static_cast<float>(enu.north),
-                               static_cast<float>(enu.up);
+    transform.translation() = translation_offset;
 
     std::cout << "\nTransformation Matrix (4x4):\n" << transform.matrix() << "\n\n";
 

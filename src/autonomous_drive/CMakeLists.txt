@@ -42,7 +42,8 @@ find_package(lanelet2_traffic_rules REQUIRED)
 pkg_check_modules(PROJ REQUIRED IMPORTED_TARGET proj)
 
 # PCL
-find_package(PCL REQUIRED components common io)
+find_package(PCL REQUIRED components common io filters)
+find_package(pcl_conversions REQUIRED)
 
 
 add_library(${PROJECT_NAME} SHARED
@@ -177,6 +178,35 @@ target_link_libraries(align_pcd_maps
 )
 set_property(TARGET align_pcd_maps PROPERTY CXX_STANDARD 17)
 
+# pcd_publisher
+add_executable(pcd_publisher
+  src/pcd_publisher.cpp
+)
+target_include_directories(pcd_publisher PUBLIC
+  ${PCL_INCLUDE_DIRS}
+)
+target_link_libraries(pcd_publisher
+  ${PCL_LIBRARIES}
+)
+ament_target_dependencies(pcd_publisher
+  rclcpp
+  sensor_msgs
+  pcl_conversions
+)
+set_property(TARGET pcd_publisher PROPERTY CXX_STANDARD 17)
+
+# webots_tf_publisher
+add_executable(webots_tf_publisher
+  src/webots_tf_publisher.cpp
+)
+ament_target_dependencies(webots_tf_publisher
+  rclcpp
+  geometry_msgs
+  tf2
+  tf2_ros
+)
+set_property(TARGET webots_tf_publisher PROPERTY CXX_STANDARD 17)
+
 
 install(DIRECTORY include/
   DESTINATION include
@@ -200,7 +230,7 @@ install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
-install(TARGETS lane_detection lanelet2_waypoint_publisher pid_controller pure_pursuit_controller align_pcd_maps
+install(TARGETS lane_detection lanelet2_waypoint_publisher pid_controller pure_pursuit_controller align_pcd_maps pcd_publisher webots_tf_publisher
   DESTINATION lib/${PROJECT_NAME}
 )
 
