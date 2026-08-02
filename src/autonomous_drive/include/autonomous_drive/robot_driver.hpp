@@ -99,6 +99,7 @@ private:
     // Vehicle state feedback
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr velocity_pub;
     rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr pose_pub;
+    rclcpp::Publisher<geometry_msgs::msg::PoseStamped>::SharedPtr lidar_pose_pub;
     rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr target_speed_pub;
 
     // Control mode

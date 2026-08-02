@@ -152,6 +152,7 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
     // Vehicle state feedback
     velocity_pub = node->create_publisher<std_msgs::msg::Float64>("/vehicle/current_velocity", 10);
     pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("/vehicle/world_pose", 10);
+    lidar_pose_pub = node->create_publisher<geometry_msgs::msg::PoseStamped>("/lidar/world_pose", 10);
     target_speed_pub = node->create_publisher<std_msgs::msg::Float64>("/vehicle/target_speed", 10);
 
     if (!node->has_parameter("target_speed")) {
@@ -214,9 +215,9 @@ void autonomous_drive::RobotDriver::step() {
     // // Publish world pose and TF
     publish_pose();
 
-    if (!transform_published && vehicle_node != nullptr) {
-        const double* pos = wb_supervisor_node_get_position(vehicle_node);
-        const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+    if (!transform_published && lidar_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(lidar_node);
+        const double* rot = wb_supervisor_node_get_orientation(lidar_node);
         if (pos != nullptr && rot != nullptr) {
             tf2::Matrix3x3 m(
                 rot[0], rot[1], rot[2],
@@ -234,7 +235,7 @@ void autonomous_drive::RobotDriver::step() {
             geometry_msgs::msg::TransformStamped tf_msg;
             tf_msg.header.stamp = node->get_clock()->now();
             tf_msg.header.frame_id = "map";
-            tf_msg.child_frame_id = "lio_map";
+            tf_msg.child_frame_id = "inital_lidar";
 
             tf_msg.transform.translation.x = pos[0];
             tf_msg.transform.translation.y = pos[1];
@@ -268,51 +269,98 @@ void autonomous_drive::RobotDriver::step() {
 }
 
 void autonomous_drive::RobotDriver::publish_pose() {
-    if (vehicle_node == nullptr) return;
-    const double* pos = wb_supervisor_node_get_position(vehicle_node);
-    const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
-    if (pos == nullptr || rot == nullptr) return;
+    auto now = node->get_clock()->now();
 
-    // Convert Webots rotation matrix -> quaternion
-    tf2::Matrix3x3 m(
-        rot[0], rot[1], rot[2],
-        rot[3], rot[4], rot[5],
-        rot[6], rot[7], rot[8]);
+    // -------- Publish vehicle_node pose & TF --------
+    if (vehicle_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(vehicle_node);
+        const double* rot = wb_supervisor_node_get_orientation(vehicle_node);
+        if (pos != nullptr && rot != nullptr) {
+            tf2::Matrix3x3 m(
+                rot[0], rot[1], rot[2],
+                rot[3], rot[4], rot[5],
+                rot[6], rot[7], rot[8]);
 
-    tf2::Quaternion q;
-    m.getRotation(q);
+            tf2::Quaternion q;
+            m.getRotation(q);
 
-    // -------- Publish PoseStamped --------
-    geometry_msgs::msg::PoseStamped pose_msg;
-    pose_msg.header.stamp = node->get_clock()->now();
-    pose_msg.header.frame_id = "map";
+            geometry_msgs::msg::PoseStamped pose_msg;
+            pose_msg.header.stamp = now;
+            pose_msg.header.frame_id = "map";
 
-    pose_msg.pose.position.x = pos[0];
-    pose_msg.pose.position.y = pos[1];
-    pose_msg.pose.position.z = pos[2];
+            pose_msg.pose.position.x = pos[0];
+            pose_msg.pose.position.y = pos[1];
+            pose_msg.pose.position.z = pos[2];
 
-    pose_msg.pose.orientation.x = q.x();
-    pose_msg.pose.orientation.y = q.y();
-    pose_msg.pose.orientation.z = q.z();
-    pose_msg.pose.orientation.w = q.w();
+            pose_msg.pose.orientation.x = q.x();
+            pose_msg.pose.orientation.y = q.y();
+            pose_msg.pose.orientation.z = q.z();
+            pose_msg.pose.orientation.w = q.w();
 
-    if (pose_pub != nullptr) {
-        pose_pub->publish(pose_msg);
+            if (pose_pub != nullptr) {
+                pose_pub->publish(pose_msg);
+            }
+
+            geometry_msgs::msg::TransformStamped tf_msg;
+            tf_msg.header = pose_msg.header;
+            tf_msg.child_frame_id = "gt_vehicle";
+
+            tf_msg.transform.translation.x = pos[0];
+            tf_msg.transform.translation.y = pos[1];
+            tf_msg.transform.translation.z = pos[2];
+
+            tf_msg.transform.rotation = pose_msg.pose.orientation;
+
+            if (tf_broadcaster != nullptr) {
+                tf_broadcaster->sendTransform(tf_msg);
+            }
+        }
     }
 
-    // -------- Publish TF --------
-    geometry_msgs::msg::TransformStamped tf_msg;
-    tf_msg.header = pose_msg.header;
-    tf_msg.child_frame_id = "vehicle";
+    // -------- Publish lidar_node pose & TF --------
+    if (lidar_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(lidar_node);
+        const double* rot = wb_supervisor_node_get_orientation(lidar_node);
+        if (pos != nullptr && rot != nullptr) {
+            tf2::Matrix3x3 m(
+                rot[0], rot[1], rot[2],
+                rot[3], rot[4], rot[5],
+                rot[6], rot[7], rot[8]);
 
-    tf_msg.transform.translation.x = pos[0];
-    tf_msg.transform.translation.y = pos[1];
-    tf_msg.transform.translation.z = pos[2];
+            tf2::Quaternion q;
+            m.getRotation(q);
 
-    tf_msg.transform.rotation = pose_msg.pose.orientation;
+            geometry_msgs::msg::PoseStamped pose_msg;
+            pose_msg.header.stamp = now;
+            pose_msg.header.frame_id = "map";
 
-    if (tf_broadcaster != nullptr) {
-        tf_broadcaster->sendTransform(tf_msg);
+            pose_msg.pose.position.x = pos[0];
+            pose_msg.pose.position.y = pos[1];
+            pose_msg.pose.position.z = pos[2];
+
+            pose_msg.pose.orientation.x = q.x();
+            pose_msg.pose.orientation.y = q.y();
+            pose_msg.pose.orientation.z = q.z();
+            pose_msg.pose.orientation.w = q.w();
+
+            if (lidar_pose_pub != nullptr) {
+                lidar_pose_pub->publish(pose_msg);
+            }
+
+            geometry_msgs::msg::TransformStamped tf_msg;
+            tf_msg.header = pose_msg.header;
+            tf_msg.child_frame_id = "gt_lidar";
+
+            tf_msg.transform.translation.x = pos[0];
+            tf_msg.transform.translation.y = pos[1];
+            tf_msg.transform.translation.z = pos[2];
+
+            tf_msg.transform.rotation = pose_msg.pose.orientation;
+
+            if (tf_broadcaster != nullptr) {
+                tf_broadcaster->sendTransform(tf_msg);
+            }
+        }
     }
 }
 
@@ -395,7 +443,7 @@ void autonomous_drive::RobotDriver::publish_lidar() {
     int num_points = wb_lidar_get_number_of_points(lidar);
     sensor_msgs::msg::PointCloud2 msg;
     msg.header.stamp    = node->get_clock()->now();
-    msg.header.frame_id = "velodyne";
+    msg.header.frame_id = "gt_lidar";
     msg.height    = 1;
     msg.width     = static_cast<uint32_t>(num_points);
     msg.is_bigendian = false;

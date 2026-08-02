@@ -46,8 +46,8 @@ WorldInfo {
   title "ROS2 simulation"
   ERP 0.6
   basicTimeStep 33
-  FPS 15
-  optimalThreadCount 2
+  FPS 10
+  optimalThreadCount 1
   physicsDisableTime 0
   gpsCoordinateSystem "WGS84"
   gpsReference 25.012909999999998 121.46627050000001 0
@@ -115,8 +115,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.6142991038792587 0.5239652128844869 0.5899975141134526 2.1775686042961877
-  position 9.155942553418228 18.640285733408618 1418.5361821773727
+  orientation 0.700295331404928 -0.4384194496767653 -0.5633603065158076 3.8473278884722877
+  position -195.03089205059962 62.66898105981488 1526.2976266832334
   near 3
 }
 TexturedBackground {
@@ -130,13 +130,8 @@ Floor {
   }
 }
 ModernHouse {
-  translation -233.836 -393.334 0
-  rotation 0 0 1 -0.261795307179586
-}
-ModernHouse {
-  translation -208.201 -403.194 0
-  rotation 0 0 1 -0.261795307179586
-  name "modern house(1)"
+  translation -220.732 -399.791 0
+  rotation 0 0 1 -0.311795
 }
 ModernHouse {
   translation 225.027 327.175 0
@@ -144,44 +139,31 @@ ModernHouse {
   name "modern house(2)"
 }
 ModernHouse {
-  translation 248.773 320.812 0
+  translation 253.003 320.812 0
   rotation 0 0 1 4.07987e-06
   name "modern house(3)"
-}
-Hotel {
-  translation 87.88 -394.67 0
 }
 Hotel {
   translation 80.06 -378.35 0
   name "hotel(2)"
 }
 Hotel {
-  translation -459.65 -165.88 0
+  translation -457.96 -173.92 0
   name "hotel(3)"
 }
 Hotel {
-  translation -454.622 -184.08 0
-  rotation 0 0 1 0.523599
-  name "hotel(5)"
-}
-Hotel {
-  translation -457.639 -148.646 0
+  translation -456.529 -148.945 0
   rotation 0 0 1 -0.261795307179586
   name "hotel(4)"
 }
 Hotel {
-  translation 94.15 -411.35 0
+  translation 90.11 -404.56 0
   name "hotel(1)"
 }
 SmallResidentialTower {
-  translation -125.866 -376.2 0
+  translation -128.381 -386.785 0
   rotation 0 0 1 -0.261795307179586
   name "residential tower(1)"
-}
-SmallResidentialTower {
-  translation -127.771 -383.276 0
-  rotation 0 0 1 -0.261795307179586
-  name "residential tower(7)"
 }
 SmallResidentialTower {
   translation -132.085 -399.334 0
@@ -892,52 +874,7 @@ Road {
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
-    0 0 0
-    0.13368 4.52962 0
-    0.56794 7.83666 0
-    1.24724 11.23216 0
-    2.2227 14.8797 0
-    3.28818 18.09616 0
-    4.58168 21.39926 0
-    6.82316 26.1939 0
-    7.53814 27.55224 0
-    11.34238 33.86496 0
-    14.5454 38.34308 0
-    17.43666 41.9332 0
-    17.71784 42.26358 0
-    22.11922 47.07758 0
-    25.67102 50.55326 0
-    28.57846 53.17914 0
-    35.91804 58.97868 0
-    39.38434 61.31936 0
-    42.64448 63.30354 0
-    44.12048 64.13514 0
-    48.1813 66.21624 0
-    52.74462 68.20642 0
-    54.5909 68.91056 0
-    57.94612 70.04532 0
-    60.63448 70.82234 0
-    64.19964 71.67482 0
-    67.14592 72.22808 0
-    69.948 72.62804 0
-    74.2723 73.00278 0
-    78.56904 73.07652 0
-    82.78122 72.84006 0
-    86.16536 72.3942 0
-    88.37522 71.92956 0
-    148.59882 120.69146 0
-    152.03528 123.44596 0
-    153.118 126.39884 0
-    149.92142 128.96404 0
-    17.14432 229.71528 0
-    13.53318 232.71694 0
-    11.8218 232.59458 0
-    10.35342 230.21574 0
-    -140.245438 27.56616 0
-    -138.627874 25.64084 0
-    -134.355994 22.02134 0
-    -105.471482 -0.16124 0
-    -91.324684 -10.98772 0
+    0 0 0, 0.13368 4.52962 0, 0.56794 7.83666 0, 1.24724 11.23216 0, 2.2227 14.8797 0, 3.28818 18.09616 0, 4.58168 21.39926 0, 6.82316 26.1939 0, 7.53814 27.55224 0, 11.34238 33.86496 0, 14.5454 38.34308 0, 17.43666 41.9332 0, 17.71784 42.26358 0, 22.11922 47.07758 0, 25.67102 50.55326 0, 28.57846 53.17914 0, 35.91804 58.97868 0, 39.38434 61.31936 0, 42.64448 63.30354 0, 44.12048 64.13514 0, 48.1813 66.21624 0, 52.74462 68.20642 0, 54.5909 68.91056 0, 57.94612 70.04532 0, 60.63448 70.82234 0, 64.19964 71.67482 0, 67.14592 72.22808 0, 69.948 72.62804 0, 74.2723 73.00278 0, 78.56904 73.07652 0, 82.78122 72.84006 0, 86.16536 72.3942 0, 88.37522 71.92956 0, 148.59882 120.69146 0, 152.03528 123.44596 0, 153.118 126.39884 0, 149.92142 128.96404 0, 17.14432 229.71528 0, 13.53318 232.71694 0, 11.8218 232.59458 0, 10.35342 230.21574 0, -140.245438 27.56616 0, -138.627874 25.64084 0, -134.355994 22.02134 0, -105.471482 -0.16124 0, -91.324684 -10.98772 0
   ]
   splineSubdivision 0
   appearance CementTiles {
@@ -1286,54 +1223,7 @@ Road {
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
-    0 0 0
-    -1.54028 3.81348 0
-    -3.75538 9.88586 0
-    -2.94428 15.10638 0
-    -2.59854 17.33164 0
-    -1.41214 19.84036 0
-    0.49192 22.89896 0
-    2.90758 25.98958 0
-    4.22574 27.45948 0
-    6.71364 29.95886 0
-    8.6735 31.73932 0
-    10.80552 33.53376 0
-    12.03632 34.51394 0
-    15.11662 36.82044 0
-    18.52384 39.17276 0
-    20.9867 40.73852 0
-    26.9743 44.10052 0
-    34.3494 47.668 0
-    41.32396 50.6513 0
-    49.07524 53.6417 0
-    55.15656 55.79594 0
-    61.84342 57.99994 0
-    68.28268 59.9777 0
-    74.14068 61.6643 0
-    79.82192 63.20378 0
-    88.43108 65.36406 0
-    95.56178 66.9994 0
-    103.73234 68.70088 0
-    112.8178 70.3681 0
-    119.7382 71.46714 0
-    128.9167 72.66814 0
-    136.98106 73.43948 0
-    149.53994 73.93462 0
-    161.08346 73.15364 0
-    173.97608 70.9225 0
-    192.5687 65.53036 0
-    282.45342 33.86516 0
-    299.07222 27.63092 0
-    322.39356 18.48344 0
-    342.477 10.27284 0
-    360.96532 2.46834 0
-    387.8264 -9.25508 0
-    409.76336 -19.14398 0
-    421.94434 -24.75184 0
-    436.79564 -31.70024 0
-    451.20096 -38.5579 0
-    466.50112 -45.97512 0
-    486.88794 -56.1218 0
+    0 0 0, -1.54028 3.81348 0, -3.75538 9.88586 0, -2.94428 15.10638 0, -2.59854 17.33164 0, -1.41214 19.84036 0, 0.49192 22.89896 0, 2.90758 25.98958 0, 4.22574 27.45948 0, 6.71364 29.95886 0, 8.6735 31.73932 0, 10.80552 33.53376 0, 12.03632 34.51394 0, 15.11662 36.82044 0, 18.52384 39.17276 0, 20.9867 40.73852 0, 26.9743 44.10052 0, 34.3494 47.668 0, 41.32396 50.6513 0, 49.07524 53.6417 0, 55.15656 55.79594 0, 61.84342 57.99994 0, 68.28268 59.9777 0, 74.14068 61.6643 0, 79.82192 63.20378 0, 88.43108 65.36406 0, 95.56178 66.9994 0, 103.73234 68.70088 0, 112.8178 70.3681 0, 119.7382 71.46714 0, 128.9167 72.66814 0, 136.98106 73.43948 0, 149.53994 73.93462 0, 161.08346 73.15364 0, 173.97608 70.9225 0, 192.5687 65.53036 0, 282.45342 33.86516 0, 299.07222 27.63092 0, 322.39356 18.48344 0, 342.477 10.27284 0, 360.96532 2.46834 0, 387.8264 -9.25508 0, 409.76336 -19.14398 0, 421.94434 -24.75184 0, 436.79564 -31.70024 0, 451.20096 -38.5579 0, 466.50112 -45.97512 0, 486.88794 -56.1218 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1397,43 +1287,7 @@ Road {
   leftBorder FALSE
   rightBarrier TRUE
   wayPoints [
-    0 0 0
-    15.93754 -5.66994 0
-    35.39684 -10.98624 0
-    53.83282 -14.92366 0
-    70.19812 -17.6749 0
-    90.92136 -20.22902 0
-    121.40538 -22.89814 0
-    145.5956 -23.78984 0
-    171.2792 -23.36402 0
-    192.0635 -21.97898 0
-    206.4103 -20.51566 0
-    241.54678 -15.41756 0
-    264.99428 -11.02942 0
-    283.26852 -7.17646 0
-    299.41552 -3.08236 0
-    341.92568 11.3048 0
-    371.0869 23.1065 0
-    410.4164 40.65526 0
-    445.4204 57.45894 0
-    475.461 72.59264 0
-    503.29682 87.12488 0
-    522.28 97.29596 0
-    549.61486 112.30834 0
-    564.76628 120.83238 0
-    566.61368 122.05124 0
-    568.97546 123.71556 0
-    572.36932 126.275 0
-    574.14058 128.57836 0
-    575.25078 130.67758 0
-    575.90818 132.3456 0
-    575.99026 134.28676 0
-    575.4678 136.53466 0
-    574.7151 138.63924 0
-    573.81516 140.68758 0
-    573.11414 142.12386 0
-    571.16382 145.7057 0
-    466.72122 322.97734 0
+    0 0 0, 15.93754 -5.66994 0, 35.39684 -10.98624 0, 53.83282 -14.92366 0, 70.19812 -17.6749 0, 90.92136 -20.22902 0, 121.40538 -22.89814 0, 145.5956 -23.78984 0, 171.2792 -23.36402 0, 192.0635 -21.97898 0, 206.4103 -20.51566 0, 241.54678 -15.41756 0, 264.99428 -11.02942 0, 283.26852 -7.17646 0, 299.41552 -3.08236 0, 341.92568 11.3048 0, 371.0869 23.1065 0, 410.4164 40.65526 0, 445.4204 57.45894 0, 475.461 72.59264 0, 503.29682 87.12488 0, 522.28 97.29596 0, 549.61486 112.30834 0, 564.76628 120.83238 0, 566.61368 122.05124 0, 568.97546 123.71556 0, 572.36932 126.275 0, 574.14058 128.57836 0, 575.25078 130.67758 0, 575.90818 132.3456 0, 575.99026 134.28676 0, 575.4678 136.53466 0, 574.7151 138.63924 0, 573.81516 140.68758 0, 573.11414 142.12386 0, 571.16382 145.7057 0, 466.72122 322.97734 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1704,61 +1558,7 @@ Road {
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
-    0 0 0
-    -1.37274 0.70548 0
-    -2.36226 1.15072 0
-    -3.70534 1.69624 0
-    -5.65448 2.38796 0
-    -7.47558 2.94118 0
-    -7.9262 3.06532 0
-    -11.81136 3.9423 0
-    -12.73074 4.10184 0
-    -14.94264 4.41458 0
-    -17.18004 4.63208 0
-    -19.20372 4.74586 0
-    -21.83482 4.7791 0
-    -24.73858 4.66866 0
-    -26.1707 4.55826 0
-    -28.10534 4.35114 0
-    -31.24552 3.87432 0
-    -33.85528 3.34664 0
-    -34.58146 3.17868 0
-    -37.6351 2.37208 0
-    -40.82422 1.35674 0
-    -44.75158 -0.13672 0
-    -49.25658 -2.1818 0
-    -51.17896 -3.1632 0
-    -53.71242 -4.55664 0
-    -56.0847 -5.96536 0
-    -59.43234 -8.12584 0
-    -62.77184 -10.48478 0
-    -64.87462 -12.07582 0
-    -66.19324 -13.11564 0
-    -66.89142 -13.67946 0
-    -69.04074 -15.4764 0
-    -73.02628 -19.08546 0
-    -74.33486 -20.36118 0
-    -75.55802 -21.60024 0
-    -78.34558 -24.6155 0
-    -80.14236 -26.72366 0
-    -82.34092 -29.51818 0
-    -83.78806 -31.51318 0
-    -85.9897 -34.8476 0
-    -87.71872 -37.79364 0
-    -88.91514 -40.05712 0
-    -88.93294 -40.09268 0
-    -90.48012 -43.39994 0
-    -91.34334 -45.4982 0
-    -92.45492 -48.59624 0
-    -93.5306 -52.2809 0
-    -94.08896 -54.70024 0
-    -94.26916 -55.56634 0
-    -94.6983 -57.89694 0
-    -95.12428 -62.035 0
-    -95.23626 -64.36052 0
-    -95.18914 -68.13452 0
-    -94.99322 -70.61698 0
-    -94.13984 -75.42712 0
+    0 0 0, -1.37274 0.70548 0, -2.36226 1.15072 0, -3.70534 1.69624 0, -5.65448 2.38796 0, -7.47558 2.94118 0, -7.9262 3.06532 0, -11.81136 3.9423 0, -12.73074 4.10184 0, -14.94264 4.41458 0, -17.18004 4.63208 0, -19.20372 4.74586 0, -21.83482 4.7791 0, -24.73858 4.66866 0, -26.1707 4.55826 0, -28.10534 4.35114 0, -31.24552 3.87432 0, -33.85528 3.34664 0, -34.58146 3.17868 0, -37.6351 2.37208 0, -40.82422 1.35674 0, -44.75158 -0.13672 0, -49.25658 -2.1818 0, -51.17896 -3.1632 0, -53.71242 -4.55664 0, -56.0847 -5.96536 0, -59.43234 -8.12584 0, -62.77184 -10.48478 0, -64.87462 -12.07582 0, -66.19324 -13.11564 0, -66.89142 -13.67946 0, -69.04074 -15.4764 0, -73.02628 -19.08546 0, -74.33486 -20.36118 0, -75.55802 -21.60024 0, -78.34558 -24.6155 0, -80.14236 -26.72366 0, -82.34092 -29.51818 0, -83.78806 -31.51318 0, -85.9897 -34.8476 0, -87.71872 -37.79364 0, -88.91514 -40.05712 0, -88.93294 -40.09268 0, -90.48012 -43.39994 0, -91.34334 -45.4982 0, -92.45492 -48.59624 0, -93.5306 -52.2809 0, -94.08896 -54.70024 0, -94.26916 -55.56634 0, -94.6983 -57.89694 0, -95.12428 -62.035 0, -95.23626 -64.36052 0, -95.18914 -68.13452 0, -94.99322 -70.61698 0, -94.13984 -75.42712 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -1922,41 +1722,7 @@ Road {
   rightBorder FALSE
   leftBorder FALSE
   wayPoints [
-    0 0 0
-    -1.54602 1.6498 0
-    -2.97456 2.94848 0
-    -4.37998 4.07694 0
-    -5.68768 5.01266 0
-    -7.2558 6.00346 0
-    -9.08234 6.99068 0
-    -11.00888 7.8496 0
-    -13.27618 8.63316 0
-    -14.78524 9.02362 0
-    -16.31388 9.31524 0
-    -17.69606 9.49054 0
-    -20.17868 9.59828 0
-    -22.8862 9.41718 0
-    -24.7214 9.11946 0
-    -26.66862 8.65008 0
-    -28.59538 8.0307 0
-    -30.115 7.43366 0
-    -31.49506 6.80854 0
-    -33.83322 5.5601 0
-    -35.28206 4.64492 0
-    -37.10172 3.30186 0
-    -38.5641 2.0251 0
-    -40.32366 0.17382 0
-    -41.40108 -1.19268 0
-    -42.4 -2.68388 0
-    -43.511 -4.71662 0
-    -44.1528 -6.16918 0
-    -44.69562 -7.65822 0
-    -45.09184 -8.98992 0
-    -45.4729 -10.62314 0
-    -45.9188 -13.83188 0
-    -46.01244 -16.44422 0
-    -45.88566 -18.9536 0
-    -45.45606 -21.78298 0
+    0 0 0, -1.54602 1.6498 0, -2.97456 2.94848 0, -4.37998 4.07694 0, -5.68768 5.01266 0, -7.2558 6.00346 0, -9.08234 6.99068 0, -11.00888 7.8496 0, -13.27618 8.63316 0, -14.78524 9.02362 0, -16.31388 9.31524 0, -17.69606 9.49054 0, -20.17868 9.59828 0, -22.8862 9.41718 0, -24.7214 9.11946 0, -26.66862 8.65008 0, -28.59538 8.0307 0, -30.115 7.43366 0, -31.49506 6.80854 0, -33.83322 5.5601 0, -35.28206 4.64492 0, -37.10172 3.30186 0, -38.5641 2.0251 0, -40.32366 0.17382 0, -41.40108 -1.19268 0, -42.4 -2.68388 0, -43.511 -4.71662 0, -44.1528 -6.16918 0, -44.69562 -7.65822 0, -45.09184 -8.98992 0, -45.4729 -10.62314 0, -45.9188 -13.83188 0, -46.01244 -16.44422 0, -45.88566 -18.9536 0, -45.45606 -21.78298 0
   ]
   startLine [
     "D:/Webots/projects/objects/road/protos/textures/road_line_solid.png"
@@ -3292,7 +3058,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 25.040015 489.950001 0
+  translation -230.257 351.47 0
+  rotation 0 0 1 -1.3089953071795861
   name "building3"
   floorHeight 3.2
   floorNumber 6
@@ -3338,7 +3105,7 @@ SimpleBuilding {
   wallType "highrise"
 }
 SimpleBuilding {
-  translation 6.470015 409.829999 0
+  translation 1.26001 409.83 0
   name "building6"
   floorNumber 4
   corners [
@@ -3350,7 +3117,8 @@ SimpleBuilding {
   wallType "old building"
 }
 SimpleBuilding {
-  translation -87.9 420.07 0
+  translation -78.6604 408.968 0
+  rotation 0 0 -1 1.309
   name "building7"
   floorNumber 4
   corners [
@@ -3362,7 +3130,7 @@ SimpleBuilding {
   wallType "stone wall"
 }
 SimpleBuilding {
-  translation -511.313 154.459 0
+  translation -508.403 160.613 0
   rotation 0 0 1 0.785398
   name "building8"
   floorNumber 4
@@ -3375,7 +3143,7 @@ SimpleBuilding {
   wallType "red and white building"
 }
 SimpleBuilding {
-  translation 14.320015 397.960001 0
+  translation 10.85 394.12 0
   name "building9"
   floorNumber 4
   corners [
@@ -3387,19 +3155,7 @@ SimpleBuilding {
   wallType "old building"
 }
 SimpleBuilding {
-  translation -73.34 407.15 0
-  name "building10"
-  floorNumber 4
-  corners [
-    0 0
-    -12.3 -9.19
-    -4.12 -20
-    8.17 -10.81
-  ]
-  wallType "stone brick"
-}
-SimpleBuilding {
-  translation -494.72 132.63 0
+  translation -496.7 132.92 0
   name "building11"
   floorNumber 4
   corners [
@@ -3411,7 +3167,8 @@ SimpleBuilding {
   wallType "residential building"
 }
 SimpleBuilding {
-  translation -242.36 425.52 0
+  translation -244.299 432.737 0
+  rotation 0 0 1 0.261799
   name "building12"
   floorNumber 4
   corners [
@@ -3423,7 +3180,7 @@ SimpleBuilding {
   wallType "transparent highrise"
 }
 SimpleBuilding {
-  translation -17.569985 413.250001 0
+  translation -29.32 421.26 0
   name "building13"
   floorNumber 4
   corners [
@@ -3435,7 +3192,7 @@ SimpleBuilding {
   wallType "highrise"
 }
 SimpleBuilding {
-  translation 53.920015 430.990001 0
+  translation 302.55 241.11 0
   name "building14"
   floorNumber 4
   corners [
@@ -3448,6 +3205,7 @@ SimpleBuilding {
 }
 SimpleBuilding {
   translation -475.96 211.13 0
+  rotation 0 0 1 0.261799
   name "building15"
   floorNumber 4
   corners [
@@ -3459,7 +3217,8 @@ SimpleBuilding {
   wallType "red and white building"
 }
 SimpleBuilding {
-  translation -133.49 433.88 0
+  translation -126.905 428.186 0
+  rotation 0 0 1 1.8326
   name "building16"
   floorNumber 4
   corners [
@@ -3471,7 +3230,8 @@ SimpleBuilding {
   wallType "blue glass building"
 }
 SimpleBuilding {
-  translation -118.74 423.57 0
+  translation -108.97 415.88 0
+  rotation 0 0 1 1.5708
   name "building17"
   floorNumber 4
   corners [
@@ -3497,7 +3257,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 40.120015 374.510001 0
+  translation 231.47 177.216 0
+  rotation 0 0 1 0.13090030610042527
   name "building19"
   floorNumber 4
   corners [
@@ -3512,7 +3273,7 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 75.300015 419.860001 0
+  translation 250.96 268.42 0
   name "building20"
   floorNumber 4
   corners [
@@ -3522,18 +3283,6 @@ SimpleBuilding {
     7.39 -9.6
   ]
   wallType "brick building"
-}
-SimpleBuilding {
-  translation -512.46 169.41 0
-  name "building21"
-  floorNumber 4
-  corners [
-    0 0
-    11.84 9.02
-    19.23 -0.58
-    7.39 -9.61
-  ]
-  wallType "office building"
 }
 SimpleBuilding {
   translation -50.83 382.14 0
@@ -3548,7 +3297,8 @@ SimpleBuilding {
   wallType "old office building"
 }
 SimpleBuilding {
-  translation -452.35 241.6 0
+  translation -453.326 241.339 0
+  rotation 0 0 1 0.261799
   name "building23"
   floorNumber 4
   corners [
@@ -3560,7 +3310,7 @@ SimpleBuilding {
   wallType "blue glass building"
 }
 SimpleBuilding {
-  translation 70.250015 397.380001 0
+  translation 267.2 198.96 0
   name "building24"
   floorNumber 4
   corners [
@@ -3572,7 +3322,7 @@ SimpleBuilding {
   wallType "red and white building"
 }
 SimpleBuilding {
-  translation -490.735 188.334 0
+  translation -487.629 196.283 0
   rotation 0 0 1 1.8326
   name "building25"
   floorNumber 4
@@ -3601,20 +3351,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -438.096 64.07 0
-  rotation 0 0 1 -1.047195307179586
-  name "building27"
-  floorNumber 4
-  corners [
-    0 0
-    -6.56 8.33
-    9.06 20.49
-    15.62 12.16
-  ]
-  wallType "orange building"
-}
-SimpleBuilding {
-  translation -40.21 338.83 0
+  translation -17.69 323.86 0
+  rotation 0 0 1 1.5708
   name "building28"
   floorNumber 4
   corners [
@@ -3626,7 +3364,8 @@ SimpleBuilding {
   wallType "tall house"
 }
 SimpleBuilding {
-  translation -19.049985 415.650001 0
+  translation -48.75 444.36 0
+  rotation 0 0 1 -1.5707953071795862
   name "building29"
   floorNumber 4
   corners [
@@ -3650,7 +3389,7 @@ SimpleBuilding {
   wallType "old building"
 }
 SimpleBuilding {
-  translation 39.770015 392.800001 0
+  translation 156.87 260 0
   name "building31"
   floorNumber 4
   corners [
@@ -3674,19 +3413,7 @@ SimpleBuilding {
   wallType "gray glass building"
 }
 SimpleBuilding {
-  translation 16.090015 374.760001 0
-  name "building33"
-  floorNumber 4
-  corners [
-    0 0
-    11.84 9.03
-    19.23 -0.58
-    7.39 -9.600006
-  ]
-  wallType "stone brick"
-}
-SimpleBuilding {
-  translation 97.890015 402.960001 0
+  translation 228.73 200.87 0
   name "building34"
   floorNumber 4
   corners [
@@ -3701,7 +3428,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 47.430015 451.160001 0
+  translation -255.272 414.033 0
+  rotation 0 0 1 1.8326
   name "building35"
   floorNumber 4
   corners [
@@ -3716,7 +3444,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 71.680015 423.900001 0
+  translation 215.826 275.32 0
+  rotation 0 0 1 1.309
   name "building36"
   floorNumber 4
   corners [
@@ -3731,7 +3460,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -222.33 456.45 0
+  translation -223.159 459.526 0
+  rotation 0 0 1 0.261799
   name "building37"
   floorNumber 4
   corners [
@@ -3815,14 +3545,14 @@ SimpleBuilding {
   floorHeight 4.67
   floorNumber 25
   corners [
-    0 0 102.109994 127.8, 133.019994 103.44, 165.409994 79.74, 177.189994 62.79, 178.609994 60.75, 181.279994 56.9, 188.289994 56.46, 193.139994 50.82, 191.749994 46.03, 188.719994 41.54, 183.089994 40.03, 177.319994 41.31, 162.599994 27.53, 100.899994 -1.08, 76.609994 -25.04, 58.159994 -58.31, 50.049994 -62.76, 49.639994 -67.29, 47.309994 -71.79, 42.379994 -74.01, 36.799994 -71.67, 33.51 -67.63, 1.16 -44.07, 17.17 -21.69, 21.83 -15.18
+    0 0, 102.109994 127.8, 133.019994 103.44, 165.409994 79.74, 177.189994 62.79, 178.609994 60.75, 181.279994 56.9, 188.289994 56.46, 193.139994 50.82, 191.749994 46.03, 188.719994 41.54, 183.089994 40.03, 177.319994 41.31, 162.599994 27.53, 100.899994 -1.08, 76.609994 -25.04, 58.159994 -58.31, 50.049994 -62.76, 49.639994 -67.29, 47.309994 -71.79, 42.379994 -74.01, 36.799994 -71.67, 33.51 -67.63, 1.16 -44.07, 17.17 -21.69, 21.83 -15.18
   ]
   wallType "highrise"
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 453.006 -88.9064 0
-  rotation 0 0 1 -1.8325953071795862
+  translation 443.492 -106.443 0
+  rotation 0 0 -1 1.7017003061004252
   name "板橋車站大樓(1)"
   floorHeight 4.67
   floorNumber 25
@@ -3979,7 +3709,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation 41.020015 347.519995 0
+  translation 57.2637 308.513 0
+  rotation 0 0 -1 -1.8326053071795858
   name "Honda"
   corners [
     0 0
@@ -4027,38 +3758,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -253.609985 -223.210005 0
-  name "building43"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -3.01 -1.66
-    1.26 -9.77
-    4.55 -8.36
-  ]
-  wallType "old building"
-}
-SimpleBuilding {
   translation -323.712303 -261.013805 0
   name "building44"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    0.814818 -4.43568
-    5.442302 -17.5662
-    27.142302 -11.1562
-    11.072076 5.71596
-    5.44244 3.48914
-  ]
-  wallType "construction building"
-  roofShape "flat roof"
-}
-SimpleBuilding {
-  translation -368.532 -133.224 0
-  rotation 0 0 1 1.5708
-  name "building44(1)"
   floorHeight 3.2
   floorNumber 6
   corners [
@@ -4096,19 +3797,6 @@ SimpleBuilding {
     6.71 -13.83
   ]
   wallType "concrete building"
-}
-SimpleBuilding {
-  translation -297.789999 -245.140005 0
-  name "building47"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    8.289994 4.77
-    15.109994 -7.54
-    6.51 -13.23
-  ]
-  wallType "construction building"
 }
 SimpleBuilding {
   translation -264.169985 -228.590005 0
@@ -4150,19 +3838,6 @@ SimpleBuilding {
   wallType "transparent highrise"
 }
 SimpleBuilding {
-  translation -264.169985 -228.590005 0
-  name "building51"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -3.33 -1.59
-    0.55 -9.61
-    3.88 -8.02
-  ]
-  wallType "residential building"
-}
-SimpleBuilding {
   translation -272.489985 -232.270005 0
   name "building52"
   floorHeight 3.2
@@ -4191,19 +3866,6 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -280.390005 -236.130005 0
-  name "building54"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -4.25 -2.07
-    1.97 -14.38
-    6.52 -11.9
-  ]
-  wallType "blue glass building"
-}
-SimpleBuilding {
   translation -284.640005 -238.200005 0
   name "building55"
   floorHeight 3.2
@@ -4217,7 +3879,8 @@ SimpleBuilding {
   wallType "brick building"
 }
 SimpleBuilding {
-  translation -315.769999 -285.220005 0
+  translation -296.68 -297.422 0
+  rotation 0 0 1 -2.6179953071795863
   name "building56"
   floorHeight 3.2
   floorNumber 6
@@ -4229,7 +3892,8 @@ SimpleBuilding {
   wallType "old house"
 }
 SimpleBuilding {
-  translation -303.580131 -332.646225 0
+  translation -305.28 -323.186 0
+  rotation 0 0 1 -1.5707953071795862
   name "building57"
   floorHeight 3.2
   floorNumber 6
@@ -4238,19 +3902,6 @@ SimpleBuilding {
     -3.38 9.42
     17.220006 16.13
     20.200006 6.92
-  ]
-  wallType "orange building"
-}
-SimpleBuilding {
-  translation -279.140005 -330.600005 0
-  name "building58"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -3.39 9.32
-    7.73 12.46
-    11.01 3.03
   ]
   wallType "orange building"
 }
@@ -4279,19 +3930,6 @@ SimpleBuilding {
     10.51 3.61
   ]
   wallType "highrise"
-}
-SimpleBuilding {
-  translation -291.869999 -294.640005 0
-  name "building61"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -2.89 7.79
-    8.949994 11.02
-    10.899994 2.93
-  ]
-  wallType "old building"
 }
 SimpleBuilding {
   translation -294.759999 -286.860005 0
@@ -4326,32 +3964,6 @@ SimpleBuilding {
   ]
   wallType "red and white building"
   roofShape "flat roof"
-}
-SimpleBuilding {
-  translation -291.229999 -255.940005 0
-  name "building64"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    5.929994 -11.03
-    12.419994 -8.35
-    6.289994 2.74
-  ]
-  wallType "brick building"
-}
-SimpleBuilding {
-  translation -284.940005 -253.190005 0
-  name "building65"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    7.12 3.49
-    13.14 -7.9
-    6.13 -11.09
-  ]
-  wallType "red and white building"
 }
 SimpleBuilding {
   translation -275.733325 -252.338885 0
@@ -4429,19 +4041,6 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -230.95 -279.32 0
-  name "新時代華廈(1)"
-  floorHeight 3.2
-  floorNumber 7
-  corners [
-    0 0
-    -4.36 -9.74
-    7.92 -14.59
-    12.8 -1.36
-  ]
-  wallType "transparent highrise"
-}
-SimpleBuilding {
   translation -238.520005 -288.770005 0
   name "building70"
   floorHeight 3.2
@@ -4466,32 +4065,6 @@ SimpleBuilding {
     12.93 -7.04
   ]
   wallType "brick building"
-}
-SimpleBuilding {
-  translation -220.74 -335.52 0
-  name "building71(1)"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -5.24 -15.07
-    8.22 -19.92
-    12.93 -7.04
-  ]
-  wallType "brick building"
-}
-SimpleBuilding {
-  translation -245.670005 -309.280005 0
-  name "building72"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    -3.5 -10.37
-    9.26 -17.07
-    13.46 -4.85
-  ]
-  wallType "residential building"
 }
 SimpleBuilding {
   translation -249.170005 -319.650005 0
@@ -4537,19 +4110,6 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -270.380005 -296.490005 0
-  name "building75"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    14.99 4.97
-    18.81 -5.04
-    3.22 -9.15
-  ]
-  wallType "orange building"
-}
-SimpleBuilding {
   translation -273.480005 -288.000005 0
   name "building76"
   floorHeight 3.2
@@ -4589,46 +4149,6 @@ SimpleBuilding {
     4.97 -10.8
   ]
   wallType "construction building"
-}
-SimpleBuilding {
-  translation -263.980005 -268.260005 0
-  name "building79"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    7.7 3.38
-    12.54 -5.86
-    12.89 -6.53
-    5.42 -10.65
-  ]
-  wallType "residential building"
-  roofShape "flat roof"
-}
-SimpleBuilding {
-  translation -256.280005 -264.880005 0
-  name "building80"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    8.15 3.49
-    13.21 -5.29
-    4.84 -9.24
-  ]
-}
-SimpleBuilding {
-  translation -241.509985 -235.050005 0
-  name "building81"
-  floorHeight 3.2
-  floorNumber 6
-  corners [
-    0 0
-    2.32 -4.84
-    -12.34 -11.79
-    -14.65 -6.95
-  ]
-  wallType "red and white building"
 }
 SimpleBuilding {
   translation -106.458525 -198.348405 0
@@ -4690,19 +4210,6 @@ SimpleBuilding {
   ]
   wallType "classic building"
   roofShape "flat roof"
-}
-SimpleBuilding {
-  translation 209.72 -124.87 0
-  name "巴黎16區(1)"
-  floorHeight 3.87
-  floorNumber 28
-  corners [
-    0 0
-    39.27 20.45
-    26.82 44.08
-    -12.45 23.63
-  ]
-  wallType "old office building"
 }
 SimpleBuilding {
   translation 105.149995 -92.990005 0
@@ -4887,8 +4394,8 @@ SimpleBuilding {
   roofShape "flat roof"
 }
 SimpleBuilding {
-  translation -113.52 -441.582 0
-  rotation 0 0 1 -0.785395307179586
+  translation -92.0267 -447.707 0
+  rotation 0 0 1 0.785401
   name "building82(1)"
   floorNumber 14
   corners [
@@ -4949,18 +4456,6 @@ SimpleBuilding {
   wallType "office building"
 }
 SimpleBuilding {
-  translation 305.349995 253.049995 0
-  name "building86"
-  floorNumber 4
-  corners [
-    0 0
-    8.61 -10.16
-    0.2 -17.19
-    -8.4 -7.04
-  ]
-  wallType "highrise"
-}
-SimpleBuilding {
   translation 300.403 311.573 0
   rotation 0 0 1 0.523599
   name "building86(1)"
@@ -4974,20 +4469,8 @@ SimpleBuilding {
   wallType "highrise"
 }
 SimpleBuilding {
-  translation 269.713 321.546 0
-  rotation 0 0 1 0.523599
-  name "building86(2)"
-  floorNumber 4
-  corners [
-    0 0
-    8.61 -10.16
-    0.2 -17.19
-    -8.4 -7.04
-  ]
-  wallType "highrise"
-}
-SimpleBuilding {
-  translation 307.129995 254.099995 0
+  translation 254.35 219.74 0
+  rotation 0 0 1 4.692820414042842e-06
   name "building87"
   floorNumber 4
   corners [
@@ -5266,23 +4749,6 @@ SimpleBuilding {
   wallType "construction building"
 }
 SimpleBuilding {
-  translation -18.059005 -234.006025 0
-  name "building101"
-  floorNumber 2
-  corners [
-    0 0
-    -12.81 -16.25
-    -24.59 -9.71
-    -30.32 -16.05
-    -18.1 -28.74
-    -7.69 -19.13
-    -3.88 -23.78
-    11.22 -9.1
-  ]
-  wallType "old office building"
-  roofShape "flat roof"
-}
-SimpleBuilding {
   translation -65.933345 -284.011685 0
   name "building102"
   floorNumber 2
@@ -5374,20 +4840,6 @@ SimpleBuilding {
   wallType "factory building"
 }
 SimpleBuilding {
-  translation -329.787873 -148.038905 0
-  name "building106"
-  floorNumber 5
-  corners [
-    0 0
-    51.290008 25.48
-    61.790008 6.19
-    25.83 -10.2
-    8.27 -18.23
-  ]
-  wallType "construction building"
-  roofShape "flat roof"
-}
-SimpleBuilding {
   translation -312.861245 -52.636725 0
   name "building107"
   floorHeight 4.94
@@ -5425,19 +4877,6 @@ SimpleBuilding {
     19.44 -16.08
   ]
   roofShape "flat roof"
-}
-SimpleBuilding {
-  translation 104.46 65.53 0
-  name "画世紀(1)"
-  floorHeight 3.74
-  floorNumber 29
-  corners [
-    0 0
-    18.58 -22.81
-    33.88 -10.47
-    15.31 12.33
-  ]
-  wallType "glass building"
 }
 SimpleBuilding {
   translation 155.899995 50.059995 0
@@ -5494,7 +4933,8 @@ SimpleBuilding {
   wallType "office building"
 }
 SimpleBuilding {
-  translation 306.439995 46.079995 0
+  translation 308.093 44.4293 0
+  rotation 0 0 1 1.5399
   name "building109"
   corners [
     0 0
@@ -5559,18 +4999,6 @@ SimpleBuilding {
     -25.4 -12.59
   ]
   wallType "arcade-style building"
-}
-SimpleBuilding {
-  translation 20.620015 -125.160005 0
-  name "building112"
-  floorNumber 1
-  corners [
-    0 0
-    10.54 4.84
-    21.68 -18.07
-    10.45 -23.27
-  ]
-  wallType "construction building"
 }
 SimpleBuilding {
   translation -51.972385 -258.108785 0
@@ -6391,7 +5819,7 @@ DEF WEBOTS_VEHICLE0 TeslaModel3 {
         density -1
         mass 0.83
       }
-      horizontalResolution 1800
+      horizontalResolution 900
       fieldOfView 6.28318
       verticalFieldOfView 0.5236
       numberOfLayers 16
@@ -6634,17 +6062,17 @@ LowPolyTree2 {
   scale 1 1 1.252168
 }
 LowPolyTree {
-  translation -193.843205 -291.534105 0
+  translation -72.4694 203.733 0
   rotation 0 0 1 6.000474
   scale 1 1 1.278617
 }
 LowPolyTree {
-  translation -151.071885 -307.105405 0
+  translation -71.108 -456.773 0
   rotation 0 0 1 1.28808
   scale 1 1 1.088813
 }
 LowPolyTree3 {
-  translation -109.503785 -322.208245 0
+  translation -80.9605 -320.401 0
   rotation 0 0 1 3.297747
   scale 1 1 1.056427
 }
@@ -6817,11 +6245,6 @@ LowPolyTree3 {
   translation -126.243245 -394.705405 0
   rotation 0 0 1 1.716361
   scale 1 1 1.167702
-}
-LowPolyTree2 {
-  translation -231.429085 -352.383825 0
-  rotation 0 0 1 3.260252
-  scale 1 1 1.121239
 }
 LowPolyTree {
   translation -162.952365 -322.377965 0
@@ -7124,44 +6547,38 @@ LowPolyTree {
   scale 1 1 1.342289
 }
 GasStation {
-  translation -64.1819 -358.592 0
+  translation -73.4118 -363.263 0
   rotation 0 0 -1 -2.094395307179586
 }
 GasStation {
-  translation -398.706 42.1336 0
-  rotation 0 0 1 1.04719
+  translation -417.357 57.8096 0
+  rotation 0 0 -1 -1.0471853071795865
   name "gas station(3)"
 }
 GasStation {
-  translation 303.138 94.741 0
+  translation 270.501 78.9436 0
   rotation 0 0 1 -1.047195307179586
   name "gas station(2)"
 }
 GasStation {
-  translation -218.289 -370.365 0
-  rotation 0 0 1 2.618
+  translation -216.711 -361.166 0
+  rotation 0 0 -1 -2.7489003061004254
   name "gas station(1)"
 }
 LargeResidentialTower {
-  translation -343.964 -9.31956 0
+  translation -358.586 -25.1724 0
   rotation 0 0 1 -0.785395307179586
   scale 2
 }
 LargeResidentialTower {
-  translation -369.066 16.3782 0
-  rotation 0 0 1 2.85387e-06
+  translation -374.005 25.7305 0
+  rotation 0 0 -1 2.2252996938995744
   name "residential tower(13)"
   scale 2
 }
 LargeResidentialTower {
-  translation -373.009 -43.1507 0
-  rotation 0 0 -1 0.785395307179586
-  name "residential tower(2)"
-  scale 2
-}
-LargeResidentialTower {
-  translation -409.086 -69.6091 0
-  rotation 0 0 1 -2.3561953071795863
+  translation -394.611 -66.4283 0
+  rotation 0 0 1 2.35619
   name "residential tower(3)"
   scale 2
 }
@@ -7179,7 +6596,7 @@ LargeResidentialTower {
 }
 LargeResidentialTower {
   translation -161.34 -413.734 0
-  rotation 0 0 1 -1.8325953071795862
+  rotation 0 0 1 -1.9026
   name "residential tower(6)"
   scale 2
 }

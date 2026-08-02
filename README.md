@@ -51,16 +51,16 @@ ros2 run autonomous_drive align_pcd_maps \
   --merged merged_map.pcd
 
 # visualize SLAM map
-ros2 run autonomous_drive pcd_publisher --pcd merged_map.pcd --topic /pcd_map --frame lio_map --leaf 0.2
+ros2 run autonomous_drive pcd_publisher --pcd merged_map.pcd --topic /pcd_map --frame inital_lidar --leaf 0.4
 
 # visualize lanelet2 map
 ros2 launch lanelet2_rviz_visualizer visualize.launch.py map_file:=/home/marvin/Webots/map4_sumo_to_lanelet.osm
 
 # tf from SLAM local map to global map
 ros2 run autonomous_drive webots_tf_publisher \
-  --trans 57.4214 -39.8686 0.400134 \
-  --rot -2.4193992400859864e-06 -0.0007925767510579611 0.9999996859080708 2.0472 \
-  --frame map --child lio_map
+  --trans 57.3837 -66.2511 1.55936 \
+  --rot -0.0013009 3.97107e-06 -0.999999 1.0944 \
+  --frame map --child inital_lidar
 ```
 
 Others
