@@ -18,24 +18,36 @@ ros2 launch webots_launch webots_launch.py world:=/home/marvin/Webots/src/webots
 # main control
 ros2 launch autonomous_drive robot_launch.py
 
-# SLAM
-ros2 launch lio_sam run.launch.py
-
 # manual/autonomous GUI
 ros2 run autonomous_drive manual_control
+
+# SLAM
+ros2 launch lio_sam run.launch.py
 ```
 
 Map Creation
 ```
 # save map
-ros2 service call /lio_sam/save_map lio_sam/srv/SaveMap "{destination: /Webots/session2_map}"
+ros2 service call /lio_sam/save_map lio_sam/srv/SaveMap "{destination: /Webots/session1_map}"
 
 # merge map (GPS, IMU)
 ros2 run autonomous_drive align_pcd_maps \
-  --map1 session1_map/GlobalMap.pcd --gps1 25.012562 121.466838 1.557820 \
+  --map1 session1_map/GlobalMap.pcd \
+  --gps1 25.012562 121.466838 1.557820 \
   --quat1 0.0013875008952695877 0.0009375014607109571 0.854233181330776 0.519819926952773 \
-  --map2 session2_map/GlobalMap.pcd --gps2 25.012318 121.466846 1.503477 \
+  --map2 session2_map/GlobalMap.pcd \
+  --gps2 25.012318 121.466846 1.503477 \
   --quat2 0.001268760589103432 0.001000005029291599 -0.5203799060427668 0.8538268023469364 \
+  --out2 map2_aligned.pcd \
+  --merged merged_map.pcd
+
+ros2 run autonomous_drive align_pcd_maps \
+  --map1 session1_map/GlobalMap.pcd \
+  --gps1 25.012562 121.466838 1.557820 \
+  --rot1 -2.4194e-06 -0.000792577 1 2.0472 \
+  --map2 session2_map/GlobalMap.pcd \
+  --gps2 25.012318 121.466846 1.503477 \
+  --rot2 -0.0013009 3.97107e-06 -0.999999 1.0944 \
   --out2 map2_aligned.pcd \
   --merged merged_map.pcd
 
@@ -50,6 +62,17 @@ ros2 run autonomous_drive align_pcd_maps \
   --out2 map2_aligned.pcd \
   --merged merged_map.pcd
 
+# merge map (lidar ground truth)
+ros2 run autonomous_drive align_pcd_maps \
+  --map1 merged_map.pcd \
+  --trans1 56.9115 -38.8835 1.56091 \
+  --rot1 -2.4194e-06 -0.000792577 1 2.0472 \
+  --map2 session3_map/GlobalMap.pcd \
+  --trans2 -306.073 -8.17997 1.55834 \
+  --rot2 0.00057711 0.00044004 -1 2.4034 \
+  --out2 map3_aligned.pcd \
+  --merged merged2_map.pcd
+
 # visualize SLAM map
 ros2 run autonomous_drive pcd_publisher --pcd merged_map.pcd --topic /pcd_map --frame inital_lidar --leaf 0.4
 
@@ -58,8 +81,8 @@ ros2 launch lanelet2_rviz_visualizer visualize.launch.py map_file:=/home/marvin/
 
 # tf from SLAM local map to global map
 ros2 run autonomous_drive webots_tf_publisher \
-  --trans 57.3837 -66.2511 1.55936 \
-  --rot -0.0013009 3.97107e-06 -0.999999 1.0944 \
+  --trans -306.073 -8.17997 1.55834 \
+  --rot -0.0013009 0.00057711 0.00044004 -1 2.4034 \
   --frame map --child inital_lidar
 ```
 

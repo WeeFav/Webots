@@ -292,19 +292,34 @@ int main(int argc, char** argv) {
     Eigen::Matrix3f R1 = Eigen::Matrix3f::Identity();
     Eigen::Matrix3f R2 = Eigen::Matrix3f::Identity();
 
+    // Compute Map 1 Rotation Matrix R1
+    if (has_rot1) {
+        R1 = axisAngleToRotationMatrix(vrml_rot1[0], vrml_rot1[1], vrml_rot1[2], vrml_rot1[3]);
+        std::cout << "Map 1 VRML Rot: axis=[" << vrml_rot1[0] << ", " << vrml_rot1[1] << ", " << vrml_rot1[2] << "], angle=" << vrml_rot1[3] << " rad\n";
+    } else if (has_quat1) {
+        R1 = quat1.toRotationMatrix();
+        std::cout << "Map 1 Quat: x=" << quat1.x() << ", y=" << quat1.y() << ", z=" << quat1.z() << ", w=" << quat1.w() << "\n";
+    } else if (has_rpy1) {
+        R1 = rpyToRotationMatrix(rpy1.roll, rpy1.pitch, rpy1.yaw);
+        std::cout << "Map 1 RPY : Roll=" << rpy1.roll << " deg, Pitch=" << rpy1.pitch << " deg, Yaw=" << rpy1.yaw << " deg\n";
+    }
+
+    // Compute Map 2 Rotation Matrix R2
+    if (has_rot2) {
+        R2 = axisAngleToRotationMatrix(vrml_rot2[0], vrml_rot2[1], vrml_rot2[2], vrml_rot2[3]);
+        std::cout << "Map 2 VRML Rot: axis=[" << vrml_rot2[0] << ", " << vrml_rot2[1] << ", " << vrml_rot2[2] << "], angle=" << vrml_rot2[3] << " rad\n";
+    } else if (has_quat2) {
+        R2 = quat2.toRotationMatrix();
+        std::cout << "Map 2 Quat: x=" << quat2.x() << ", y=" << quat2.y() << ", z=" << quat2.z() << ", w=" << quat2.w() << "\n";
+    } else if (has_rpy2) {
+        R2 = rpyToRotationMatrix(rpy2.roll, rpy2.pitch, rpy2.yaw);
+        std::cout << "Map 2 RPY : Roll=" << rpy2.roll << " deg, Pitch=" << rpy2.pitch << " deg, Yaw=" << rpy2.yaw << " deg\n";
+    }
+
     if (has_trans_mode) {
         std::cout << "Mode      : Webots Ground-Truth Translation & Rotation\n";
         std::cout << "Map 1 Trans: [" << trans1.x() << ", " << trans1.y() << ", " << trans1.z() << "]\n";
         std::cout << "Map 2 Trans: [" << trans2.x() << ", " << trans2.y() << ", " << trans2.z() << "]\n";
-
-        if (has_rot1) {
-            R1 = axisAngleToRotationMatrix(vrml_rot1[0], vrml_rot1[1], vrml_rot1[2], vrml_rot1[3]);
-            std::cout << "Map 1 VRML Rot: axis=[" << vrml_rot1[0] << ", " << vrml_rot1[1] << ", " << vrml_rot1[2] << "], angle=" << vrml_rot1[3] << " rad\n";
-        }
-        if (has_rot2) {
-            R2 = axisAngleToRotationMatrix(vrml_rot2[0], vrml_rot2[1], vrml_rot2[2], vrml_rot2[3]);
-            std::cout << "Map 2 VRML Rot: axis=[" << vrml_rot2[0] << ", " << vrml_rot2[1] << ", " << vrml_rot2[2] << "], angle=" << vrml_rot2[3] << " rad\n";
-        }
 
         // Relative translation in world coordinates rotated into Map 1 local frame:
         // T_rel = R1^T * (Trans2 - Trans1)
@@ -316,27 +331,14 @@ int main(int argc, char** argv) {
         std::cout << "Map 1 GPS : Lat = " << gps1.lat << ", Lon = " << gps1.lon << ", Alt = " << gps1.alt << " m\n";
         std::cout << "Map 2 GPS : Lat = " << gps2.lat << ", Lon = " << gps2.lon << ", Alt = " << gps2.alt << " m\n";
 
-        if (has_quat1) {
-            R1 = quat1.toRotationMatrix();
-            std::cout << "Map 1 Quat: x=" << quat1.x() << ", y=" << quat1.y() << ", z=" << quat1.z() << ", w=" << quat1.w() << "\n";
-        } else if (has_rpy1) {
-            R1 = rpyToRotationMatrix(rpy1.roll, rpy1.pitch, rpy1.yaw);
-            std::cout << "Map 1 RPY : Roll=" << rpy1.roll << " deg, Pitch=" << rpy1.pitch << " deg, Yaw=" << rpy1.yaw << " deg\n";
-        }
-
-        if (has_quat2) {
-            R2 = quat2.toRotationMatrix();
-            std::cout << "Map 2 Quat: x=" << quat2.x() << ", y=" << quat2.y() << ", z=" << quat2.z() << ", w=" << quat2.w() << "\n";
-        } else if (has_rpy2) {
-            R2 = rpyToRotationMatrix(rpy2.roll, rpy2.pitch, rpy2.yaw);
-            std::cout << "Map 2 RPY : Roll=" << rpy2.roll << " deg, Pitch=" << rpy2.pitch << " deg, Yaw=" << rpy2.yaw << " deg\n";
-        }
-
         // Compute relative ENU displacement of Map 2 origin relative to Map 1 origin
         ENUCoord enu = gpsToENU(gps2, gps1);
-        translation_offset << static_cast<float>(enu.east),
-                              static_cast<float>(enu.north),
-                              static_cast<float>(enu.up);
+        Eigen::Vector3f enu_vec(static_cast<float>(enu.east),
+                                static_cast<float>(enu.north),
+                                static_cast<float>(enu.up));
+        // Transform ENU displacement into Map 1 local frame:
+        // T_rel = R1^T * ENU_vec
+        translation_offset = R1.transpose() * enu_vec;
     }
 
     std::cout << "--------------------------------------------------\n";
