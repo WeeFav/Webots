@@ -5713,8 +5713,8 @@ SumoInterface {
   networkFiles "//wsl$/Ubuntu-22.04/home/marvin/Webots/src/webots_launch/worlds/map4_net"
 }
 DEF WEBOTS_VEHICLE0 TeslaModel3 {
-  translation -305.251 -7.43165 0.400134
-  rotation 0.00057711 0.00044004 -1 2.4034
+  translation 41.14191716593977 -26.03244345299225 0.3227318543282683
+  rotation 0.0002926992039666483 -0.0001783861795280173 0.9999999412527718 2.047199404410158
   name "WEBOTS_VEHICLE0"
   controller "<extern>"
   supervisor TRUE

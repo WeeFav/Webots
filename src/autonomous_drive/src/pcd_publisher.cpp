@@ -24,7 +24,7 @@ public:
         this->declare_parameter<std::string>("pcd_file", "");
         this->declare_parameter<std::string>("topic", "/pcd_map");
         this->declare_parameter<std::string>("frame_id", "map");
-        this->declare_parameter<double>("publish_rate", 0.0); // Default: 0.0 (publish once with latching)
+        this->declare_parameter<double>("publish_rate", 0.2); // Default: 0.2 Hz (re-publish every 5 seconds)
         this->declare_parameter<double>("leaf_size", 0.0);    // Default: 0.0 (no downsampling filter)
         this->declare_parameter<bool>("latch", true);
 
@@ -199,7 +199,7 @@ int main(int argc, char** argv) {
                       << "  --topic <topic_name>       Topic to publish (default: /pcd_map)\n"
                       << "  --frame <frame_id>         Frame ID for header (default: map)\n"
                       << "  --leaf-size, --leaf <m>    Voxel grid downsample leaf size in meters (e.g. 0.2, 0.4)\n"
-                      << "  --rate <hz>                Publish rate in Hz (default: 0.0 = publish once latched)\n"
+                      << "  --rate <hz>                Publish rate in Hz (default: 0.2 = publish every 5 seconds)\n"
                       << "  --ros-args                 ROS 2 standard arguments\n\n"
                       << "Examples:\n"
                       << "  ros2 run autonomous_drive pcd_publisher --pcd merged_map.pcd --leaf 0.2\n";

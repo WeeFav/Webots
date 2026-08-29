@@ -2,12 +2,19 @@ import os
 import launch
 from launch_ros.actions import Node
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 from webots_ros2_driver.webots_controller import WebotsController
 
 def generate_launch_description():
+    print_session_arg = DeclareLaunchArgument(
+        'print_session',
+        default_value='false',
+        description='Print vehicle translation/rotation, GPS, IMU, and lidar pose for session'
+    )
+
     package_dir = get_package_share_directory('autonomous_drive')
     robot_description_path = os.path.join(package_dir, 'resource', 'robot.urdf')
 
@@ -17,6 +24,7 @@ def generate_launch_description():
         parameters=[
             {'robot_description': robot_description_path},
             {'use_sim_time': True},
+            {'print_session': LaunchConfiguration('print_session')},
         ]
     )
 
@@ -66,6 +74,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        print_session_arg,
         robot_driver_0,
         pid_controller,
         pure_pursuit_controller,

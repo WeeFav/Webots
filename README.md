@@ -64,9 +64,9 @@ ros2 run autonomous_drive align_pcd_maps \
 
 # merge map (lidar ground truth)
 ros2 run autonomous_drive align_pcd_maps \
-  --map1 merged_map.pcd \
-  --trans1 56.9115 -38.8835 1.56091 \
-  --rot1 -2.4194e-06 -0.000792577 1 2.0472 \
+  --map1 session2_map/GlobalMap.pcd \
+  --trans1 57.3837 -66.2511 1.55936 \
+  --rot1 -0.0013009 3.97107e-06 -0.999999 1.0944 \
   --map2 session3_map/GlobalMap.pcd \
   --trans2 -306.073 -8.17997 1.55834 \
   --rot2 0.00057711 0.00044004 -1 2.4034 \

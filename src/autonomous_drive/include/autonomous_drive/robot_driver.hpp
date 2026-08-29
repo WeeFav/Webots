@@ -66,6 +66,7 @@ private:
     void lane_detection(cv::Mat &seg, std::vector<bool> &lane_exist);
     void object_detection();
     void publish_pose();
+    void print_session_info();
     std::vector<BoxInfo> extract_boxes( WbNodeRef node, const Eigen::Matrix3d& parent_R, const Eigen::Vector3d& parent_t);
     Corners8x3 get_box_corners(const BoxInfo& box);
     Corners8x3 get_bounding_box(const std::vector<BoxInfo>& boxes);
@@ -136,6 +137,14 @@ private:
     std::shared_ptr<tf2_ros::StaticTransformBroadcaster> static_broadcaster;
     std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster;
     bool transform_published = false;
+
+    // Session print info
+    bool print_session_{false};
+    bool session_printed_{false};
+    int print_step_skip_{50};
+    int samples_to_collect_{10};
+    std::vector<std::array<double, 3>> gps_samples_;
+    std::vector<std::array<double, 4>> imu_samples_;
 
 };
 } // namespace robot_driver

@@ -26,6 +26,8 @@
 #include <webots/vehicle/driver.h>
 #include <webots/vehicle/car.h>
 
+#include <sstream>
+#include <iomanip>
 #include <vector>
 #include <array>
 #include <string>
@@ -159,6 +161,41 @@ void autonomous_drive::RobotDriver::init(webots_ros2_driver::WebotsNode *webots_
         node->declare_parameter<double>("target_speed", 5.0);
     }
 
+    auto check_bool_param = [this](const std::string& name) -> bool {
+        if (!node->has_parameter(name)) {
+            try {
+                node->declare_parameter<bool>(name, false);
+            } catch (...) {
+                try {
+                    node->declare_parameter<std::string>(name, "false");
+                } catch (...) {}
+            }
+        }
+        try {
+            auto p = node->get_parameter(name);
+            if (p.get_type() == rclcpp::PARAMETER_BOOL) {
+                return p.as_bool();
+            } else if (p.get_type() == rclcpp::PARAMETER_STRING) {
+                std::string s = p.as_string();
+                return (s == "true" || s == "True" || s == "1");
+            }
+        } catch (...) {}
+        return false;
+    };
+
+    if (check_bool_param("print_session")) {
+        print_session_ = true;
+    }
+    if (parameters.find("print_session") != parameters.end() &&
+        (parameters["print_session"] == "true" || parameters["print_session"] == "1")) {
+        print_session_ = true;
+    }
+
+    if (print_session_) {
+        RCLCPP_INFO(node->get_logger(), "Print session info enabled (skipping first %d steps, collecting %d samples).",
+                    print_step_skip_, samples_to_collect_);
+    }
+
     RCLCPP_INFO(node->get_logger(), "RobotDriver initialized.");
     RCLCPP_INFO(node->get_logger(), "Wheelbase: %f", wbu_car_get_wheelbase());
     
@@ -169,8 +206,31 @@ void autonomous_drive::RobotDriver::step() {
     rclcpp::spin_some(node->get_node_base_interface());
     step_count++;
 
-    const double* gps_coords = wb_gps_get_values(gps);
-    RCLCPP_INFO(node->get_logger(), "gps_coords: %f, %f, %f", gps_coords[0], gps_coords[1], gps_coords[2]);
+    // const double* gps_coords = wb_gps_get_values(gps);
+    // RCLCPP_INFO(node->get_logger(), "gps_coords: %f, %f, %f", gps_coords[0], gps_coords[1], gps_coords[2]);
+
+    if (print_session_ && !session_printed_) {
+        if (step_count > print_step_skip_) {
+            if (gps_samples_.size() < static_cast<size_t>(samples_to_collect_)) {
+                if (gps != 0) {
+                    const double* coords = wb_gps_get_values(gps);
+                    if (coords != nullptr) {
+                        gps_samples_.push_back({coords[0], coords[1], coords[2]});
+                    }
+                }
+            }
+
+            if ((gps == 0 || gps_samples_.size() >= static_cast<size_t>(samples_to_collect_)) &&
+                imu_samples_.size() >= static_cast<size_t>(samples_to_collect_)) {
+                print_session_info();
+                session_printed_ = true;
+            } else if (step_count > (print_step_skip_ + samples_to_collect_ + 50) &&
+                       (!gps_samples_.empty() || !imu_samples_.empty())) {
+                print_session_info();
+                session_printed_ = true;
+            }
+        }
+    }
 
     // Automatic transmission logic in autonomous mode
     if (control_mode_ == "auto") {
@@ -366,6 +426,12 @@ void autonomous_drive::RobotDriver::publish_pose() {
 
 void autonomous_drive::RobotDriver::imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
 {
+    if (print_session_ && !session_printed_) {
+        if (step_count > print_step_skip_ && imu_samples_.size() < static_cast<size_t>(samples_to_collect_)) {
+            imu_samples_.push_back({msg->orientation.x, msg->orientation.y, msg->orientation.z, msg->orientation.w});
+        }
+    }
+
     if (!imu_prev_valid_) {
         // First message: store as both previous and current; nothing to interpolate yet.
         imu_prev_ = *msg;
@@ -522,6 +588,95 @@ void autonomous_drive::RobotDriver::cmd_ackermann_callback(const ackermann_msgs:
     }
     wbu_driver_set_cruising_speed(target_speed);
     wbu_driver_set_steering_angle(steering_angle);
+}
+
+void autonomous_drive::RobotDriver::print_session_info() {
+    std::array<double, 3> veh_pos = {0.0, 0.0, 0.0};
+    std::array<double, 4> veh_rot = {0.0, 0.0, 1.0, 0.0};
+
+    if (vehicle_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(vehicle_node);
+        if (pos != nullptr) {
+            veh_pos = {pos[0], pos[1], pos[2]};
+        }
+
+        WbFieldRef rot_field = wb_supervisor_node_get_field(vehicle_node, "rotation");
+        if (rot_field != nullptr) {
+            const double* r = wb_supervisor_field_get_sf_rotation(rot_field);
+            if (r != nullptr) {
+                veh_rot = {r[0], r[1], r[2], r[3]};
+            }
+        } else {
+            const double* rot_mat = wb_supervisor_node_get_orientation(vehicle_node);
+            if (rot_mat != nullptr) {
+                Eigen::Matrix3d R;
+                R << rot_mat[0], rot_mat[1], rot_mat[2],
+                     rot_mat[3], rot_mat[4], rot_mat[5],
+                     rot_mat[6], rot_mat[7], rot_mat[8];
+                Eigen::AngleAxisd aa(R);
+                veh_rot = {aa.axis().x(), aa.axis().y(), aa.axis().z(), aa.angle()};
+            }
+        }
+    }
+
+    std::array<double, 3> lidar_pos = {0.0, 0.0, 0.0};
+    std::array<double, 4> lidar_rot = {0.0, 0.0, 1.0, 0.0};
+
+    if (lidar_node != nullptr) {
+        const double* pos = wb_supervisor_node_get_position(lidar_node);
+        if (pos != nullptr) {
+            lidar_pos = {pos[0], pos[1], pos[2]};
+        }
+
+        const double* rot_mat = wb_supervisor_node_get_orientation(lidar_node);
+        if (rot_mat != nullptr) {
+            Eigen::Matrix3d R;
+            R << rot_mat[0], rot_mat[1], rot_mat[2],
+                 rot_mat[3], rot_mat[4], rot_mat[5],
+                 rot_mat[6], rot_mat[7], rot_mat[8];
+            Eigen::AngleAxisd aa(R);
+            lidar_rot = {aa.axis().x(), aa.axis().y(), aa.axis().z(), aa.angle()};
+        }
+    }
+
+    double avg_gps[3] = {0.0, 0.0, 0.0};
+    if (!gps_samples_.empty()) {
+        for (const auto& s : gps_samples_) {
+            avg_gps[0] += s[0];
+            avg_gps[1] += s[1];
+            avg_gps[2] += s[2];
+        }
+        avg_gps[0] /= gps_samples_.size();
+        avg_gps[1] /= gps_samples_.size();
+        avg_gps[2] /= gps_samples_.size();
+    }
+
+    double avg_imu[4] = {0.0, 0.0, 0.0, 0.0};
+    if (!imu_samples_.empty()) {
+        for (const auto& s : imu_samples_) {
+            avg_imu[0] += s[0];
+            avg_imu[1] += s[1];
+            avg_imu[2] += s[2];
+            avg_imu[3] += s[3];
+        }
+        avg_imu[0] /= imu_samples_.size();
+        avg_imu[1] /= imu_samples_.size();
+        avg_imu[2] /= imu_samples_.size();
+        avg_imu[3] /= imu_samples_.size();
+    }
+
+    std::ostringstream ss;
+    ss << std::setprecision(16);
+    ss << "  vehicle translation: " << veh_pos[0] << " " << veh_pos[1] << " " << veh_pos[2] << "\n";
+    ss << "  vehicle rotation: " << veh_rot[0] << " " << veh_rot[1] << " " << veh_rot[2] << " " << veh_rot[3] << "\n";
+    ss << std::fixed << std::setprecision(6);
+    ss << "  vehicle GPS: " << avg_gps[0] << ", " << avg_gps[1] << ", " << avg_gps[2] << " \n";
+    ss << std::defaultfloat << std::setprecision(16);
+    ss << "  vehicle IMU: " << avg_imu[0] << " " << avg_imu[1] << " " << avg_imu[2] << " " << avg_imu[3] << "\n";
+    ss << "  lidar translation: " << lidar_pos[0] << " " << lidar_pos[1] << " " << lidar_pos[2] << "\n";
+    ss << "  lidar rotation: " << lidar_rot[0] << " " << lidar_rot[1] << " " << lidar_rot[2] << " " << lidar_rot[3];
+
+    RCLCPP_INFO(node->get_logger(), "\n%s", ss.str().c_str());
 }
 
 #include "pluginlib/class_list_macros.hpp"

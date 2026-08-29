@@ -3321,10 +3321,10 @@
   <node id='3840' action='modify' visible='true' version='1' lat='25.01151506728' lon='121.46480426155' />
   <node id='3841' action='modify' visible='true' version='1' lat='25.01146598676' lon='121.46476646673' />
   <node id='3842' action='modify' visible='true' version='1' lat='25.01140628825' lon='121.46476928295' />
-  <node id='3846' action='modify' visible='true' version='1' lat='25.01151901554' lon='121.46488559322' />
-  <node id='3847' action='modify' visible='true' version='1' lat='25.01152331711' lon='121.46489668471' />
-  <node id='3848' action='modify' visible='true' version='1' lat='25.01150677268' lon='121.46485362846' />
-  <node id='3849' action='modify' visible='true' version='1' lat='25.01149173348' lon='121.46489570196' />
+  <node id='3846' action='delete' visible='true' version='1' lat='25.01151761703' lon='121.46488862989' />
+  <node id='3847' action='delete' visible='true' version='1' lat='25.01152331711' lon='121.46489668471' />
+  <node id='3848' action='delete' visible='true' version='1' lat='25.01150677268' lon='121.46485362846' />
+  <node id='3849' action='delete' visible='true' version='1' lat='25.01149173348' lon='121.46489570196' />
   <node id='3853' action='modify' visible='true' version='1' lat='25.0114610722' lon='121.46485127937' />
   <node id='3854' action='modify' visible='true' version='1' lat='25.01144006013' lon='121.4648771751' />
   <node id='3858' action='modify' visible='true' version='1' lat='25.01146098753' lon='121.46478345297' />
@@ -9723,19 +9723,11 @@
     <nd ref='3842' />
     <nd ref='52' />
   </way>
-  <way id='3850' action='modify' visible='true' version='1'>
-    <nd ref='3018' />
-    <nd ref='3846' />
-    <nd ref='3847' />
-    <nd ref='1001' />
+  <way id='3850' action='delete' visible='true' version='1'>
     <tag k='subtype' v='solid' />
     <tag k='type' v='line_thin' />
   </way>
-  <way id='3851' action='modify' visible='true' version='1'>
-    <nd ref='3021' />
-    <nd ref='3848' />
-    <nd ref='3849' />
-    <nd ref='1004' />
+  <way id='3851' action='delete' visible='true' version='1'>
   </way>
   <way id='3855' action='modify' visible='true' version='1'>
     <nd ref='371' />
@@ -15322,9 +15314,7 @@
     <tag k='subtype' v='road' />
     <tag k='type' v='lanelet' />
   </relation>
-  <relation id='3852' action='modify' visible='true' version='1'>
-    <member type='way' ref='3851' role='right' />
-    <member type='way' ref='3850' role='left' />
+  <relation id='3852' action='delete' visible='true' version='1'>
     <tag k='location' v='urban' />
     <tag k='subtype' v='road' />
     <tag k='type' v='lanelet' />

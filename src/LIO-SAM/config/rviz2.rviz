@@ -12,6 +12,7 @@ Panels:
         - /Path1
         - /MarkerArray1
         - /MarkerArray2
+        - /MarkerArray3
       Splitter Ratio: 0.35384616255760193
     Tree Height: 1112
   - Class: rviz_common/Selection
@@ -51,8 +52,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 25.81147575378418
-        Min Value: -3.1322412490844727
+        Max Value: 26.577198028564453
+        Min Value: -2.074967622756958
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -60,7 +61,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Color Transformer: AxisColor
       Decay Time: 1000
-      Enabled: false
+      Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
       Max Intensity: 92.95751190185547
@@ -81,7 +82,7 @@ Visualization Manager:
         Value: /lio_sam/mapping/cloud_registered
       Use Fixed Frame: true
       Use rainbow: true
-      Value: false
+      Value: true
     - Class: rviz_default_plugins/TF
       Enabled: true
       Frame Timeout: 15
@@ -165,7 +166,8 @@ Visualization Manager:
       Enabled: true
       Name: MarkerArray
       Namespaces:
-        {}
+        loop_edges: true
+        loop_nodes: true
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -185,6 +187,19 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /lanelet2_map_markers
+      Value: true
+    - Class: rviz_default_plugins/MarkerArray
+      Enabled: true
+      Name: MarkerArray
+      Namespaces:
+        centerline_line: true
+        centerline_points: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /centerline_waypoints_markers
       Value: true
   Enabled: true
   Global Options:
@@ -232,16 +247,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 472.1856384277344
+      Distance: 426.80078125
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 96.49343872070312
-        Y: -83.83827209472656
-        Z: 4.506679058074951
+        X: 18.108552932739258
+        Y: -4.108727931976318
+        Z: 4.050155162811279
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -250,7 +265,7 @@ Visualization Manager:
       Pitch: 1.5697963237762451
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.8585851192474365
+      Yaw: 3.0285873413085938
     Saved: ~
 Window Geometry:
   Displays:
